@@ -12,7 +12,7 @@
         //É o mesmo que CEP
         public string ZipCode { get; private set; }
 
-        public Address() { }
+        protected Address() { }
 
         public Address(int number, string street, string neighborhood, string city, string state, string zipCode)
         {

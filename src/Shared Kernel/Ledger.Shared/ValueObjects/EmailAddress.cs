@@ -4,7 +4,7 @@
     {
         public string Email { get; private set; }
 
-        public EmailAddress() { }
+        protected EmailAddress() { }
 
         public EmailAddress(string email)
         {

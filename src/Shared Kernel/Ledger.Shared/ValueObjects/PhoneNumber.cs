@@ -4,7 +4,7 @@
     {
         public string Number { get; private set; }
 
-        public PhoneNumber() { }
+        protected PhoneNumber() { }
 
         public PhoneNumber(string number)
         {

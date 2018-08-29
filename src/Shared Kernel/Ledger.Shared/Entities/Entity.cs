@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Ledger.Shared.Events;
+using Ledger.Shared.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Ledger.Shared.Entities
 {
-    public class Entity<T> : IDomainNotifier
+    public class Entity<T> : IDomainNotifier, IEventProducer
                              where T : Entity<T>
     {
         public Guid Id { get; protected set; }
         private List<DomainNotification> _notifications;
+        private List<DomainEvent> _events;
 
         public Entity()
         {
@@ -79,6 +82,21 @@ namespace Ledger.Shared.Entities
         public bool HasNotifications()
         {
             return _notifications.Any();
+        }
+
+        public IReadOnlyList<DomainEvent> GetEvents()
+        {
+            return _events;
+        }
+
+        public void AddEvent(DomainEvent @event)
+        {
+            _events.Add(@event);
+        }
+
+        public bool HasEvents()
+        {
+            return _events.Any();
         }
     }
 }
