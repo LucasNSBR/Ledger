@@ -11,6 +11,8 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 
         public ActivationStatus Status { get; private set; }
 
+        protected Activation() { }
+
         public Activation(Company company)
         {
             Company = company;
@@ -56,6 +58,11 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         public bool IsPending()
         {
             return Status == ActivationStatus.Pending;
+        }
+
+        public bool IsAccepted()
+        {
+            return Status == ActivationStatus.Accepted;
         }
 
         public void ResetActivationProcess()

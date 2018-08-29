@@ -1,4 +1,5 @@
-﻿using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
+﻿using Ledger.Activations.Data.EntityTypeConfiguration;
+using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Activations.Data.Context
@@ -13,7 +14,8 @@ namespace Ledger.Activations.Data.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfiguration(new ActivationEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
         }
     }
 }

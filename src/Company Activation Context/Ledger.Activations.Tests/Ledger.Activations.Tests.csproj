@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AppServices\" />
+  </ItemGroup>
+
 </Project>

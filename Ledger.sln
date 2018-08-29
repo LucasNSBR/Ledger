@@ -3,29 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Companies.Domain", "src\Company Data Context\Ledger.Companies.Domain\Ledger.Companies.Domain.csproj", "{5494EB22-68EF-41A0-879F-CD74AFB92321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Companies.Domain", "src\Company Data Context\Ledger.Companies.Domain\Ledger.Companies.Domain.csproj", "{5494EB22-68EF-41A0-879F-CD74AFB92321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Companies.Data", "src\Company Data Context\Ledger.Companies.Data\Ledger.Companies.Data.csproj", "{D42BC63E-E33E-4556-B009-923F9E068D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Companies.Data", "src\Company Data Context\Ledger.Companies.Data\Ledger.Companies.Data.csproj", "{D42BC63E-E33E-4556-B009-923F9E068D54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Companies.Application", "src\Company Data Context\Ledger.Companies.Application\Ledger.Companies.Application.csproj", "{1662392A-47F5-436C-861F-75294708618F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Companies.Application", "src\Company Data Context\Ledger.Companies.Application\Ledger.Companies.Application.csproj", "{1662392A-47F5-436C-861F-75294708618F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Company Data Context", "Company Data Context", "{F68358E8-8797-4ABB-9C50-09FDF74091B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Kernel", "Shared Kernel", "{9CD8EB02-5B29-4940-8912-9DD324AFAD16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Shared", "src\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj", "{70F3DD70-0BD6-49B1-98D0-0A7FE731B636}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Shared", "src\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj", "{70F3DD70-0BD6-49B1-98D0-0A7FE731B636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Companies.Tests", "src\Company Data Context\Ledger.Companies.Tests\Ledger.Companies.Tests.csproj", "{283646F2-7485-46A0-BF88-E3947F5781C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Companies.Tests", "src\Company Data Context\Ledger.Companies.Tests\Ledger.Companies.Tests.csproj", "{283646F2-7485-46A0-BF88-E3947F5781C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Company Activation Context", "Company Activation Context", "{0D386AF9-5537-4081-B9AF-FF95012D202A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Activations.Tests", "src\Company Activation Context\Ledger.Activations.Tests\Ledger.Activations.Tests.csproj", "{897BC4C9-1315-4AA4-9C09-D819DD7EF57B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Activations.Tests", "src\Company Activation Context\Ledger.Activations.Tests\Ledger.Activations.Tests.csproj", "{897BC4C9-1315-4AA4-9C09-D819DD7EF57B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Activations.Domain", "src\Company Activation Context\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj", "{DAAAF050-5B40-4FF2-821D-8D6C7F627CAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Activations.Domain", "src\Company Activation Context\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj", "{DAAAF050-5B40-4FF2-821D-8D6C7F627CAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Activations.Application", "src\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj", "{8400F2EF-B8F6-426D-891F-B84B3468988D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Activations.Application", "src\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj", "{8400F2EF-B8F6-426D-891F-B84B3468988D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Activations.Data", "src\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj", "{AE7E0F45-6F62-4B77-94BA-904C6335FE9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Activations.Data", "src\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj", "{AE7E0F45-6F62-4B77-94BA-904C6335FE9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.WebApi", "src\Web Apps\Ledger.WebApi\Ledger.WebApi.csproj", "{542D8980-DD34-4438-B600-E492371B169B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{AE7E0F45-6F62-4B77-94BA-904C6335FE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE7E0F45-6F62-4B77-94BA-904C6335FE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE7E0F45-6F62-4B77-94BA-904C6335FE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542D8980-DD34-4438-B600-E492371B169B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542D8980-DD34-4438-B600-E492371B169B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542D8980-DD34-4438-B600-E492371B169B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542D8980-DD34-4438-B600-E492371B169B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
