@@ -1,5 +1,4 @@
-﻿using Ledger.Companies.Domain.Events;
-using Ledger.Shared.Entities;
+﻿using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
 using System;
 
