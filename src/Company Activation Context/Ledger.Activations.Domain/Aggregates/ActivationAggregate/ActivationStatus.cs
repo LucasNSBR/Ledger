@@ -2,9 +2,8 @@
 {
     public enum ActivationStatus
     {
-        Accepted,
-        Pending,
-        Rejected,
-        Unstarted,
+        Accepted = 0,
+        Pending = 1,
+        Rejected = 2,
     }
 }

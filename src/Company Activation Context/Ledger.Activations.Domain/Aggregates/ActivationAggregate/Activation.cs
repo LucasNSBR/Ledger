@@ -53,7 +53,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
                 AddNotification("Erro de rejeição", "Não é possível rejeitar a ativação a partir do status atual.");
         }
 
-        private bool IsPending()
+        public bool IsPending()
         {
             return Status == ActivationStatus.Pending;
         }
@@ -61,7 +61,10 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         public void ResetActivationProcess()
         {
             if (Status == ActivationStatus.Rejected)
+            {
                 SetPending();
+                AddEvent(new CompanyActivationResetedEvent());
+            }
             else
                 AddNotification("Erro de reinício", "Não é possível recomeçar o processo a partir do status atual.");
         }

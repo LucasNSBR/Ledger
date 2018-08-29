@@ -18,6 +18,7 @@ namespace Ledger.Shared.Entities
             Id = Guid.NewGuid();
 
             _notifications = new List<DomainNotification>();
+            _events = new List<DomainEvent>();
         }
 
         public override bool Equals(object obj)
