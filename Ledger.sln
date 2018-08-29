@@ -29,6 +29,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Activations.Data", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.WebApi", "src\Web Apps\Ledger.WebApi\Ledger.WebApi.csproj", "{542D8980-DD34-4438-B600-E492371B169B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web Apps", "Web Apps", "{1F63C585-D231-4CC6-A9D5-5ABB98BFE776}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{495DE3C3-43F2-489E-AB2B-E243605A0A55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.CrossCutting.IoC", "src\CrossCutting\Ledger.CrossCutting.IoC\Ledger.CrossCutting.IoC.csproj", "{0839BB34-37D2-4665-9441-C42F5FDE2F50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +81,10 @@ Global
 		{542D8980-DD34-4438-B600-E492371B169B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{542D8980-DD34-4438-B600-E492371B169B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{542D8980-DD34-4438-B600-E492371B169B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0839BB34-37D2-4665-9441-C42F5FDE2F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0839BB34-37D2-4665-9441-C42F5FDE2F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0839BB34-37D2-4665-9441-C42F5FDE2F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0839BB34-37D2-4665-9441-C42F5FDE2F50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +99,8 @@ Global
 		{DAAAF050-5B40-4FF2-821D-8D6C7F627CAE} = {0D386AF9-5537-4081-B9AF-FF95012D202A}
 		{8400F2EF-B8F6-426D-891F-B84B3468988D} = {0D386AF9-5537-4081-B9AF-FF95012D202A}
 		{AE7E0F45-6F62-4B77-94BA-904C6335FE9A} = {0D386AF9-5537-4081-B9AF-FF95012D202A}
+		{542D8980-DD34-4438-B600-E492371B169B} = {1F63C585-D231-4CC6-A9D5-5ABB98BFE776}
+		{0839BB34-37D2-4665-9441-C42F5FDE2F50} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {395E85EF-3430-42A5-9692-61DCA5954711}

@@ -7,7 +7,7 @@ using System;
 namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/foods")]
+    [Route("api/activations")]
     public class ActivationController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;
@@ -19,11 +19,12 @@ namespace Ledger.WebApi.Controllers
         }
         
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 15)]
         public IActionResult Get(Guid id)
         {
             Activation activation = _activationAppService.GetByCompanyId(id);
 
-            return Ok(activation);
+            return CreateResponse(activation);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Ledger.CrossCutting.IoC;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ namespace Ledger.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            Bootstrapper.Initialize(services);
+
             services
                    .AddMvc()
                    .AddJsonOptions(options =>

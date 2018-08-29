@@ -1,5 +1,6 @@
 ﻿using Ledger.Activations.Data.EntityTypeConfiguration;
 using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
+using Ledger.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Activations.Data.Context

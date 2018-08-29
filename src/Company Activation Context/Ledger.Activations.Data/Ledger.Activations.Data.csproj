@@ -9,11 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EntityTypeConfiguration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.2" />
   </ItemGroup>
 
 </Project>

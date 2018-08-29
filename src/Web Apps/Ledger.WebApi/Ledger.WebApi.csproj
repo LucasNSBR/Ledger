@@ -16,4 +16,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.IoC\Ledger.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
