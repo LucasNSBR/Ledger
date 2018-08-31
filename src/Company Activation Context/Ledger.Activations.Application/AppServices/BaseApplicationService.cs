@@ -1,4 +1,5 @@
 ﻿using Ledger.CrossCutting.Data.Transactions;
+using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
 
 namespace Ledger.Activations.Application.AppServices
@@ -6,12 +7,14 @@ namespace Ledger.Activations.Application.AppServices
     public abstract class BaseApplicationService
     {
         protected readonly IDomainNotificationHandler _domainNotificationHandler;
+        protected readonly IServiceBus _serviceBus;
         private readonly IUnitOfWork _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;
+            _serviceBus = serviceBus;
         }
         
         public bool AddNotifications(IDomainNotifier notifier)
