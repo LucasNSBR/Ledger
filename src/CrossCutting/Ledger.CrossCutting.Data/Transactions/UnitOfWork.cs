@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Ledger.CrossCutting.Data.Transactions
 {
@@ -11,16 +12,28 @@ namespace Ledger.CrossCutting.Data.Transactions
             _dbContext = dbContext;
         }
 
-        public bool Commit()
+        public CommitResult Commit()
         {
             try
             {
                 _dbContext.SaveChanges();
-                return true;
+                return CommitResult.Ok();
             }
-            catch
+            catch(DbUpdateException dbex)
             {
-                return false;
+                return CommitResult.Fail(dbex);
+            }
+            catch(InvalidOperationException ioex)
+            {
+                return CommitResult.Fail(ioex);
+            }
+            catch(NotSupportedException nsex)
+            {
+                return CommitResult.Fail(nsex);
+            }
+            catch(Exception ex)
+            {
+                return CommitResult.Fail(ex);
             }
         }
 

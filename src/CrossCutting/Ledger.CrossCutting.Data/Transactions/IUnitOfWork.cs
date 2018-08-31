@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        bool Commit();
+        CommitResult Commit();
         void Rollback();
     }
 }

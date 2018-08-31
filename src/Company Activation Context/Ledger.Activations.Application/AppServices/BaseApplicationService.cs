@@ -32,10 +32,7 @@ namespace Ledger.Activations.Application.AppServices
 
         public bool Commit()
         {
-            if (_unitOfWork.Commit())
-                return true;
-
-            return false;
+            return _unitOfWork.Commit().Success;
         }
     }
 }
