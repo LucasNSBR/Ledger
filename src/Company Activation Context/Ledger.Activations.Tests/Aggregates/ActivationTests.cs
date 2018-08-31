@@ -2,6 +2,7 @@
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ledger.Activations.Tests.Aggregates
@@ -15,7 +16,7 @@ namespace Ledger.Activations.Tests.Aggregates
 
         public ActivationTests()
         {
-            owner = new Owner("Lucas Pereira Campos", 20, new Cpf("981.153.856-99"));
+            owner = new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99"));
             company = new Company(Guid.NewGuid(), owner);
             activation = new Activation(company);
         }
@@ -84,6 +85,20 @@ namespace Ledger.Activations.Tests.Aggregates
             activation.ResetActivationProcess();
 
             Assert.AreEqual(ActivationStatus.Pending, activation.Status);
+        }
+
+        [TestMethod]
+        public void ShouldAttachAndReturnDocuments()
+        {
+            byte[] owner = new byte[8];
+            byte[] contratoSocial = new byte[8];
+            byte[] alteracaoContratoSocial = new byte[8];
+
+            activation.AttachCompanyActivationDocuments(contratoSocial, alteracaoContratoSocial, owner);
+            IReadOnlyList<byte[]> documents = activation.GetCompanyActivationDocuments();
+
+            Assert.IsNotNull(documents);
+            Assert.AreEqual(3, documents.Count);
         }
     }
 }

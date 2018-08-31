@@ -52,7 +52,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
             
-            activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(), 
+            activation.AttachCompanyActivationDocuments(command.ContratoSocialPicture.ToBytes(), 
                 command.AlteracaoContratoSocialPicture.ToBytes(), 
                 command.OwnerDocumentPicture.ToBytes());
 

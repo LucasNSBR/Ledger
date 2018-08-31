@@ -1,6 +1,6 @@
 ﻿using Ledger.Activations.Domain.Events;
 using Ledger.Shared.Entities;
-using System;
+using System.Collections.Generic;
 
 namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 {
@@ -71,7 +71,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
                 AddNotification("Erro de reinício", "Não é possível recomeçar o processo a partir do status atual.");
         }
 
-        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
+        public void AttachCompanyActivationDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
         {
             if (Company == null)
                 AddNotification("Erro na entidade", "Não há uma empresa válida presente no processo de ativação.");
@@ -81,6 +81,24 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
                     Company.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, ownerDocument);
                 else
                     AddNotification("Erro de anexação", "Não é possível anexar os documentos a partir do status atual.");
+            }
+        }
+        
+        public IReadOnlyList<byte[]> GetCompanyActivationDocuments()
+        {
+            if (Company == null)
+            {
+                AddNotification("Erro na entidade", "Não há uma empresa válida presente no processo de ativação.");
+                return null;
+            }
+            else
+            {
+                return new List<byte[]>
+                {
+                    Company.ContratoSocialPicture,
+                    Company.AlteracaoContratoSocialPicture,
+                    Company.OwnerDocumentPicture
+                };
             }
         }
     }
