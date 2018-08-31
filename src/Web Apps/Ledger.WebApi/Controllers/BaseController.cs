@@ -13,7 +13,7 @@ namespace Ledger.WebApi.Controllers
             _domainNotificationHandler = domainNotificationHandler;
         }
 
-        public IActionResult CreateResponse(object results, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public IActionResult CreateResponse(object result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             if (_domainNotificationHandler.HasNotifications())
             {
@@ -30,7 +30,7 @@ namespace Ledger.WebApi.Controllers
             {
                 success = true,
                 result = "A operação foi concluída com sucesso.",
-                data = results
+                data = result
             });
         }
 

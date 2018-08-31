@@ -2,8 +2,8 @@
 {
     public enum ActivationStatus
     {
-        Accepted = 0,
-        Pending = 1,
+        Pending = 0,
+        Accepted = 1,
         Rejected = 2,
     }
 }

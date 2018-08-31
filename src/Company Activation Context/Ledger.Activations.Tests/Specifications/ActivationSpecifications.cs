@@ -10,13 +10,15 @@ namespace Ledger.Activations.Tests.Specifications
     public class ActivationSpecifications
     {
         [TestMethod]
-        public void ShouldMatchUsingCompanyIdSpecification()
+        public void ShouldMatchUsingIdSpecification()
         {
-            ActivationCompanyIdSpecification specification = new ActivationCompanyIdSpecification(new Guid("9c0e0aa4-2618-4158-9714-dee8dd94b5ad"));
+            Guid companyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1");
 
+            ActivationIdSpecification specification = new ActivationIdSpecification(companyId);
+            
             Activation activation = new Activation(
-                   new Company(new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
-                   new Owner("Lucas Pereira Campos", 20, new Cpf("981.153.856-99"), null), null, null)
+                   new Company(companyId,
+                   new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-25), new Cpf("981.153.856-99")))
                    );
 
             Assert.IsTrue(specification.IsSatisfiedBy(activation));

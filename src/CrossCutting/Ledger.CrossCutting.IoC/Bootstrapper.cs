@@ -1,4 +1,5 @@
-﻿using Ledger.Shared.Notifications;
+﻿using Ledger.CrossCutting.Data.Transactions;
+using Ledger.Shared.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ledger.CrossCutting.IoC
@@ -8,6 +9,7 @@ namespace Ledger.CrossCutting.IoC
         public static void Initialize(IServiceCollection services)
         {
             InitializeCore(services);
+            InitializeInfrastructure(services);
 
             ActivationContextBootstrapper.Initialize(services);
         }
@@ -15,6 +17,11 @@ namespace Ledger.CrossCutting.IoC
         private static void InitializeCore(IServiceCollection services)
         {
             services.AddScoped<IDomainNotificationHandler, DomainNotificationHandler>();
+        }
+
+        private static void InitializeInfrastructure(IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

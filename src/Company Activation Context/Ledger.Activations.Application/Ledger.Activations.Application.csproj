@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
     <ProjectReference Include="..\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
   </ItemGroup>
 

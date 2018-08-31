@@ -1,6 +1,5 @@
 ﻿using Ledger.Activations.Data.EntityTypeConfiguration;
 using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
-using Ledger.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Activations.Data.Context
@@ -8,6 +7,7 @@ namespace Ledger.Activations.Data.Context
     public class LedgerActivationDbContext : DbContext
     {
         public DbSet<Activation> Activations { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         public LedgerActivationDbContext(DbContextOptions<LedgerActivationDbContext> options) : base(options)
         {

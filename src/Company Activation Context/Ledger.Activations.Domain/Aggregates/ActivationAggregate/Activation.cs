@@ -6,23 +6,17 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 {
     public class Activation : Entity<Activation>, IAggregateRoot
     {
-        public Guid CompanyId { get; private set; }
         public Company Company { get; private set; }
 
         public ActivationStatus Status { get; private set; }
 
         protected Activation() { }
 
+        //The company can only have one activation, 
+        //then ActivationId is the same as CompanyId
         public Activation(Company company)
         {
-            Company = company;
-
-            SetPending();
-        }
-
-        public Activation(Guid id, Company company)
-        {
-            Id = id;
+            Id = company.Id;
             Company = company;
 
             SetPending();
@@ -30,7 +24,8 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 
         private void SetPending()
         {
-            Status = ActivationStatus.Pending;
+            if(!IsPending())
+                Status = ActivationStatus.Pending;
         }
 
         public void SetAccepted()
@@ -74,6 +69,19 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
             }
             else
                 AddNotification("Erro de reinício", "Não é possível recomeçar o processo a partir do status atual.");
+        }
+
+        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
+        {
+            if (Company == null)
+                AddNotification("Erro na entidade", "Não há uma empresa válida presente no processo de ativação.");
+            else
+            {
+                if (IsPending())
+                    Company.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, ownerDocument);
+                else
+                    AddNotification("Erro de anexação", "Não é possível anexar os documentos a partir do status atual.");
+            }
         }
     }
 }

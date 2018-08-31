@@ -1,6 +1,7 @@
-﻿using Ledger.Activations.Application.AppServices;
+﻿using Ledger.Activations.Application.AppServices.ActivationAppServices;
 using Ledger.Activations.Data.Context;
 using Ledger.Activations.Data.Repositories.ActivationRepository;
+using Ledger.Activations.Domain.Factories.ActivationFactories;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +12,19 @@ namespace Ledger.CrossCutting.IoC
     {
         public static void Initialize(IServiceCollection services)
         {
+            services.AddScoped<DbContext>(prov => prov.GetRequiredService<LedgerActivationDbContext>());
+
             services.AddDbContext<LedgerActivationDbContext>(options =>
                 options.UseInMemoryDatabase("ActivationDb"));
 
+            InitializeFactories(services);
             InitializeRepositories(services);
             InitializeApplicationServices(services);
+        }
+
+        private static void InitializeFactories(IServiceCollection services)
+        {
+            services.AddScoped<IActivationFactory, ActivationFactory>();
         }
 
         private static void InitializeRepositories(IServiceCollection services)

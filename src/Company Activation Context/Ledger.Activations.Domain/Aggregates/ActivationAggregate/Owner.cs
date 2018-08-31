@@ -1,22 +1,21 @@
 ﻿using Ledger.Shared.ValueObjects;
+using System;
 
 namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 {
     public class Owner : ValueObject<Owner>
     {
         public string Name { get; private set; }
-        public int Age { get; private set; }
+        public DateTime Birthday { get; private set; }
         public Cpf Cpf { get; private set; }
-        public byte[] DocumentPicture { get; private set; }
-
+        
         protected Owner() { }
 
-        public Owner(string name, int age, Cpf cpf, byte[] documentPicture)
+        public Owner(string name, DateTime birthday, Cpf cpf)
         {
             Name = name;
-            Age = age;
+            Birthday = birthday;
             Cpf = cpf;
-            DocumentPicture = documentPicture;
         }
 
         public override string ToString()

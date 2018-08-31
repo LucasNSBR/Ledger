@@ -11,10 +11,11 @@ namespace Ledger.Activations.Data.EntityTypeConfiguration
             builder
                 .HasKey(k => k.Id);
 
+            //Configure PK to be FK also
             builder
                 .HasOne(a => a.Company)
                 .WithOne()
-                .HasForeignKey<Activation>(a => a.CompanyId);
+                .HasForeignKey<Activation>(a => a.Id);
 
             builder
                 .Property(a => a.Status)

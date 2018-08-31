@@ -22,6 +22,14 @@ namespace Ledger.Shared.Notifications
             _notifications.Add(notification);
         }
 
+        public void AddNotifications(IDomainNotifier notifier)
+        {
+            foreach (DomainNotification notification in notifier.GetNotifications())
+            {
+                AddNotification(notification.Title, notification.Description);
+            }
+        }
+
         public void AddNotification(string title, string description)
         {
             _notifications.Add(new DomainNotification(title, description));
@@ -32,7 +40,7 @@ namespace Ledger.Shared.Notifications
             return _notifications;
         }
 
-        public IEnumerable<DomainNotification> GetAtomicValues()
+        public IEnumerable<DomainNotification> GetAtomicNotifications()
         {
             foreach (DomainNotification notification in _notifications)
             {

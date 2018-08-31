@@ -6,25 +6,23 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
     public class Company : Entity<Company>
     {
         public Owner Owner { get; private set; }
-
         public byte[] ContratoSocialPicture { get; private set; }
         public byte[] AlteracaoContratoSocialPicture { get; private set; }
+        public byte[] OwnerDocumentPicture { get; private set; }
 
         protected Company() { }
 
-        public Company(Owner owner, byte[] contratoSocial, byte[] alteracaoContratoSocial)
-        {
-            Owner = owner;
-            ContratoSocialPicture = contratoSocial;
-            AlteracaoContratoSocialPicture = alteracaoContratoSocial;
-        }
-
-        public Company(Guid id, Owner owner, byte[] contratoSocial, byte[] alteracaoContratoSocial)
+        public Company(Guid id, Owner owner)
         {
             Id = id;
             Owner = owner;
+        }
+
+        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
+        {
             ContratoSocialPicture = contratoSocial;
             AlteracaoContratoSocialPicture = alteracaoContratoSocial;
+            OwnerDocumentPicture = ownerDocument;
         }
     }
 }

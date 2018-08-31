@@ -15,7 +15,7 @@ namespace Ledger.Activations.Data.EntityTypeConfiguration
                 .OwnsOne(o => o.Owner, cfg =>
                 {
                     cfg.Property(o => o.Name).IsRequired().HasMaxLength(120);
-                    cfg.Property(o => o.Age).IsRequired();
+                    cfg.Property(o => o.Birthday).IsRequired();
                     cfg.OwnsOne(o => o.Cpf);
                 });
         }

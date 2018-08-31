@@ -21,18 +21,21 @@ namespace Ledger.Activations.Data.Repositories.ActivationRepository
 
         public Activation GetById(Guid id)
         {
-            ActivationCompanyIdSpecification specification = new ActivationCompanyIdSpecification(id);
-
-            return _dbSet
-                .FirstOrDefault(specification.ToExpression());
-        }
-
-        public Activation GetByCompanyId(Guid id)
-        {
             ActivationIdSpecification specification = new ActivationIdSpecification(id);
 
             return _dbSet
+                .AsNoTracking()
                 .FirstOrDefault(specification.ToExpression());
+        }
+
+        public void Register(Activation activation)
+        {
+            _dbContext.Add(activation);
+        }
+
+        public void Update(Activation activation)
+        {
+            _dbContext.Update(activation);
         }
     }
 }

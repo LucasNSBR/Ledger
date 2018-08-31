@@ -1,6 +1,7 @@
 ﻿using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Ledger.Activations.Tests.Aggregates
@@ -14,8 +15,8 @@ namespace Ledger.Activations.Tests.Aggregates
 
         public ActivationTests()
         {
-            owner = new Owner("Lucas Pereira Campos", 20, new Cpf("981.153.856-99"), null);
-            company = new Company(owner, null, null);
+            owner = new Owner("Lucas Pereira Campos", 20, new Cpf("981.153.856-99"));
+            company = new Company(Guid.NewGuid(), owner);
             activation = new Activation(company);
         }
 
