@@ -22,6 +22,12 @@ namespace Ledger.Activations.Tests.Aggregates
         }
 
         [TestMethod]
+        public void CompanyIdAndActivationShouldBeSame()
+        {
+            Assert.AreEqual(company.Id, activation.Id);
+        }
+
+        [TestMethod]
         public void StatusShouldBePending()
         {
             Assert.AreEqual(ActivationStatus.Pending, activation.Status);
@@ -94,8 +100,8 @@ namespace Ledger.Activations.Tests.Aggregates
             byte[] contratoSocial = new byte[8];
             byte[] alteracaoContratoSocial = new byte[8];
 
-            activation.AttachCompanyActivationDocuments(contratoSocial, alteracaoContratoSocial, owner);
-            IReadOnlyList<byte[]> documents = activation.GetCompanyActivationDocuments();
+            activation.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, owner);
+            IReadOnlyList<byte[]> documents = activation.GetCompanyDocuments();
 
             Assert.IsNotNull(documents);
             Assert.AreEqual(3, documents.Count);
