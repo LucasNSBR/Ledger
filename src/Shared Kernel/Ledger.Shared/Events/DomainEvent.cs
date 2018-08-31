@@ -4,8 +4,8 @@ namespace Ledger.Shared.Events
 {
     public abstract class DomainEvent : IDomainEvent
     {
-        public Guid EventId { get; private set; }
-        public DateTime DateCreated { get; private set; }
+        public Guid EventId { get; }
+        public DateTime DateCreated { get; }
 
         public DomainEvent()
         {
