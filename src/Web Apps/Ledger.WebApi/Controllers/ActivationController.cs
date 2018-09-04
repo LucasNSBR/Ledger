@@ -13,12 +13,12 @@ namespace Ledger.WebApi.Controllers
     {
         private readonly IActivationApplicationService _activationAppService;
 
-        public ActivationController(IDomainNotificationHandler domainNotificationHandler, IActivationApplicationService activationAppServiceService) 
+        public ActivationController(IDomainNotificationHandler domainNotificationHandler, IActivationApplicationService activationAppService)
                                                                                                                 : base(domainNotificationHandler)
         {
-            _activationAppService = activationAppServiceService;
+            _activationAppService = activationAppService;
         }
-        
+
         [HttpGet("{id:guid}")]
         public IActionResult Get(Guid id)
         {
@@ -46,8 +46,13 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/accept")]
-        public IActionResult Accept([FromBody]AcceptActivationCommand command)
+        public IActionResult Accept(Guid id)
         {
+            AcceptActivationCommand command = new AcceptActivationCommand
+            {
+                ActivationId = id
+            };
+
             _activationAppService.AcceptActivation(command);
 
             return CreateResponse();
@@ -55,8 +60,13 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/reject")]
-        public IActionResult Reject([FromBody]RejectActivationCommand command)
+        public IActionResult Reject(Guid id)
         {
+            RejectActivationCommand command = new RejectActivationCommand
+            {
+                ActivationId = id
+            };
+
             _activationAppService.RejectActivation(command);
 
             return CreateResponse();
@@ -64,8 +74,13 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/reset")]
-        public IActionResult Reset([FromBody]ResetActivationCommand command)
+        public IActionResult Reset(Guid id)
         {
+            ResetActivationCommand command = new ResetActivationCommand
+            {
+                ActivationId = id
+            };
+
             _activationAppService.ResetActivation(command);
 
             return CreateResponse();
