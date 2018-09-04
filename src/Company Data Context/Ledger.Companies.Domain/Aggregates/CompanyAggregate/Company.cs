@@ -19,7 +19,7 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
 
         public Company(string name, EmailAddress email, string description, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
         {
-            Active = false;
+            SetInactive();
 
             Name = name;
             Email = email;
@@ -30,7 +30,7 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
 
         public Company(Guid id, string name, EmailAddress email, string description, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
         {
-            Active = false;
+            SetInactive();
 
             Id = id;
             Name = name;
@@ -53,23 +53,14 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
         public void SetActive()
         {
             if (!Active)
-            {
                 Active = true;
-                //AddEvent(new CompanyActivatedEvent());
-            }
             else
                 AddNotification("Erro de ativação", "A empresa já está ativada.");
         }
 
         public void SetInactive()
         {
-            if (Active)
-            {
-                Active = false;
-                //AddEvent(new CompanyInactivedEvent());
-            }
-            else
-                AddNotification("Erro de desativação", "A empresa já está desativada.");
+            Active = false;
         }
     }
 }
