@@ -2,18 +2,18 @@
 {
     public class Rg : ValueObject<Rg>
     {
-        public string NumeroRg { get; private set; }
+        public string Number { get; private set; }
 
         protected Rg() { }
 
-        public Rg(string numeroRg)
+        public Rg(string number)
         {
-            NumeroRg = numeroRg;
+            Number = number;
         }
 
         public override string ToString()
         {
-            return NumeroRg;
+            return Number;
         }
     }
 }

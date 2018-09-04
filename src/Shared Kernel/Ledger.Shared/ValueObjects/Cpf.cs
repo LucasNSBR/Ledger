@@ -2,18 +2,18 @@
 {
     public class Cpf : ValueObject<Cpf>
     {
-        public string NumeroCpf { get; private set; }
+        public string Number { get; private set; }
 
         protected Cpf() { }
 
-        public Cpf(string numeroCpf)
+        public Cpf(string number)
         {
-            NumeroCpf = numeroCpf;
+            Number = number;
         }
 
         public override string ToString()
         {
-            return NumeroCpf;
+            return Number;
         }
     }
 }

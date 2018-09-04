@@ -2,18 +2,18 @@
 {
     public class Cnpj : ValueObject<Cnpj>
     {
-        public string NumeroCnpj { get; private set; }
+        public string Number { get; private set; }
 
         protected Cnpj() { }
 
-        public Cnpj(string numeroCnpj)
+        public Cnpj(string number)
         {
-            NumeroCnpj = numeroCnpj;
+            Number = number;
         }
 
         public override string ToString()
         {
-            return NumeroCnpj;
+            return Number;
         }
     }
 }

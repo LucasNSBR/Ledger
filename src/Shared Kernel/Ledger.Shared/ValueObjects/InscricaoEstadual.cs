@@ -2,18 +2,18 @@
 {
     public class InscricaoEstadual : ValueObject<InscricaoEstadual>
     {
-        public string NumeroInscricao { get; private set; }
+        public string Number { get; private set; }
 
         protected InscricaoEstadual() { }
 
-        public InscricaoEstadual(string numeroInscricao)
+        public InscricaoEstadual(string number)
         {
-            NumeroInscricao = numeroInscricao;
+            Number = number;
         }
 
         public override string ToString()
         {
-            return NumeroInscricao;
+            return Number;
         }
     }
 }
