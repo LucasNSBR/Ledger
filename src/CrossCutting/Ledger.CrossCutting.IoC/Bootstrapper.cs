@@ -13,6 +13,7 @@ namespace Ledger.CrossCutting.IoC
             InitializeInfrastructure(services);
             InitializeBus(services);
 
+            IdentityBootstrapper.Initialize(services);
             ActivationContextBootstrapper.Initialize(services);
         }
 
