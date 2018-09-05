@@ -13,7 +13,12 @@ namespace Ledger.WebApi.Controllers
             _domainNotificationHandler = domainNotificationHandler;
         }
 
-        public IActionResult CreateResponse(object result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
+        protected void AddNotification(string title, string description)
+        {
+            _domainNotificationHandler.AddNotification(new DomainNotification(title, description));
+        }
+
+        protected IActionResult CreateResponse(object result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             if (_domainNotificationHandler.HasNotifications())
             {
@@ -21,7 +26,7 @@ namespace Ledger.WebApi.Controllers
                 {
                     success = false,
                     result = "Ocorreu um erro ao retornar os resultados.",
-                    errors = _domainNotificationHandler
+                    data = _domainNotificationHandler
                             .GetNotifications()
                 });
             }
@@ -34,12 +39,13 @@ namespace Ledger.WebApi.Controllers
             });
         }
 
-        public IActionResult CreateErrorResponse(object message = null)
+        protected IActionResult CreateErrorResponse(object message = null)
         {
             return BadRequest(new
             {
                 success = false,
                 result = message ?? "Ocorreu um erro ao retornar os resultados.",
+                data = (string)null,
             });
         }
     }

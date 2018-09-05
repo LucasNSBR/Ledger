@@ -6,5 +6,12 @@ namespace Ledger.CrossCutting.Identity.Models.Users
 {
     public class LedgerIdentityUser : IdentityUser<Guid>, IUser
     {
+        protected LedgerIdentityUser() { }
+
+        public LedgerIdentityUser(string email)
+        {
+            UserName = email;
+            Email = email;
+        }
     }
 }

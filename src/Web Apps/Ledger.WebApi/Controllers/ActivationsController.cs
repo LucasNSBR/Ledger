@@ -9,11 +9,11 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/activations")]
-    public class ActivationController : BaseController
+    public class ActivationsController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;
 
-        public ActivationController(IDomainNotificationHandler domainNotificationHandler, IActivationApplicationService activationAppService)
+        public ActivationsController(IDomainNotificationHandler domainNotificationHandler, IActivationApplicationService activationAppService)
                                                                                                                 : base(domainNotificationHandler)
         {
             _activationAppService = activationAppService;

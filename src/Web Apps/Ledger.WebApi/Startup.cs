@@ -38,6 +38,7 @@ namespace Ledger.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseResponseCompression();
             app.UseMvc();
         }

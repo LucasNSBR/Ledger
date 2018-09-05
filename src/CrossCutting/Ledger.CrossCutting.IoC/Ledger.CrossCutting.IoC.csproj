@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+    <ProjectReference Include="..\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>
