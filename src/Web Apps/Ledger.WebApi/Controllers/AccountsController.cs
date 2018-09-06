@@ -1,5 +1,6 @@
-﻿using Ledger.CrossCutting.Identity.Commands;
-using Ledger.CrossCutting.Identity.Models.Managers;
+﻿using Ledger.CrossCutting.Identity.Abstractions;
+using Ledger.CrossCutting.Identity.Commands;
+using Ledger.CrossCutting.Identity.Models.Services;
 using Ledger.CrossCutting.Identity.Models.Users;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
@@ -18,14 +19,16 @@ namespace Ledger.WebApi.Controllers
     {
         private readonly LedgerUserManager _userManager;
         private readonly LedgerSignInManager _signInManager;
+        private readonly IJwtFactory _jwtFactory;
 
-        public AccountsController(IDomainNotificationHandler domainNotificationHandler, LedgerSignInManager signInManager, LedgerUserManager userManager)
+        public AccountsController(IDomainNotificationHandler domainNotificationHandler, LedgerSignInManager signInManager, LedgerUserManager userManager, IJwtFactory jwtFactory)
                                                                                                                             : base(domainNotificationHandler)
         {
             _userManager = userManager;
+            _jwtFactory = jwtFactory;
             _signInManager = signInManager;
         }
-
+        
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody]RegisterUserCommand command)
@@ -71,15 +74,13 @@ namespace Ledger.WebApi.Controllers
                 Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, command.Password, true);
                 if (result.Succeeded)
                 {
-                    //TODO: GENERATE JWT TOKEN
-
                     IEnumerable<Claim> claims = await _userManager.GetClaimsAsync(user);
                     GenericIdentity identity = new GenericIdentity(user.Id.ToString());
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(identity, claims);
 
-                    //TODO: WRITE JWT TOKEN 
-
-                    return CreateResponse(claimsIdentity);
+                    string token = _jwtFactory.WriteToken(user.Id.ToString(), claims);
+                 
+                    return CreateResponse(token);
                 }
             }
 
@@ -135,7 +136,7 @@ namespace Ledger.WebApi.Controllers
 
             if (user != null)
             {
-                //TODO: LOGOUT
+                //TODO: REVOKE JWT TOKEN
             }
 
             return CreateResponse();

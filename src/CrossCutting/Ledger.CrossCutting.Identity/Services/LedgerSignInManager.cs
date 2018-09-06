@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Ledger.CrossCutting.Identity.Models.Managers
+namespace Ledger.CrossCutting.Identity.Models.Services
 {
     public class LedgerSignInManager : SignInManager<LedgerIdentityUser>
     {

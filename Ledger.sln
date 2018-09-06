@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Shared.IntegrationEv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.CrossCutting.ServiceBus", "src\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj", "{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.CrossCutting.Identity", "src\CrossCutting\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj", "{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.CrossCutting.Identity", "src\CrossCutting\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj", "{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

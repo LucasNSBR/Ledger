@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
-namespace Ledger.CrossCutting.Identity.Models.Managers
+namespace Ledger.CrossCutting.Identity.Models.Services
 {
     public class LedgerUserManager : UserManager<LedgerIdentityUser>
     {
