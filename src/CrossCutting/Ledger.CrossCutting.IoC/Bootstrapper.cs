@@ -1,19 +1,21 @@
 ﻿using Ledger.CrossCutting.Data.Transactions;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ledger.CrossCutting.IoC
 {
     public static class Bootstrapper
     {
-        public static void Initialize(IServiceCollection services)
+        //TODO: REFACTORE THIS
+        public static void Initialize(IServiceCollection services, IConfiguration configuration)
         {
             InitializeCore(services);
             InitializeInfrastructure(services);
             InitializeBus(services);
 
-            IdentityBootstrapper.Initialize(services);
+            IdentityBootstrapper.Initialize(services, configuration);
             ActivationContextBootstrapper.Initialize(services);
         }
 

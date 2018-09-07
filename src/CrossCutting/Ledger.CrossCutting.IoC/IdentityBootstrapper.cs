@@ -8,6 +8,7 @@ using Ledger.CrossCutting.Identity.Models.Users;
 using Ledger.CrossCutting.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -15,13 +16,13 @@ namespace Ledger.CrossCutting.IoC
 {
     public static class IdentityBootstrapper
     {
-        public static void Initialize(IServiceCollection services)
+        public static void Initialize(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<LedgerIdentityDbContext>(options =>
                 options.UseInMemoryDatabase("IdentityDb"));
 
             InitializeIdentity(services);
-            InitializeJwtConfiguration(services);
+            InitializeJwtConfiguration(services, configuration);
             InitializeApplicationServices(services);
         }
 
@@ -63,13 +64,14 @@ namespace Ledger.CrossCutting.IoC
             .AddDefaultTokenProviders();
         }
 
-        private static void InitializeJwtConfiguration(IServiceCollection services)
+        //TODO: REFACTORE THIS
+        private static void InitializeJwtConfiguration(IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtTokenOptions>(cfg =>
             {
-                cfg.Issuer = "ledger.com";
-                cfg.Audience = "ledger.com";
-                cfg.ExpiresInSeconds = 120;
+                cfg.Issuer = configuration["JwtToken:Issuer"];
+                cfg.Audience = configuration["JwtToken:Issuer"];
+                cfg.ExpiresInSeconds = configuration.GetValue<int>("JwtToken:ExpiresInSeconds");
                 cfg.IssuedAt = DateTime.Now;
                 cfg.NotBefore = DateTime.Now;
             });

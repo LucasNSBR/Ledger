@@ -3,6 +3,7 @@ using Ledger.CrossCutting.Identity.AppServices.UserAppServices;
 using Ledger.CrossCutting.Identity.Commands;
 using Ledger.CrossCutting.Identity.Models.Users;
 using Ledger.Shared.Notifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,6 +22,14 @@ namespace Ledger.WebApi.Controllers
         {
             _userApplicationService = userApplicationService;
             _jwtFactory = jwtFactory;
+        }
+
+        [HttpGet]
+        [Route("hello")]
+        [Authorize]
+        public IActionResult Hello()
+        {
+            return Ok("Operação sucesso");
         }
 
         [HttpPost]

@@ -1,4 +1,5 @@
-﻿using Ledger.CrossCutting.IoC;
+﻿using Ledger.CrossCutting.Identity.Services;
+using Ledger.CrossCutting.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
-using System.Text;
 
 namespace Ledger.WebApi
 {
@@ -22,7 +22,7 @@ namespace Ledger.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Bootstrapper.Initialize(services);
+            Bootstrapper.Initialize(services, Configuration);
 
             services
                 .AddAuthentication(cfg =>
@@ -38,10 +38,10 @@ namespace Ledger.WebApi
                         ValidateIssuer = true,
                         ValidateIssuerSigningKey = true,
                         ValidateLifetime = true,
-                        ValidIssuer = "ledger.com",
-                        ValidAudience = "ledger.com",
+                        ValidIssuer = Configuration["JwtToken:Issuer"],
+                        ValidAudience = Configuration["JwtToken:Audience"],
                         ClockSkew = TimeSpan.Zero,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SALT_KEY"])) 
+                        IssuerSigningKey = new SigningConfiguration(Configuration).SecurityKey 
                     };
                 });
 

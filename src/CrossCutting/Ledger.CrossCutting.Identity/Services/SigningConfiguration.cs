@@ -7,7 +7,19 @@ namespace Ledger.CrossCutting.Identity.Services
 {
     public class SigningConfiguration : ISigningConfiguration
     {
-        private readonly IConfiguration _configuration; 
+        private readonly IConfiguration _configuration;
+
+        private SecurityKey _securityKey;
+        public SecurityKey SecurityKey
+        {
+            get
+            {
+                if(_securityKey == null)
+                    _securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SALT_KEY"]));
+
+                return _securityKey;
+            }
+        }
 
         public SigningConfiguration(IConfiguration configuration)
         {
@@ -17,7 +29,7 @@ namespace Ledger.CrossCutting.Identity.Services
         public SigningCredentials GetSigningCredentials()
         {
             return new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SALT_KEY"])), SecurityAlgorithms.HmacSha256);
+                SecurityKey, SecurityAlgorithms.HmacSha256);
         }
     }
 }
