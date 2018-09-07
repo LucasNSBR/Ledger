@@ -52,7 +52,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNull(activation))
+            if (NotifyNullActivation(activation))
                 return;
 
             activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(), 
@@ -76,7 +76,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNull(activation))
+            if (NotifyNullActivation(activation))
                 return;
 
             activation.SetAccepted();
@@ -100,7 +100,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNull(activation))
+            if (NotifyNullActivation(activation))
                 return;
 
             activation.SetRejected();
@@ -123,7 +123,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNull(activation))
+            if (NotifyNullActivation(activation))
                 return;
 
             activation.ResetActivationProcess();
@@ -137,7 +137,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
                 _serviceBus.Publish(new ResetedCompanyActivationIntegrationEvent(command.ActivationId));
         }
 
-        private bool NotifyNull(Activation activation)
+        private bool NotifyNullActivation(Activation activation)
         {
             if (activation == null)
             {

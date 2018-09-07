@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+    <ProjectReference Include="..\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
   </ItemGroup>
 
 </Project>

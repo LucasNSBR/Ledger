@@ -18,6 +18,9 @@ namespace Ledger.WebApi.Controllers
             _domainNotificationHandler.AddNotification(new DomainNotification(title, description));
         }
 
+        //CreateReponse always check for Domain Notifications (errors) before send results
+        //This will secure that the application never will deliver wrong or incomplete data 
+        //DomainNotificationHandler notifications are filled on the AppServices operations
         protected IActionResult CreateResponse(object result = null, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             if (_domainNotificationHandler.HasNotifications())

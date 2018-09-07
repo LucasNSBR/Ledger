@@ -3,10 +3,8 @@ using Ledger.CrossCutting.Identity.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 
 namespace Ledger.CrossCutting.Identity.Services
 {
@@ -21,11 +19,8 @@ namespace Ledger.CrossCutting.Identity.Services
             _signingConfiguration = signingConfiguration;
         }
 
-        public string WriteToken(string name, IEnumerable<Claim> claims)
+        public string WriteToken(ClaimsIdentity claimsIdentity)
         {
-            GenericIdentity genericIdentity = new GenericIdentity(name);
-            ClaimsIdentity identity = new ClaimsIdentity(genericIdentity, claims);
-
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
 
             SecurityToken token = handler.CreateToken(new SecurityTokenDescriptor
@@ -35,7 +30,7 @@ namespace Ledger.CrossCutting.Identity.Services
                 Issuer = _options.Value.Issuer,
                 IssuedAt = _options.Value.IssuedAt,
                 NotBefore = _options.Value.NotBefore,
-                Subject = identity,                
+                Subject = claimsIdentity,
                 SigningCredentials = _signingConfiguration.GetSigningCredentials(),
             });
 

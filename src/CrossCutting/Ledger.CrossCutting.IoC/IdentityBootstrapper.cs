@@ -1,4 +1,5 @@
 ﻿using Ledger.CrossCutting.Identity.Abstractions;
+using Ledger.CrossCutting.Identity.AppServices.UserAppServices;
 using Ledger.CrossCutting.Identity.Configuration;
 using Ledger.CrossCutting.Identity.Context;
 using Ledger.CrossCutting.Identity.Models.Roles;
@@ -21,6 +22,7 @@ namespace Ledger.CrossCutting.IoC
 
             InitializeIdentity(services);
             InitializeJwtConfiguration(services);
+            InitializeApplicationServices(services);
         }
 
         private static void InitializeIdentity(IServiceCollection services)
@@ -74,6 +76,11 @@ namespace Ledger.CrossCutting.IoC
 
             services.AddSingleton<ISigningConfiguration, SigningConfiguration>();
             services.AddScoped<IJwtFactory, JwtFactory>();
+        }
+
+        private static void InitializeApplicationServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserApplicationService, UserApplicationService>();
         }
     }
 }
