@@ -14,6 +14,7 @@ namespace Ledger.CrossCutting.Identity.AppServices.UserAppServices
         Task ConfirmEmail(ConfirmUserEmailCommand command);
         Task ForgotPassword(ForgotUserPasswordCommand command);
         Task ResetPassword(ResetUserPasswordCommand command);
+        Task ChangePassword(ChangeUserPasswordCommand command);
         Task<ClaimsIdentity> Login(LoginUserCommand command);
     }
 }

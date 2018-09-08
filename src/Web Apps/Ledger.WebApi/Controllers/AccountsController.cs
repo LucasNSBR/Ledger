@@ -66,6 +66,15 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPasswordCommand command)
+        {
+            await _userApplicationService.ChangePassword(command);
+
+            return CreateResponse();
+        }
+
+        [HttpPost]
         [Route("recoverpassword")]
         public async Task<IActionResult> RecoverPassword(string email)
         {

@@ -104,6 +104,26 @@ namespace Ledger.CrossCutting.Identity.AppServices.UserAppServices
                 AddNotifications(result);
         }
 
+        public async Task ChangePassword(ChangeUserPasswordCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            LedgerIdentityUser user = await GetByEmail(command.Email);
+
+            if (NotifyNullUser(user))
+                return;
+
+            IdentityResult result = await _userManager.ChangePasswordAsync(user, command.Password, command.NewPassword);
+
+            if (!result.Succeeded)
+                AddNotifications(result);
+            //else
+            //_serviceBus.Publish(new ForgotUserPasswordEvent(userId, userEmail, resetToken));
+        }
+
         public async Task ForgotPassword(ForgotUserPasswordCommand command)
         {
             command.Validate();
@@ -137,7 +157,7 @@ namespace Ledger.CrossCutting.Identity.AppServices.UserAppServices
 
             if (!result.Succeeded)
                 AddNotifications(result);
-
+            //else
             //_serviceBus.Publish(new ResetedUserPasswordEvent());
         }
 
