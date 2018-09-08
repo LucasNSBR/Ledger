@@ -19,7 +19,7 @@ namespace Ledger.CrossCutting.EmailService.Dispatchers
             _sendGridKey = options.Value.SendGridKey;
             _sendGridUser = options.Value.SendGridUser;
 
-            _senderAddress = new EmailAddress(options.Value.FromAddress, options.Value.FromName);
+            _senderAddress = new EmailAddress(options.Value.SendAddress, options.Value.SenderName);
         }
 
         public async Task SendEmailAsync(string to, string subject, string body)

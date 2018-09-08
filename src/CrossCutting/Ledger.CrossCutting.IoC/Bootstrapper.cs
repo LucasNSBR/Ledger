@@ -15,6 +15,7 @@ namespace Ledger.CrossCutting.IoC
             InitializeInfrastructure(services);
             InitializeBus(services);
 
+            EmailServiceBootstrapper.Initialize(services, configuration);
             IdentityBootstrapper.Initialize(services, configuration);
             ActivationContextBootstrapper.Initialize(services);
         }

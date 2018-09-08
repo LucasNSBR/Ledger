@@ -4,7 +4,7 @@
     {
         public string SendGridKey { get; set; }
         public string SendGridUser { get; set; }
-        public string FromAddress { get; set; }
-        public string FromName { get; set; }
+        public string SendAddress { get; set; }
+        public string SenderName { get; set; }
     }
 }
