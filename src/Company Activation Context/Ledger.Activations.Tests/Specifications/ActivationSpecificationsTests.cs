@@ -7,7 +7,7 @@ using System;
 namespace Ledger.Activations.Tests.Specifications
 {
     [TestClass]
-    public class ActivationSpecifications
+    public class ActivationSpecificationsTests
     {
         [TestMethod]
         public void ShouldMatchUsingIdSpecification()

@@ -40,6 +40,9 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             InscricaoEstadual inscricaoEstadual = new InscricaoEstadual(command.InscricaoEstadual);
             Company company = new Company(command.Name, command.Description, email, cnpj, inscricaoEstadual);
 
+            if (NotifyCnpjExists(company.Cnpj, company.Id))
+                return;
+
             _repository.Register(company);
 
             Commit();
@@ -57,7 +60,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             InscricaoEstadual inscricaoEstadual = new InscricaoEstadual(command.InscricaoEstadual);
             Company company = new Company(command.Id, command.Name, command.Description, email, cnpj, inscricaoEstadual);
 
-            if (NotifyCnpjExists(command.Cnpj))
+            if (NotifyCnpjExists(company.Cnpj, company.Id))
                 return;
 
             _repository.Update(company);
@@ -111,17 +114,20 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             Commit();
         }
 
-        private bool NotifyCnpjExists(string cnpj)
+        private bool NotifyCnpjExists(Cnpj cnpj, Guid id)
         {
-            Company company = _repository.GetByCnpj(cnpj);
+            Company company = _repository.GetByCnpj(cnpj.Number);
 
             if (company != null)
             {
-                AddNotification("CNPJ duplicado", "Uma empresa com o mesmo CNPJ já foi registrada.");
-                return true;
+                if (company.Id != id)
+                {
+                    AddNotification("CNPJ duplicado", "Uma empresa com o mesmo CNPJ já foi registrada.");
+                    return true;
+                }
             }
 
-            return true;
+            return false;
         }
 
         private bool NotifyNullCompany(Company company)

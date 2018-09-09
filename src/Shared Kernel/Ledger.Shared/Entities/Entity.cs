@@ -55,7 +55,7 @@ namespace Ledger.Shared.Entities
         {
             if (ReferenceEquals(a, null))
             {
-                return ReferenceEquals(b, null);
+                return !ReferenceEquals(b, null);
             }
 
             return !Equals(a, b);
