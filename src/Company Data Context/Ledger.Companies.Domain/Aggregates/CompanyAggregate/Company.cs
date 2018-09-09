@@ -17,25 +17,25 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
 
         protected Company() { }
 
-        public Company(string name, EmailAddress email, string description, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
+        public Company(string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
         {
             SetInactive();
 
             Name = name;
-            Email = email;
             Description = description;
+            Email = email;
             Cnpj = cnpj;
             InscricaoEstadual = inscricaoEstadual;
         }
 
-        public Company(Guid id, string name, EmailAddress email, string description, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
+        public Company(Guid id, string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
         {
             SetInactive();
 
             Id = id;
             Name = name;
-            Email = email;
             Description = description;
+            Email = email;
             Cnpj = cnpj;
             InscricaoEstadual = inscricaoEstadual;
         }

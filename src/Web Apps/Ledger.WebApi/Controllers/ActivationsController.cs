@@ -13,7 +13,7 @@ namespace Ledger.WebApi.Controllers
     {
         private readonly IActivationApplicationService _activationAppService;
 
-        public ActivationsController(IDomainNotificationHandler domainNotificationHandler, IActivationApplicationService activationAppService)
+        public ActivationsController(IActivationApplicationService activationAppService, IDomainNotificationHandler domainNotificationHandler)
                                                                                                                 : base(domainNotificationHandler)
         {
             _activationAppService = activationAppService;

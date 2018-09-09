@@ -17,7 +17,7 @@ namespace Ledger.WebApi.Controllers
         private readonly IUserApplicationService _userApplicationService;
         private readonly IJwtFactory _jwtFactory;
 
-        public AccountsController(IDomainNotificationHandler domainNotificationHandler, IUserApplicationService userApplicationService, IJwtFactory jwtFactory)
+        public AccountsController(IUserApplicationService userApplicationService, IJwtFactory jwtFactory, IDomainNotificationHandler domainNotificationHandler)
                                                                                                                                 : base(domainNotificationHandler)
         {
             _userApplicationService = userApplicationService;

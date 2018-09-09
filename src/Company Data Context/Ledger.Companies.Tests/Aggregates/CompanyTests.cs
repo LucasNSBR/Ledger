@@ -18,7 +18,7 @@ namespace Ledger.Companies.Tests.Aggregates
 
         public CompanyTests()
         {
-            company = new Company("Ledger Activation", email, "No Description", cnpj, inscricao);
+            company = new Company("Ledger Activation", "No Description", email, cnpj, inscricao);
         }
 
         [TestMethod]

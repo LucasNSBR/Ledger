@@ -3,7 +3,7 @@ using System;
 
 namespace Ledger.Companies.Domain.Commands
 {
-    public class ChangeCompanyPhoneNumberCommand : Command
+    public class ChangeCompanyPhoneCommand : Command
     {
         public Guid CompanyId { get; set; }
         public string PhoneNumber { get; set; }
