@@ -24,14 +24,6 @@ namespace Ledger.WebApi.Controllers
             _jwtFactory = jwtFactory;
         }
 
-        [HttpGet]
-        [Route("hello")]
-        [Authorize]
-        public IActionResult Hello()
-        {
-            return Ok("Operação sucesso");
-        }
-
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody]RegisterUserCommand command)
@@ -66,6 +58,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPasswordCommand command)
         {
