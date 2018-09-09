@@ -41,17 +41,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Shared.IntegrationEv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.CrossCutting.ServiceBus", "src\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj", "{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.CrossCutting.Identity", "src\CrossCutting\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj", "{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.CrossCutting.EmailService", "src\CrossCutting\Ledger.CrossCutting.EmailService\Ledger.CrossCutting.EmailService.csproj", "{14248366-35FC-4F19-A251-321E3A415234}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity Context", "Identity Context", "{600B39BE-8E49-42DB-AD00-B213DB840BDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Identity.Application", "src\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj", "{4A37515A-EF0B-4217-A05D-AAFCEB19F1F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Identity.Application", "src\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj", "{4A37515A-EF0B-4217-A05D-AAFCEB19F1F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Identity.Domain", "src\Identity Context\Ledger.Identity.Domain\Ledger.Identity.Domain.csproj", "{B305D867-A85F-415C-B48D-DF5243DA6C94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Identity.Domain", "src\Identity Context\Ledger.Identity.Domain\Ledger.Identity.Domain.csproj", "{B305D867-A85F-415C-B48D-DF5243DA6C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Identity.Data", "Ledger.Identity.Data\Ledger.Identity.Data.csproj", "{9542CE8F-4B9A-404A-8DED-16303BE7AFFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Identity.Data", "src\Identity Context\Ledger.Identity.Data\Ledger.Identity.Data.csproj", "{F7E5C594-CEDC-4360-9447-A4D4C029DB12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,10 +113,6 @@ Global
 		{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14248366-35FC-4F19-A251-321E3A415234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14248366-35FC-4F19-A251-321E3A415234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14248366-35FC-4F19-A251-321E3A415234}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -131,10 +125,10 @@ Global
 		{B305D867-A85F-415C-B48D-DF5243DA6C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B305D867-A85F-415C-B48D-DF5243DA6C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B305D867-A85F-415C-B48D-DF5243DA6C94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9542CE8F-4B9A-404A-8DED-16303BE7AFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9542CE8F-4B9A-404A-8DED-16303BE7AFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9542CE8F-4B9A-404A-8DED-16303BE7AFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9542CE8F-4B9A-404A-8DED-16303BE7AFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,11 +148,10 @@ Global
 		{86F12A50-16CE-47E3-BDEA-6785D6AECB7D} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 		{66B91518-4C38-4F99-81BF-612C03E15559} = {9CD8EB02-5B29-4940-8912-9DD324AFAD16}
 		{852F5ADA-7E91-4F3A-997B-5744BBFB7FF3} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
-		{46B9BDB5-ECF4-47F2-9D36-F96A4E8AD25A} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 		{14248366-35FC-4F19-A251-321E3A415234} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 		{4A37515A-EF0B-4217-A05D-AAFCEB19F1F3} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
 		{B305D867-A85F-415C-B48D-DF5243DA6C94} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
-		{9542CE8F-4B9A-404A-8DED-16303BE7AFFA} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
+		{F7E5C594-CEDC-4360-9447-A4D4C029DB12} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {395E85EF-3430-42A5-9692-61DCA5954711}

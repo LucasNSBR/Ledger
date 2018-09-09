@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Ledger.Identity.Data\Ledger.Identity.Data.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
     <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Data\Ledger.Identity.Data.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
     <ProjectReference Include="..\Ledger.CrossCutting.EmailService\Ledger.CrossCutting.EmailService.csproj" />
   </ItemGroup>
