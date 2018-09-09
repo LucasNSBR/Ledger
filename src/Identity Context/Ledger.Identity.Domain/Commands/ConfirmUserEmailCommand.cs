@@ -2,11 +2,10 @@
 
 namespace Ledger.Identity.Domain.Commands
 {
-    public class ChangeUserPasswordCommand : Command
+    public class ConfirmUserEmailCommand : Command
     {
         public string Email { get; set; }
-        public string Password { get; set; }
-        public string NewPassword { get; set; }
+        public string ConfirmationToken { get; set; }
 
         public override void Validate()
         {

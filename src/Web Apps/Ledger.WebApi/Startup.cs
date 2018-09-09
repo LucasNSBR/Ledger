@@ -1,5 +1,5 @@
-﻿using Ledger.CrossCutting.Identity.Services;
-using Ledger.CrossCutting.IoC;
+﻿using Ledger.CrossCutting.IoC;
+using Ledger.Identity.Domain.Configuration.SigningConfigurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +19,7 @@ namespace Ledger.WebApi
         }
 
         public IConfiguration Configuration { get; }
+        public IServiceProvider Provider { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,7 +42,7 @@ namespace Ledger.WebApi
                         ValidIssuer = Configuration["JwtToken:Issuer"],
                         ValidAudience = Configuration["JwtToken:Audience"],
                         ClockSkew = TimeSpan.Zero,
-                        IssuerSigningKey = new SigningConfiguration(Configuration).SecurityKey 
+                        IssuerSigningKey = services.BuildServiceProvider().GetRequiredService<ISigningConfiguration>().SecurityKey 
                     };
                 });
 

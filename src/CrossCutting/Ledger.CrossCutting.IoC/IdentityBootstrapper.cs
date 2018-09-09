@@ -1,11 +1,10 @@
-﻿using Ledger.CrossCutting.Identity.Abstractions;
-using Ledger.CrossCutting.Identity.AppServices.UserAppServices;
-using Ledger.CrossCutting.Identity.Configuration;
-using Ledger.CrossCutting.Identity.Context;
-using Ledger.CrossCutting.Identity.Models.Roles;
-using Ledger.CrossCutting.Identity.Models.Services;
-using Ledger.CrossCutting.Identity.Models.Users;
-using Ledger.CrossCutting.Identity.Services;
+﻿using Ledger.Identity.Application.AppServices.UserAppServices;
+using Ledger.Identity.Data.Context;
+using Ledger.Identity.Domain.Configuration.JwtConfigurations;
+using Ledger.Identity.Domain.Configuration.SigningConfigurations;
+using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+using Ledger.Identity.Domain.Models.Services.UserServices;
+using Ledger.Identity.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -74,6 +73,11 @@ namespace Ledger.CrossCutting.IoC
                 cfg.ExpiresInSeconds = configuration.GetValue<int>("JwtToken:ExpiresInSeconds");
                 cfg.IssuedAt = DateTime.Now;
                 cfg.NotBefore = DateTime.Now;
+            });
+
+            services.Configure<SigningOptions>(cfg =>
+            {
+                cfg.SALT_KEY = configuration["SALT_KEY"];
             });
 
             services.AddSingleton<ISigningConfiguration, SigningConfiguration>();

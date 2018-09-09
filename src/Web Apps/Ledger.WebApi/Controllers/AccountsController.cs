@@ -1,7 +1,7 @@
-﻿using Ledger.CrossCutting.Identity.Abstractions;
-using Ledger.CrossCutting.Identity.AppServices.UserAppServices;
-using Ledger.CrossCutting.Identity.Commands;
-using Ledger.CrossCutting.Identity.Models.Users;
+﻿using Ledger.Identity.Application.AppServices.UserAppServices;
+using Ledger.Identity.Domain.Commands;
+using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+using Ledger.Identity.Domain.Services;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
