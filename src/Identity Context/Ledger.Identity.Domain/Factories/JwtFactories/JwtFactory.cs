@@ -1,5 +1,5 @@
 ﻿using Ledger.Identity.Domain.Configuration.JwtConfigurations;
-using Ledger.Identity.Domain.Configuration.SigningConfigurations;
+using Ledger.Identity.Domain.Services.SigningServices;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,9 +11,9 @@ namespace Ledger.Identity.Domain.Services
     public class JwtFactory : IJwtFactory
     {
         private readonly IOptions<JwtTokenOptions> _options;
-        private readonly ISigningConfiguration _signingConfiguration;
+        private readonly ISigningService _signingConfiguration;
 
-        public JwtFactory(IOptions<JwtTokenOptions> options, ISigningConfiguration signingConfiguration)
+        public JwtFactory(IOptions<JwtTokenOptions> options, ISigningService signingConfiguration)
         {
             _options = options;
             _signingConfiguration = signingConfiguration;

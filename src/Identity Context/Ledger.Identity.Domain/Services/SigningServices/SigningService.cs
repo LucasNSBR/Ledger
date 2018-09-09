@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Ledger.Identity.Domain.Configuration.SigningConfigurations;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Ledger.Identity.Domain.Configuration.SigningConfigurations
+namespace Ledger.Identity.Domain.Services.SigningServices
 {
-    public class SigningConfiguration : ISigningConfiguration
+    public class SigningService : ISigningService
     {
         private readonly byte[] SALT_KEY;
 
@@ -20,7 +21,7 @@ namespace Ledger.Identity.Domain.Configuration.SigningConfigurations
             }
         }
 
-        public SigningConfiguration(IOptions<SigningOptions> options)
+        public SigningService(IOptions<SigningOptions> options)
         {
             SALT_KEY = Encoding.UTF8.GetBytes(options.Value.SALT_KEY);
         }

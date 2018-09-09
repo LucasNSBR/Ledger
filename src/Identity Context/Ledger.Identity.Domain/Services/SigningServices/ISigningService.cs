@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace Ledger.Identity.Domain.Configuration.SigningConfigurations
+namespace Ledger.Identity.Domain.Services.SigningServices
 {
-    public interface ISigningConfiguration
+    public interface ISigningService
     {
         SecurityKey SecurityKey { get; }
         SigningCredentials GetSigningCredentials();

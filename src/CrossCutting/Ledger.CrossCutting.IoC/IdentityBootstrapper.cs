@@ -5,6 +5,7 @@ using Ledger.Identity.Domain.Configuration.SigningConfigurations;
 using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services;
+using Ledger.Identity.Domain.Services.SigningServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -80,7 +81,7 @@ namespace Ledger.CrossCutting.IoC
                 cfg.SALT_KEY = configuration["SALT_KEY"];
             });
 
-            services.AddSingleton<ISigningConfiguration, SigningConfiguration>();
+            services.AddSingleton<ISigningService, SigningService>();
             services.AddScoped<IJwtFactory, JwtFactory>();
         }
 
