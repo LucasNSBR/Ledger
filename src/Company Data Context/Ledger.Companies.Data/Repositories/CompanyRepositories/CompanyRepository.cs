@@ -1,8 +1,10 @@
 ﻿using Ledger.Companies.Data.Context;
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Repositories;
+using Ledger.Companies.Domain.Specifications.CompanySpecifications;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 namespace Ledger.Companies.Data.Repositories.CompanyRepositories
 {
@@ -19,7 +21,20 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
 
         public Company GetById(Guid id)
         {
-            return null;
+            CompanyIdSpecification specification = new CompanyIdSpecification(id);
+
+            return _dbSet
+                .AsNoTracking()
+                .FirstOrDefault(specification.ToExpression());
+        }
+
+        public Company GetByCnpj(string cnpj)
+        {
+            CompanyCnpjSpecification specification = new CompanyCnpjSpecification(cnpj);
+
+            return _dbSet
+                .AsNoTracking()
+                .FirstOrDefault(specification.ToExpression());
         }
 
         public void Register(Company company)
