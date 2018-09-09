@@ -8,9 +8,9 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
     {
         public bool Active { get; private set; }
         public string Name { get; private set; }
+        public string Description { get; private set; }
         public EmailAddress Email { get; private set; }
         public PhoneNumber Phone { get; private set; }
-        public string Description { get; private set; }
         public Cnpj Cnpj { get; private set; }
         public InscricaoEstadual InscricaoEstadual { get; private set; }
         public Address Address { get; private set; }

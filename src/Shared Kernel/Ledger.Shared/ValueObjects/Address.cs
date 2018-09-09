@@ -6,27 +6,31 @@
         public string Street { get; private set; }
         public string Neighborhood { get; private set; }
 
+        //Notes or details about this address
+        public string Complementation { get; private set; }
+
         public string City { get; private set; }
         public string State { get; private set; }
 
-        //É o mesmo que CEP
-        public string ZipCode { get; private set; }
+        //Same as ZipCode
+        public string Cep { get; private set; }
 
         protected Address() { }
-
-        public Address(int number, string street, string neighborhood, string city, string state, string zipCode)
+        
+        public Address(int number, string street, string neighborhood, string complementation, string city, string state, string cep)
         {
             Number = number;
             Street = street;
             Neighborhood = neighborhood;
+            Complementation = complementation;
             City = city;
             State = state;
-            ZipCode = zipCode;
+            Cep = cep;
         }
 
         public override string ToString()
         {
-            return $"{Street}, {Number}, {Neighborhood} - {City}, {ZipCode}, {State}";
+            return $"{Street}, {Number}, {Neighborhood} - {City}, {Cep}, {State}";
         }
     }
 }
