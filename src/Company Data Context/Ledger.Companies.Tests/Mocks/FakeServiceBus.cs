@@ -3,7 +3,7 @@ using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Commands;
 using Ledger.Shared.IntegrationEvents.Events;
 
-namespace Ledger.Companies.Domain.Tests.Mocks
+namespace Ledger.Companies.Tests.Mocks
 {
     public class FakeServiceBus : IServiceBus
     {

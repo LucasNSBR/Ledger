@@ -1,4 +1,5 @@
-﻿using Ledger.CrossCutting.Data.Transactions;
+﻿using Ledger.Companies.Data.Context;
+using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
 
@@ -8,9 +9,9 @@ namespace Ledger.Companies.Application.AppServices
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
         protected readonly IServiceBus _serviceBus;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork<LedgerCompanyDbContext> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<LedgerCompanyDbContext> unitOfWork, IServiceBus serviceBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;

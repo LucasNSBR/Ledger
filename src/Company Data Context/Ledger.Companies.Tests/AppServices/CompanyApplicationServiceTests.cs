@@ -1,7 +1,7 @@
 ﻿using Ledger.Companies.Application.AppServices.CompanyAppServices;
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
-using Ledger.Companies.Domain.Tests.Mocks;
+using Ledger.Companies.Tests.Mocks;
 using Ledger.Shared.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

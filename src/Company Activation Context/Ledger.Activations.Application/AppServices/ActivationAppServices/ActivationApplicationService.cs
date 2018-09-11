@@ -1,8 +1,9 @@
-﻿using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
+﻿using Ledger.Activations.Data.Context;
+using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Activations.Domain.Commands;
 using Ledger.Activations.Domain.Factories.ActivationFactories;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
-using Ledger.CrossCutting.Data.Transactions;
+using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Extensions;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
@@ -17,7 +18,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
         private readonly IActivationRepository _repository;
         private readonly IActivationFactory _factory;
 
-        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<LedgerActivationDbContext> unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
         {
             _repository = repository;
             _factory = factory;

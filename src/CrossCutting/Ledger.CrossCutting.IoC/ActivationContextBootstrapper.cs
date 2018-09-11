@@ -12,8 +12,6 @@ namespace Ledger.CrossCutting.IoC
     {
         public static void Initialize(IServiceCollection services)
         {
-            services.AddScoped<DbContext>(prov => prov.GetRequiredService<LedgerActivationDbContext>());
-
             services.AddDbContext<LedgerActivationDbContext>(options =>
                 options.UseInMemoryDatabase("ActivationDb"));
 

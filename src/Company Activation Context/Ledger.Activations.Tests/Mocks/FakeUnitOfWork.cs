@@ -1,8 +1,8 @@
-﻿using Ledger.CrossCutting.Data.Transactions;
+﻿using Ledger.CrossCutting.Data.UnitOfWork;
 
 namespace Ledger.Activations.Tests.Mocks
 {
-    public class FakeUnitOfWork : IUnitOfWork
+    public class FakeUnitOfWork : IUnitOfWork<FakeDbContext>
     {
         public CommitResult Commit()
         {

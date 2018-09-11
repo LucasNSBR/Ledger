@@ -1,7 +1,8 @@
-﻿using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
+﻿using Ledger.Companies.Data.Context;
+using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
 using Ledger.Companies.Domain.Repositories;
-using Ledger.CrossCutting.Data.Transactions;
+using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
@@ -13,7 +14,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
     {
         private readonly ICompanyRepository _repository;
 
-        public CompanyApplicationService(ICompanyRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public CompanyApplicationService(ICompanyRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<LedgerCompanyDbContext> unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
         {
             _repository = repository;
         }
