@@ -14,7 +14,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
     {
         private readonly ICompanyRepository _repository;
 
-        public CompanyApplicationService(ICompanyRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<LedgerCompanyDbContext> unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public CompanyApplicationService(ICompanyRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
         {
             _repository = repository;
         }

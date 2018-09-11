@@ -2,7 +2,8 @@
 
 namespace Ledger.CrossCutting.Data.UnitOfWork
 {
-    public interface IUnitOfWork<T> where T : IDbContext<T>
+    public interface IUnitOfWork<TDbContext> 
+        where TDbContext : IDbContext<TDbContext>
     {
         CommitResult Commit();
         void Rollback();

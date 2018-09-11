@@ -9,9 +9,9 @@ namespace Ledger.Companies.Application.AppServices
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
         protected readonly IServiceBus _serviceBus;
-        private readonly IUnitOfWork<LedgerCompanyDbContext> _unitOfWork;
+        private readonly IUnitOfWork<ILedgerCompanyDbAbstraction> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<LedgerCompanyDbContext> unitOfWork, IServiceBus serviceBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IServiceBus serviceBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;

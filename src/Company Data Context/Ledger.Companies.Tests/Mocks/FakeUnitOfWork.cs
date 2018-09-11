@@ -3,7 +3,7 @@ using Ledger.CrossCutting.Data.UnitOfWork;
 
 namespace Ledger.Companies.Tests.Mocks
 {
-    public class FakeUnitOfWork : IUnitOfWork<FakeDbContext>
+    public class FakeUnitOfWork : IUnitOfWork<ILedgerCompanyDbAbstraction>
     {
         public CommitResult Commit()
         {

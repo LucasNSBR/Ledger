@@ -4,12 +4,12 @@ using System;
 
 namespace Ledger.CrossCutting.Data.UnitOfWork
 {
-    public class UnitOfWork<T> : IUnitOfWork<T> 
-                            where T : IDbContext<T>
+    public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext> 
+                            where TDbContext : IDbContext<TDbContext>
     {
-        private readonly IDbContext<T> _dbContext;
+        private readonly IDbContext<TDbContext> _dbContext;
 
-        public UnitOfWork(T dbContext)
+        public UnitOfWork(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

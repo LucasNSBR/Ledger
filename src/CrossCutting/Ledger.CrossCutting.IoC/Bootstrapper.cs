@@ -29,8 +29,11 @@ namespace Ledger.CrossCutting.IoC
 
         private static void InitializeInfrastructure(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork<LedgerActivationDbContext>, UnitOfWork<LedgerActivationDbContext>>();
-            services.AddScoped<IUnitOfWork<LedgerCompanyDbContext>, UnitOfWork<LedgerCompanyDbContext>>();
+            services.AddScoped<ILedgerActivationDbAbstraction, LedgerActivationDbContext>(provider => provider.GetRequiredService<LedgerActivationDbContext>());
+            services.AddScoped<ILedgerCompanyDbAbstraction, LedgerCompanyDbContext>(provider => provider.GetRequiredService<LedgerCompanyDbContext>());
+
+            services.AddScoped<IUnitOfWork<ILedgerActivationDbAbstraction>, UnitOfWork<ILedgerActivationDbAbstraction>>();
+            services.AddScoped<IUnitOfWork<ILedgerCompanyDbAbstraction>, UnitOfWork<ILedgerCompanyDbAbstraction>>();
         }
 
         private static void InitializeBus(IServiceCollection services)
