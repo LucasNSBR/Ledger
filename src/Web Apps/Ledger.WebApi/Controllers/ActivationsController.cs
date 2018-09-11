@@ -48,6 +48,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/accept")]
+        [Authorize(Policy = "AdminAccount")]
         public IActionResult Accept(Guid id)
         {
             AcceptActivationCommand command = new AcceptActivationCommand
@@ -62,6 +63,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/reject")]
+        [Authorize(Policy = "AdminAccount")]
         public IActionResult Reject(Guid id)
         {
             RejectActivationCommand command = new RejectActivationCommand
@@ -76,6 +78,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/reset")]
+        [Authorize(Policy = "AdminAccount")]
         public IActionResult Reset(Guid id)
         {
             ResetActivationCommand command = new ResetActivationCommand
