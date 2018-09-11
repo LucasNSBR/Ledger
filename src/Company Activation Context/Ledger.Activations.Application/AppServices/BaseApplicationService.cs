@@ -1,5 +1,6 @@
 ﻿using Ledger.CrossCutting.Data.Transactions;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.IntegrationEvents.Events;
 using Ledger.Shared.Notifications;
 
 namespace Ledger.Activations.Application.AppServices
@@ -7,7 +8,7 @@ namespace Ledger.Activations.Application.AppServices
     public abstract class BaseApplicationService
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
-        protected readonly IServiceBus _serviceBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IUnitOfWork _unitOfWork;
 
         public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus)
@@ -36,6 +37,11 @@ namespace Ledger.Activations.Application.AppServices
         public bool Commit()
         {
             return _unitOfWork.Commit().Success;
+        }
+
+        public void Publish(IntegrationEvent integrationEvent)
+        {
+            _serviceBus.Publish(integrationEvent);
         }
     }
 }

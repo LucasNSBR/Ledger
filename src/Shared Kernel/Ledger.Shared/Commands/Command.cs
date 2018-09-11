@@ -7,8 +7,8 @@ namespace Ledger.Shared.Commands
 {
     public abstract class Command : ICommand, IDomainNotifier
     {
-        public Guid CommandId { get; private set; }
-        public DateTime DateCreated { get; private set; }
+        public Guid CommandId { get; }
+        public DateTime DateCreated { get; }
 
         private List<DomainNotification> _notifications;
 

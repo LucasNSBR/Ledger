@@ -6,7 +6,7 @@
         public string Street { get; private set; }
         public string Neighborhood { get; private set; }
 
-        //Notes or details about this address
+        //Notes or extra details about this address
         public string Complementation { get; private set; }
 
         public string City { get; private set; }

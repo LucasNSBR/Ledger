@@ -7,7 +7,7 @@ namespace Ledger.Companies.Application.AppServices
     public abstract class BaseApplicationService
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
-        protected readonly IServiceBus _serviceBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IUnitOfWork _unitOfWork;
 
         public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork unitOfWork, IServiceBus serviceBus)

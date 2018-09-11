@@ -43,9 +43,9 @@ namespace Ledger.Shared.Entities
 
         public static bool operator ==(Entity<T> a, Entity<T> b)
         {
-            if(ReferenceEquals(a, null))
+            if(a is null)
             {
-                return ReferenceEquals(b, null);
+                return b is null;
             }
 
             return Equals(a, b);
@@ -53,9 +53,9 @@ namespace Ledger.Shared.Entities
 
         public static bool operator !=(Entity<T> a, Entity<T> b)
         {
-            if (ReferenceEquals(a, null))
+            if (a is null)
             {
-                return !ReferenceEquals(b, null);
+                return !(b is null);
             }
 
             return !Equals(a, b);

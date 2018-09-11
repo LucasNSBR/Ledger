@@ -1,5 +1,6 @@
 ﻿namespace Ledger.Shared.ValueObjects
 {
+    //CPF IS EQUIVALENT TO SSN (SOCIAL SECURITY NUMBER)
     public class Cpf : ValueObject<Cpf>
     {
         public string Number { get; private set; }

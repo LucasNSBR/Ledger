@@ -4,10 +4,10 @@ namespace Ledger.Shared.Notifications
 {
     public class DomainNotification 
     {
-        public Guid Id { get; private set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public DateTime DateCreated { get; private set; }
+        public Guid Id { get; }
+        public string Title { get; }
+        public string Description { get; }
+        public DateTime DateCreated { get; }
 
         public DomainNotification(string title, string description)
         {

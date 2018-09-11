@@ -87,7 +87,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             _repository.Update(activation);
 
             if (Commit())
-                _serviceBus.Publish(new AcceptedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
+                Publish(new AcceptedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
         }
 
 
@@ -111,7 +111,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             _repository.Update(activation);
 
             if (Commit())
-                _serviceBus.Publish(new RejectedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
+                Publish(new RejectedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
         }
 
         public void ResetActivation(ResetActivationCommand command)
@@ -134,7 +134,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             _repository.Update(activation);
 
             if (Commit())
-                _serviceBus.Publish(new ResetedCompanyActivationIntegrationEvent(command.ActivationId));
+                Publish(new ResetedCompanyActivationIntegrationEvent(command.ActivationId));
         }
 
         private bool NotifyNullActivation(Activation activation)
