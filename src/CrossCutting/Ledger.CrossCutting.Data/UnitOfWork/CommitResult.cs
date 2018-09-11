@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ledger.CrossCutting.Data.Transactions
+namespace Ledger.CrossCutting.Data.UnitOfWork
 {
     public class CommitResult
     {

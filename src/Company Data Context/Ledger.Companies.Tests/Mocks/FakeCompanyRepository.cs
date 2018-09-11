@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ledger.Companies.Domain.Tests.Mocks
+namespace Ledger.Companies.Tests.Mocks
 {
     public class FakeCompanyRepository : ICompanyRepository
     {

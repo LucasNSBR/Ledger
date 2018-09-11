@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
     <ProjectReference Include="..\Ledger.Companies.Domain\Ledger.Companies.Domain.csproj" />
   </ItemGroup>
 

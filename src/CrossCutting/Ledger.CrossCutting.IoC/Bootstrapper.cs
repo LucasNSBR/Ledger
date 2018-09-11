@@ -1,4 +1,6 @@
-﻿using Ledger.CrossCutting.Data.Transactions;
+﻿using Ledger.Activations.Data.Context;
+using Ledger.Companies.Data.Context;
+using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +29,11 @@ namespace Ledger.CrossCutting.IoC
 
         private static void InitializeInfrastructure(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ILedgerActivationDbAbstraction, LedgerActivationDbContext>(provider => provider.GetRequiredService<LedgerActivationDbContext>());
+            services.AddScoped<ILedgerCompanyDbAbstraction, LedgerCompanyDbContext>(provider => provider.GetRequiredService<LedgerCompanyDbContext>());
+
+            services.AddScoped<IUnitOfWork<ILedgerActivationDbAbstraction>, UnitOfWork<ILedgerActivationDbAbstraction>>();
+            services.AddScoped<IUnitOfWork<ILedgerCompanyDbAbstraction>, UnitOfWork<ILedgerCompanyDbAbstraction>>();
         }
 
         private static void InitializeBus(IServiceCollection services)

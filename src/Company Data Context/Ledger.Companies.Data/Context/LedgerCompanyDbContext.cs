@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Companies.Data.Context
 {
-    public class LedgerCompanyDbContext : DbContext
+    public class LedgerCompanyDbContext : DbContext, ILedgerCompanyDbAbstraction
     {
         public DbSet<Company> Companies { get; set; }
 
