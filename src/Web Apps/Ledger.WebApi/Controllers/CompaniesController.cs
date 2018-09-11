@@ -29,7 +29,7 @@ namespace Ledger.WebApi.Controllers
         }
         
         [HttpPost]
-        public IActionResult Register(RegisterCompanyCommand command)
+        public IActionResult Register([FromBody]RegisterCompanyCommand command)
         {
             _companyApplicationService.Register(command);
 
@@ -37,7 +37,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(UpdateCompanyCommand command)
+        public IActionResult Update([FromBody]UpdateCompanyCommand command)
         {
             _companyApplicationService.Update(command);
 
@@ -46,7 +46,7 @@ namespace Ledger.WebApi.Controllers
         
         [HttpPost]
         [Route("changeaddress")]
-        public IActionResult ChangeAddress(ChangeCompanyAddressCommand command)
+        public IActionResult ChangeAddress([FromBody]ChangeCompanyAddressCommand command)
         {
             _companyApplicationService.ChangeAddress(command);
 
@@ -55,7 +55,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("changephone")]
-        public IActionResult ChangePhone(ChangeCompanyPhoneCommand command)
+        public IActionResult ChangePhone([FromBody]ChangeCompanyPhoneCommand command)
         {
             _companyApplicationService.ChangePhone(command);
 
