@@ -1,6 +1,7 @@
 ﻿using Ledger.CrossCutting.IoC;
 using Ledger.Identity.Domain.Services.SigningServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,14 @@ namespace Ledger.WebApi
                         IssuerSigningKey = services.BuildServiceProvider().GetRequiredService<ISigningService>().SecurityKey 
                     };
                 });
+
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("ActivatedAccount", cfgPolicy =>
+                {
+                    cfgPolicy.RequireClaim("activated-account", "true");
+                });
+            });
 
             services
                    .AddMvc()

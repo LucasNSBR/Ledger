@@ -8,9 +8,9 @@ using System;
 
 namespace Ledger.WebApi.Controllers
 {
-    [Authorize]
     [Produces("application/json")]
     [Route("api/companies")]
+    [Authorize(Policy = "ActivatedAccount")]
     public class CompaniesController : BaseController
     {
         private readonly ICompanyApplicationService _companyApplicationService;

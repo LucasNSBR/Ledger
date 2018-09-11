@@ -2,6 +2,7 @@
 using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Activations.Domain.Commands;
 using Ledger.Shared.Notifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,6 +10,7 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/activations")]
+    [Authorize(Policy = "ActivatedAccount")]
     public class ActivationsController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;

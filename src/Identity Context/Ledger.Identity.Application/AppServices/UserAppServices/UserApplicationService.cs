@@ -102,6 +102,14 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
 
             if (!result.Succeeded)
                 AddNotifications(result);
+            else
+            {
+                Claim activatedAccountClaim = new Claim("activated-account", "true");
+                IdentityResult claimResult = await _userManager.AddClaimAsync(user, activatedAccountClaim);
+
+                if (!claimResult.Succeeded)
+                    AddNotifications(claimResult);
+            }
         }
 
         public async Task ChangePassword(ChangeUserPasswordCommand command)
