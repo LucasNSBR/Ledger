@@ -7,9 +7,9 @@ namespace Ledger.CrossCutting.ServiceBus
 {
     public class IntegrationServiceBus : IIntegrationServiceBus
     {
-        private readonly IBus _bus;
+        private readonly IBusControl _bus;
 
-        public IntegrationServiceBus(IBus bus)
+        public IntegrationServiceBus(IBusControl bus)
         {
             _bus = bus;
         }

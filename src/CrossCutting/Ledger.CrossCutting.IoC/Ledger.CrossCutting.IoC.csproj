@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />

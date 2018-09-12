@@ -7,6 +7,6 @@ namespace Ledger.CrossCutting.ServiceBus.Abstractions
     //This bus is responsable for Publish and Handling of IntegrationEvents
     public interface IIntegrationServiceBus
     {
-        Task Publish<T>(T IntegrationEvent) where T: IntegrationEvent
+        Task Publish<T>(T IntegrationEvent) where T : IntegrationEvent;
     }
 }

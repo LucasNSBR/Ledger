@@ -16,8 +16,8 @@ namespace Ledger.CrossCutting.IoC
         {
             InitializeCore(services);
             InitializeInfrastructure(services);
-            InitializeBus(services);
 
+            ServiceBusBootstrapper.Initialize(services, configuration);
             EmailServiceBootstrapper.Initialize(services, configuration);
             IdentityBootstrapper.Initialize(services, configuration);
             ActivationContextBootstrapper.Initialize(services);
@@ -36,11 +36,6 @@ namespace Ledger.CrossCutting.IoC
 
             services.AddScoped<IUnitOfWork<ILedgerActivationDbAbstraction>, UnitOfWork<ILedgerActivationDbAbstraction>>();
             services.AddScoped<IUnitOfWork<ILedgerCompanyDbAbstraction>, UnitOfWork<ILedgerCompanyDbAbstraction>>();
-        }
-
-        private static void InitializeBus(IServiceCollection services)
-        {
-            services.AddScoped<IDomainServiceBus, DomainServiceBus>();
         }
     }
 }
