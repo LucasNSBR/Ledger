@@ -1,5 +1,6 @@
 ﻿using Ledger.Companies.Data.EntityTypeConfiguration;
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
+using Ledger.Companies.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Companies.Data.Context

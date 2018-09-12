@@ -1,4 +1,5 @@
 ﻿using Ledger.Companies.Data.Context;
+using Ledger.Companies.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;

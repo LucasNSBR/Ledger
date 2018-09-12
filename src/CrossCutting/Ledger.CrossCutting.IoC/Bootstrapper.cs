@@ -1,5 +1,7 @@
 ﻿using Ledger.Activations.Data.Context;
+using Ledger.Activations.Domain.Context;
 using Ledger.Companies.Data.Context;
+using Ledger.Companies.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus;
 using Ledger.CrossCutting.ServiceBus.Abstractions;

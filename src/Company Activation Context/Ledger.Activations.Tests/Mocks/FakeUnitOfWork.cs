@@ -1,4 +1,5 @@
 ﻿using Ledger.Activations.Data.Context;
+using Ledger.Activations.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
 
 namespace Ledger.Activations.Tests.Mocks
