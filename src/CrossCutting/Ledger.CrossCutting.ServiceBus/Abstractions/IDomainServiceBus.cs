@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Ledger.CrossCutting.ServiceBus.Abstractions
 {
-    //Simplified Service Bus implementation to handle Domain Events
-    //To handle IntegrationEvents you'll need to use MassTransit Bus
+    //Simplified Service Bus implementation to handle local Domain Events
+    //To handle IntegrationEvents you'll need to use IntegrationServiceBus
     public interface IDomainServiceBus
     {
         Task Send<TCommand>(TCommand command, CancellationToken? cancellationToken = null) where TCommand : Command;
