@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Ledger.CrossCutting.EmailService.Configuration;
+﻿using Ledger.CrossCutting.EmailService.Configuration;
 using Ledger.CrossCutting.EmailService.Models;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ledger.CrossCutting.EmailService.Dispatchers
 {
@@ -24,32 +24,31 @@ namespace Ledger.CrossCutting.EmailService.Dispatchers
 
         public async Task SendEmailAsync(string to, string subject, string body)
         {
-            var message = new SendGridMessage();
+            SendGridMessage message = new SendGridMessage();
 
             message.SetFrom(_senderAddress);
             message.AddTo(to);
             message.SetSubject(subject);
             message.AddContent("text/plain", body);
 
-            await Execute(message);
+            await Dispatch(message);
         }
-
 
         public async Task SendEmailAsync(EmailTemplate template)
         {
-            var message = new SendGridMessage();
+            SendGridMessage message = new SendGridMessage();
 
             message.SetFrom(_senderAddress);
             message.AddTo(template.To);
             message.SetTemplateId(template.TemplateId);
             message.AddSubstitutions(template.SendGridSubstitutions.ToDictionary(k => k.Key, v => v.Value));
 
-            await Execute(message);
+            await Dispatch(message);
         }
 
-        private async Task Execute(SendGridMessage message)
+        private async Task Dispatch(SendGridMessage message)
         {
-            var client = new SendGridClient(_sendGridKey);
+            SendGridClient client = new SendGridClient(_sendGridKey);
             await client.SendEmailAsync(message);
         }
     }

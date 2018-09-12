@@ -68,7 +68,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("recoverpassword")]
+        [Route("recoverpassword/{email}")]
         public async Task<IActionResult> RecoverPassword(string email)
         {
             ForgotUserPasswordCommand command = new ForgotUserPasswordCommand

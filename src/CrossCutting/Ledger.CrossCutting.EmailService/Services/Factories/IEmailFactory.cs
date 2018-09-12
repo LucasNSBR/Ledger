@@ -6,5 +6,7 @@ namespace Ledger.CrossCutting.EmailService.Services.Factories
     {
         EmailTemplate CreateAccountConfirmationEmail(string to, string confirmationToken);
         EmailTemplate CreatePasswordResetEmail(string to, string resetToken);
+        EmailTemplate CreatePostPasswordResetEmail(string to);
+        EmailTemplate CreatePostPasswordChangeEmail(string to);
     }
 }

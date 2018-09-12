@@ -9,10 +9,10 @@ namespace Ledger.Activations.Application.AppServices
     public abstract class BaseApplicationService
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
-        private readonly IServiceBus _serviceBus;
+        private readonly IDomainServiceBus _serviceBus;
         private readonly IUnitOfWork<ILedgerActivationDbAbstraction> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IServiceBus serviceBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IDomainServiceBus serviceBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;
@@ -42,7 +42,7 @@ namespace Ledger.Activations.Application.AppServices
 
         public void Publish(IntegrationEvent integrationEvent)
         {
-            _serviceBus.Publish(integrationEvent);
+         //   _serviceBus.Publish(integrationEvent);
         }
     }
 }

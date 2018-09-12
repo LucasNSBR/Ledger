@@ -5,7 +5,7 @@ using Ledger.Shared.IntegrationEvents.Events;
 
 namespace Ledger.Activations.Tests.Mocks
 {
-    public class FakeServiceBus : IServiceBus
+    public class FakeServiceBus : IDomainServiceBus
     {
         public Task Publish(IntegrationEvent @event)
         {

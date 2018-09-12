@@ -2,10 +2,13 @@
 using Ledger.Identity.Data.Context;
 using Ledger.Identity.Domain.Configuration.JwtConfigurations;
 using Ledger.Identity.Domain.Configuration.SigningConfigurations;
+using Ledger.Identity.Domain.EventHandlers.UserEventHandlers;
+using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services;
 using Ledger.Identity.Domain.Services.SigningServices;
+using Ledger.Shared.EventHandlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +27,7 @@ namespace Ledger.CrossCutting.IoC
             InitializeIdentity(services);
             InitializeJwtConfiguration(services, configuration);
             InitializeApplicationServices(services);
+            InitializeDomainEventHandlers(services);
         }
 
         private static void InitializeIdentity(IServiceCollection services)
@@ -88,6 +92,15 @@ namespace Ledger.CrossCutting.IoC
         private static void InitializeApplicationServices(IServiceCollection services)
         {
             services.AddScoped<IUserApplicationService, UserApplicationService>();
+        }
+
+        private static void InitializeDomainEventHandlers(IServiceCollection services)
+        {
+            services.AddScoped<IDomainEventHandler<UserRegisteredEvent>, UserDomainEventHandler>();
+            services.AddScoped<IDomainEventHandler<UserLoggedInEvent>, UserDomainEventHandler>();
+            services.AddScoped<IDomainEventHandler<UserForgotPasswordEvent>, UserDomainEventHandler>();
+            services.AddScoped<IDomainEventHandler<UserResetedPasswordEvent>, UserDomainEventHandler>();
+            services.AddScoped<IDomainEventHandler<UserChangedPasswordEvent>, UserDomainEventHandler>();
         }
     }
 }

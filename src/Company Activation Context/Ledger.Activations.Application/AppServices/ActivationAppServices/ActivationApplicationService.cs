@@ -18,7 +18,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
         private readonly IActivationRepository _repository;
         private readonly IActivationFactory _factory;
 
-        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IDomainServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
         {
             _repository = repository;
             _factory = factory;

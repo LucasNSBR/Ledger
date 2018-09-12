@@ -3,7 +3,6 @@ using Ledger.CrossCutting.EmailService.Dispatchers;
 using Ledger.CrossCutting.EmailService.Services.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Ledger.CrossCutting.IoC
 {
@@ -23,6 +22,8 @@ namespace Ledger.CrossCutting.IoC
             {
                 cfg.ConfirmUserAccountEmailTemplateId = configuration["SendGrid:Templates:ConfirmUserAccountTemplate"];
                 cfg.ResetUserPasswordEmailTemplateId = configuration["SendGrid:Templates:ResetUserPasswordTemplate"];
+                cfg.UserPasswordPostResetEmailTemplateId = configuration["SendGrid:Templates:PasswordPostResetTemplate"];
+                cfg.UserPasswordPostChangeEmailTemplateId = configuration["SendGrid:Templates:PasswordPostChangeTemplate"];
             });
 
             services.AddScoped<IEmailFactory, EmailFactory>();

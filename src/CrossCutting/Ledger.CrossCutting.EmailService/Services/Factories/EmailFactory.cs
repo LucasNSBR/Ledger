@@ -9,11 +9,15 @@ namespace Ledger.CrossCutting.EmailService.Services.Factories
     {
         private readonly string _confirmUserAccountEmailTemplateId;
         private readonly string _resetUserPasswordEmailTemplateId;
+        private readonly string _userPasswordPostResetEmailTemplateId;
+        private readonly string _userPasswordPostChangeEmailTemplateId;
 
         public EmailFactory(IOptions<TemplateOptions> options)
         {
             _confirmUserAccountEmailTemplateId = options.Value.ConfirmUserAccountEmailTemplateId;
             _resetUserPasswordEmailTemplateId = options.Value.ResetUserPasswordEmailTemplateId;
+            _userPasswordPostResetEmailTemplateId = options.Value.UserPasswordPostResetEmailTemplateId;
+            _userPasswordPostChangeEmailTemplateId = options.Value.UserPasswordPostChangeEmailTemplateId;
         }
 
         public EmailTemplate CreateAccountConfirmationEmail(string to, string confirmationToken)
@@ -28,6 +32,22 @@ namespace Ledger.CrossCutting.EmailService.Services.Factories
         {
             ResetUserPasswordEmailTemplate template = 
                 new ResetUserPasswordEmailTemplate(to, _resetUserPasswordEmailTemplateId, resetToken);
+
+            return template;
+        }
+
+        public EmailTemplate CreatePostPasswordResetEmail(string to)
+        {
+            UserPasswordPostResetEmailTemplate template =
+                new UserPasswordPostResetEmailTemplate(to, _userPasswordPostResetEmailTemplateId);
+
+            return template;
+        }
+
+        public EmailTemplate CreatePostPasswordChangeEmail(string to)
+        {
+            UserPasswordPostChangeEmailTemplate template =
+                new UserPasswordPostChangeEmailTemplate(to, _userPasswordPostChangeEmailTemplateId);
 
             return template;
         }

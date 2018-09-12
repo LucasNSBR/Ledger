@@ -23,6 +23,8 @@ namespace Ledger.CrossCutting.EmailService.Models
             TemplateId = templateId;
 
             _sendGridSubstitutions = new Dictionary<string, string>();
+
+            AddSendGridSubstitution("-to-", to);
         }
 
         public void AddSendGridSubstitution(string key, string value)

@@ -5,13 +5,13 @@ namespace Ledger.Identity.Domain.Events.UserEvents
 {
     public class UserLoggedInEvent : DomainEvent
     {
-        public Guid Id { get; }
+        public Guid UserId { get; }
         public string Email { get; }
         public DateTime LoginDate { get; }
 
-        public UserLoggedInEvent(Guid id, string email)
+        public UserLoggedInEvent(Guid userId, string email)
         {
-            Id = id;
+            UserId = userId;
             LoginDate = DateTime.Now;
             Email = email;
         }

@@ -8,7 +8,6 @@
         {
             ResetToken = resetToken;
 
-            AddSendGridSubstitution("-to-", to);
             AddSendGridSubstitution("-code-", resetToken);
         }
     }

@@ -7,8 +7,7 @@
         public ConfirmUserAccountEmailTemplate(string to, string templateId, string confirmationToken) : base(to, templateId)
         {
             ConfirmationToken = confirmationToken;
-
-            AddSendGridSubstitution("-to-", to);
+            
             AddSendGridSubstitution("-code-", confirmationToken);
         }
     }
