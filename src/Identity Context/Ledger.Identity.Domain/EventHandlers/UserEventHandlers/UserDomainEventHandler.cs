@@ -23,6 +23,7 @@ namespace Ledger.Identity.Domain.EventHandlers.UserEventHandlers
         {
             _emailFactory = emailFactory;
             _emailDispatcher = emailDispatcher;
+            _userManager = userManager;
         }
 
         public async Task Handle(UserRegisteredEvent @event)

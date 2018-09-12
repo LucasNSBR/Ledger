@@ -1,8 +1,10 @@
-﻿using Ledger.CrossCutting.ServiceBus;
+﻿using Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate;
+using Ledger.CrossCutting.ServiceBus;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.CrossCutting.ServiceBus.BackgroundTasks;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
+using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -27,35 +29,27 @@ namespace Ledger.CrossCutting.IoC
         //Bounded Context Integration Service Bus
         private static void InitializeMassTransit(IServiceCollection services, IConfiguration configuration)
         {
-            ServiceProvider provider = services.BuildServiceProvider();
-
             services.AddMassTransit(cfg =>
             {
-
+                cfg.AddConsumer<CompanyIntegrationEventHandler>();
             });
 
-            IBusControl bus = Bus.Factory.CreateUsingRabbitMq(transport =>
+            services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(transport =>
             {
                 Uri hostAddress = new Uri(configuration["MassTransit:RabbitMqHost"]);
 
-                transport.Host(hostAddress, host =>
+                IRabbitMqHost host = transport.Host(hostAddress, cfg =>
                 {
-                    host.Username("guest");
-                    host.Password("guest");
+                    cfg.Username("guest");
+                    cfg.Password("guest");
                 });
-
-                transport.ReceiveEndpoint("user_events", endpoint =>
-                {
-                    endpoint.LoadFrom(provider);
-                });
-
-                transport.ReceiveEndpoint("company_events", endpoint =>
+                
+                transport.ReceiveEndpoint(host, "company_events", endpoint =>
                 {
                     endpoint.LoadFrom(provider);
                 });
-            });
+            }));
 
-            services.AddSingleton(bus);
             services.AddSingleton<IIntegrationServiceBus, IntegrationServiceBus>();
         }
 

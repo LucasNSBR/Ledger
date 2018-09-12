@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared.IntegrationEvents\Ledger.Shared.IntegrationEvents.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 

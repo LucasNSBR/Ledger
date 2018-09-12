@@ -9,16 +9,16 @@ namespace Ledger.Activations.Application.AppServices
     public abstract class BaseApplicationService
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
-        private readonly IDomainServiceBus _serviceBus;
+        private readonly IIntegrationServiceBus _integrationBus;
         private readonly IUnitOfWork<ILedgerActivationDbAbstraction> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IDomainServiceBus serviceBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;
-            _serviceBus = serviceBus;
+            _integrationBus = integrationBus;
         }
-        
+
         public bool AddNotifications(IDomainNotifier notifier)
         {
             if (notifier.HasNotifications())
@@ -42,7 +42,7 @@ namespace Ledger.Activations.Application.AppServices
 
         public void Publish(IntegrationEvent integrationEvent)
         {
-         //   _serviceBus.Publish(integrationEvent);
+            _integrationBus.Publish(integrationEvent);
         }
     }
 }
