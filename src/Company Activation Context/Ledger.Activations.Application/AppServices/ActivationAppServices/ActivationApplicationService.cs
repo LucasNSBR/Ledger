@@ -28,20 +28,6 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             return _repository.GetById(id);
         }
 
-        public void RegisterActivation(RegisterActivationCommand command)
-        {
-            command.Validate();
-
-            if (AddNotifications(command))
-                return;
-
-            Activation activation = _factory.CreateActivation(command.CompanyId);
-
-            _repository.Register(activation);
-
-            Commit();
-        }
-
         public void AttachCompanyDocuments(AttachCompanyDocumentsCommand command)
         {
             command.Validate();

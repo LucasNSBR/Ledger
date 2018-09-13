@@ -1,4 +1,5 @@
-﻿using Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate;
+﻿using Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate;
+using Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate;
 using Ledger.CrossCutting.ServiceBus;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.CrossCutting.ServiceBus.BackgroundTasks;
@@ -32,6 +33,7 @@ namespace Ledger.CrossCutting.IoC
             services.AddMassTransit(cfg =>
             {
                 cfg.AddConsumer<CompanyIntegrationEventHandler>();
+                cfg.AddConsumer<ActivationIntegrationEventHandler>();
             });
 
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(transport =>

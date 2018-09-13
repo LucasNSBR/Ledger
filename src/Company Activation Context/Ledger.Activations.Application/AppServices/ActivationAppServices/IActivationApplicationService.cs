@@ -8,7 +8,6 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
     {
         Activation GetById(Guid id);
         
-        void RegisterActivation(RegisterActivationCommand command);
         void AttachCompanyDocuments(AttachCompanyDocumentsCommand command);
         void AcceptActivation(AcceptActivationCommand command);
         void RejectActivation(RejectActivationCommand command);

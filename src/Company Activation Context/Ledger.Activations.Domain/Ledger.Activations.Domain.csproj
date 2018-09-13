@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared.IntegrationEvents\Ledger.Shared.IntegrationEvents.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 

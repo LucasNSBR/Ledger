@@ -30,14 +30,6 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromBody]RegisterActivationCommand command)
-        {
-            _activationAppService.RegisterActivation(command);
-
-            return CreateResponse();
-        }
-
-        [HttpPost]
         [Route("{id:guid}/attach")]
         public IActionResult AttachDocuments([FromBody]AttachCompanyDocumentsCommand command)
         {
@@ -48,7 +40,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/accept")]
-        //[Authorize(Policy = "AdminAccount")]
+        [Authorize(Policy = "AdminAccount")]
         public IActionResult Accept(Guid id)
         {
             AcceptActivationCommand command = new AcceptActivationCommand
