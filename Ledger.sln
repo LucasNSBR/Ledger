@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Identity.Domain", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Identity.Data", "src\Identity Context\Ledger.Identity.Data\Ledger.Identity.Data.csproj", "{F7E5C594-CEDC-4360-9447-A4D4C029DB12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Shared.Tests", "src\Shared Kernel\Ledger.Shared.Tests\Ledger.Shared.Tests.csproj", "{A3219FB3-C86A-4332-805B-9B2480F8A41C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7E5C594-CEDC-4360-9447-A4D4C029DB12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3219FB3-C86A-4332-805B-9B2480F8A41C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3219FB3-C86A-4332-805B-9B2480F8A41C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3219FB3-C86A-4332-805B-9B2480F8A41C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3219FB3-C86A-4332-805B-9B2480F8A41C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{4A37515A-EF0B-4217-A05D-AAFCEB19F1F3} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
 		{B305D867-A85F-415C-B48D-DF5243DA6C94} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
 		{F7E5C594-CEDC-4360-9447-A4D4C029DB12} = {600B39BE-8E49-42DB-AD00-B213DB840BDC}
+		{A3219FB3-C86A-4332-805B-9B2480F8A41C} = {9CD8EB02-5B29-4940-8912-9DD324AFAD16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {395E85EF-3430-42A5-9692-61DCA5954711}
