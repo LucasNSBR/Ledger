@@ -10,7 +10,7 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/activations")]
-    [Authorize(Policy = "ActivatedAccount")]
+    //[Authorize(Policy = "ActivatedAccount")]
     public class ActivationsController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;
@@ -48,7 +48,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/accept")]
-        [Authorize(Policy = "AdminAccount")]
+        //[Authorize(Policy = "AdminAccount")]
         public IActionResult Accept(Guid id)
         {
             AcceptActivationCommand command = new AcceptActivationCommand

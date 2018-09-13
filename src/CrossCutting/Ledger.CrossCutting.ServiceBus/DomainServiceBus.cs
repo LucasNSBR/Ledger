@@ -44,10 +44,5 @@ namespace Ledger.CrossCutting.ServiceBus
 
             return Task.CompletedTask;
         }
-
-        public void Send<TCommand>(TCommand command) where TCommand : Command
-        {
-            throw new NotImplementedException();
-        }
     }
 }

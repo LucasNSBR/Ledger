@@ -1,5 +1,4 @@
-﻿using Ledger.Activations.Data.Context;
-using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
+﻿using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Activations.Domain.Commands;
 using Ledger.Activations.Domain.Context;
 using Ledger.Activations.Domain.Factories.ActivationFactories;
@@ -19,7 +18,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
         private readonly IActivationRepository _repository;
         private readonly IActivationFactory _factory;
 
-        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IDomainServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
         {
             _repository = repository;
             _factory = factory;
@@ -29,7 +28,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
         {
             return _repository.GetById(id);
         }
-        
+
         public void RegisterActivation(RegisterActivationCommand command)
         {
             command.Validate();
@@ -39,7 +38,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Owner owner = new Owner(command.OwnerName, command.OwnerBirthday, new Cpf(command.OwnerCpf));
             Activation activation = _factory.CreateActivation(command.CompanyId, owner);
-            
+
             _repository.Register(activation);
 
             Commit();
@@ -57,8 +56,8 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             if (NotifyNullActivation(activation))
                 return;
 
-            activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(), 
-                command.AlteracaoContratoSocialPicture.ToBytes(), 
+            activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(),
+                command.AlteracaoContratoSocialPicture.ToBytes(),
                 command.OwnerDocumentPicture.ToBytes());
 
             if (AddNotifications(activation))
@@ -91,7 +90,6 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             if (Commit())
                 Publish(new AcceptedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
         }
-
 
         public void RejectActivation(RejectActivationCommand command)
         {

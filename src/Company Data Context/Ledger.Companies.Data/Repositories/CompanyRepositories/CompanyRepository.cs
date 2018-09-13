@@ -2,6 +2,7 @@
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.Companies.Domain.Specifications.CompanySpecifications;
+using Ledger.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -35,6 +36,19 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
             return _dbSet
                 .AsNoTracking()
                 .FirstOrDefault(specification.ToExpression());
+        }
+
+        public bool CnpjExists(Cnpj cnpj, Guid id)
+        {
+            Company company = GetByCnpj(cnpj.Number);
+
+            if (company != null)
+            {
+                if (company.Id != id)
+                    return true;
+            }
+
+            return false;
         }
 
         public void Register(Company company)

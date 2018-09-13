@@ -1,19 +1,12 @@
-﻿using System.Threading;
+﻿using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.IntegrationEvents.Events;
 using System.Threading.Tasks;
-using Ledger.CrossCutting.ServiceBus.Abstractions;
-using Ledger.Shared.Commands;
-using Ledger.Shared.Events;
 
 namespace Ledger.Activations.Tests.Mocks
 {
-    public class FakeServiceBus : IDomainServiceBus
+    public class FakeServiceBus : IIntegrationServiceBus
     {
-        public Task Publish<TDomainEvent>(TDomainEvent @event, CancellationToken? cancellationToken = null) where TDomainEvent : DomainEvent
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task Send<TCommand>(TCommand command, CancellationToken? cancellationToken = null) where TCommand : Command
+        public Task Publish<T>(T IntegrationEvent) where T : IntegrationEvent
         {
             return Task.CompletedTask;
         }

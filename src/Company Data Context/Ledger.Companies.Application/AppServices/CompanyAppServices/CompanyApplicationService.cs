@@ -118,15 +118,12 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
         private bool NotifyCnpjExists(Cnpj cnpj, Guid id)
         {
-            Company company = _repository.GetByCnpj(cnpj.Number);
+            bool exists = _repository.CnpjExists(cnpj, id);
 
-            if (company != null)
+            if (exists)
             {
-                if (company.Id != id)
-                {
-                    AddNotification("CNPJ duplicado", "Uma empresa com o mesmo CNPJ já foi registrada.");
-                    return true;
-                }
+                AddNotification("CNPJ duplicado", "Uma empresa com o mesmo CNPJ já foi registrada.");
+                return true;
             }
 
             return false;
