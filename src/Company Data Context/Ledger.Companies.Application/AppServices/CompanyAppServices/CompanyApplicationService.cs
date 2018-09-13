@@ -49,7 +49,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             _repository.Register(company);
 
             if (Commit())
-                Publish(new RegisteredCompanyIntegrationEvent(company.Id));
+                Publish(new RegisteredCompanyIntegrationEvent(company.Id, company.Email.Email));
         }
 
         public void Update(UpdateCompanyCommand command)

@@ -1,7 +1,7 @@
 ﻿using Ledger.CrossCutting.EmailService.Models;
 using System.Threading.Tasks;
 
-namespace Ledger.CrossCutting.EmailService.Dispatchers
+namespace Ledger.CrossCutting.EmailService.Services.Dispatchers
 {
     public interface IEmailDispatcher
     {

@@ -6,7 +6,7 @@ using SendGrid.Helpers.Mail;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ledger.CrossCutting.EmailService.Dispatchers
+namespace Ledger.CrossCutting.EmailService.Services.Dispatchers
 {
     public class EmailDispatcher : IEmailDispatcher
     {
