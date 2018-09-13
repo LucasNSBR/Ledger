@@ -10,14 +10,12 @@ namespace Ledger.Activations.Tests.Aggregates
     [TestClass]
     public class ActivationTests
     {
-        Owner owner;
         Company company;
         Activation activation;
 
         public ActivationTests()
         {
-            owner = new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99"));
-            company = new Company(Guid.NewGuid(), owner);
+            company = new Company(Guid.NewGuid());
             activation = new Activation(company);
         }
 

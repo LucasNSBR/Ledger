@@ -1,7 +1,7 @@
 ﻿using Ledger.Shared.ValueObjects;
 using System;
 
-namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
+namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
 {
     public class Owner : ValueObject<Owner>
     {

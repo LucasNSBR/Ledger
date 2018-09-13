@@ -1,6 +1,7 @@
 ﻿using Ledger.Companies.Application.AppServices.CompanyAppServices;
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
+using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Tests.Mocks;
 using Ledger.Shared.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,7 @@ namespace Ledger.Companies.Tests.AppServices
         FakeUnitOfWork uow;
         CompanyApplicationService service;
         DomainNotificationHandler domainNotificationHandler;
+        CompanyFactory factory;
 
         public CompanyApplicationServiceTests()
         {
@@ -24,8 +26,9 @@ namespace Ledger.Companies.Tests.AppServices
             bus = new FakeServiceBus();
             uow = new FakeUnitOfWork();
             domainNotificationHandler = new DomainNotificationHandler();
+            factory = new CompanyFactory();
 
-            service = new CompanyApplicationService(repository, domainNotificationHandler, uow, bus);
+            service = new CompanyApplicationService(repository, factory, domainNotificationHandler, uow, bus);
         }
 
         [TestMethod]

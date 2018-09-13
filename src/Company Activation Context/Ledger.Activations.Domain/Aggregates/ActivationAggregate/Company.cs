@@ -5,8 +5,6 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 {
     public class Company : Entity<Company>
     {
-        public Owner Owner { get; private set; }
-
         //Company Social Contract (similar to a Operating Agreement Contract)
         public byte[] ContratoSocialPicture { get; private set; }
 
@@ -18,10 +16,9 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 
         protected Company() { }
 
-        public Company(Guid id, Owner owner)
+        public Company(Guid id)
         {
             Id = id;
-            Owner = owner;
         }
 
         public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)

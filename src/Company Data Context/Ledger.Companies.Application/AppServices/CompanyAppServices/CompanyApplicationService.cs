@@ -1,7 +1,7 @@
-﻿using Ledger.Companies.Data.Context;
-using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
+﻿using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
 using Ledger.Companies.Domain.Context;
+using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
@@ -14,10 +14,12 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
     public class CompanyApplicationService : BaseApplicationService, ICompanyApplicationService
     {
         private readonly ICompanyRepository _repository;
+        private readonly ICompanyFactory _factory;
 
-        public CompanyApplicationService(ICompanyRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IDomainServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IDomainServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
         {
             _repository = repository;
+            _factory = factory;
         }
 
         public Company GetByCnpj(string cnpj)
@@ -37,10 +39,8 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (AddNotifications(command))
                 return;
 
-            EmailAddress email = new EmailAddress(command.Email);
-            Cnpj cnpj = new Cnpj(command.Cnpj);
-            InscricaoEstadual inscricaoEstadual = new InscricaoEstadual(command.InscricaoEstadual);
-            Company company = new Company(command.Name, command.Description, email, cnpj, inscricaoEstadual);
+            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj, 
+                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf);
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
                 return;
@@ -57,10 +57,8 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (AddNotifications(command))
                 return;
 
-            EmailAddress email = new EmailAddress(command.Email);
-            Cnpj cnpj = new Cnpj(command.Cnpj);
-            InscricaoEstadual inscricaoEstadual = new InscricaoEstadual(command.InscricaoEstadual);
-            Company company = new Company(command.Id, command.Name, command.Description, email, cnpj, inscricaoEstadual);
+            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj, 
+                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, companyId: command.Id);
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
                 return;

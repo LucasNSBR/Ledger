@@ -2,6 +2,7 @@
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Ledger.Companies.Tests.Aggregates
@@ -15,10 +16,11 @@ namespace Ledger.Companies.Tests.Aggregates
         Address address = new Address(452, "One Way Microsoft", "Centro", "Perto do Prédio Grande", "Nova Serrana", "MG", "35519000");
         PhoneNumber phone = new PhoneNumber("555 418 9220");
         Company company;
+        Owner owner = new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99"));
 
         public CompanyTests()
         {
-            company = new Company("Ledger Activation", "No Description", email, cnpj, inscricao);
+            company = new Company("Ledger Activation", "No Description", email, cnpj, inscricao, owner);
         }
 
         [TestMethod]

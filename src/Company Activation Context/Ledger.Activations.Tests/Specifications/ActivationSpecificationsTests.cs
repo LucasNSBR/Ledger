@@ -17,9 +17,7 @@ namespace Ledger.Activations.Tests.Specifications
             ActivationIdSpecification specification = new ActivationIdSpecification(companyId);
             
             Activation activation = new Activation(
-                   new Company(companyId,
-                   new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-25), new Cpf("981.153.856-99")))
-                   );
+                   new Company(companyId));
 
             Assert.IsTrue(specification.IsSatisfiedBy(activation));
         }

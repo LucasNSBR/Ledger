@@ -8,7 +8,6 @@ using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Extensions;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
 using Ledger.Shared.Notifications;
-using Ledger.Shared.ValueObjects;
 using System;
 
 namespace Ledger.Activations.Application.AppServices.ActivationAppServices
@@ -36,8 +35,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             if (AddNotifications(command))
                 return;
 
-            Owner owner = new Owner(command.OwnerName, command.OwnerBirthday, new Cpf(command.OwnerCpf));
-            Activation activation = _factory.CreateActivation(command.CompanyId, owner);
+            Activation activation = _factory.CreateActivation(command.CompanyId);
 
             _repository.Register(activation);
 

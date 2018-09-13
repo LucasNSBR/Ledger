@@ -14,10 +14,11 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
         public Cnpj Cnpj { get; private set; }
         public InscricaoEstadual InscricaoEstadual { get; private set; }
         public Address Address { get; private set; }
+        public Owner Owner { get; private set; }
 
         protected Company() { }
 
-        public Company(string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
+        public Company(string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual, Owner owner)
         {
             SetInactive();
 
@@ -26,9 +27,10 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
             Email = email;
             Cnpj = cnpj;
             InscricaoEstadual = inscricaoEstadual;
+            Owner = owner;
         }
 
-        public Company(Guid id, string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual)
+        public Company(Guid id, string name, string description, EmailAddress email, Cnpj cnpj, InscricaoEstadual inscricaoEstadual, Owner owner)
         {
             SetInactive();
 
@@ -38,6 +40,7 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
             Email = email;
             Cnpj = cnpj;
             InscricaoEstadual = inscricaoEstadual;
+            Owner = owner;
         }
 
         public void ChangeAddress(Address address)

@@ -23,7 +23,8 @@ namespace Ledger.Companies.Tests.Mocks
         {
             Guid companyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1");
             _companies.Add(new Company(companyId,
-               "Fabrikam", "Fabrikam Corporation", new EmailAddress("admin@fabrikam.com"), new Cnpj("59.009.518/0001-41"), new InscricaoEstadual("001.115 -550"))
+               "Fabrikam", "Fabrikam Corporation", new EmailAddress("admin@fabrikam.com"), new Cnpj("59.009.518/0001-41"), new InscricaoEstadual("001.115 -550"),
+                           new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99")))
             );
         }
 
@@ -64,7 +65,15 @@ namespace Ledger.Companies.Tests.Mocks
 
         public bool CnpjExists(Cnpj cnpj, Guid id)
         {
-            return true;
+            Company company = GetByCnpj(cnpj.Number);
+
+            if (company != null)
+            {
+                if (company.Id != id)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

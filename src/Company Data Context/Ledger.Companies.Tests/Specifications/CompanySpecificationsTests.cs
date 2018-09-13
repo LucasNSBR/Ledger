@@ -17,7 +17,8 @@ namespace Ledger.Companies.Tests.Specifications
         public CompanySpecificationsTests()
         {
             company = new Company(companyId,
-               "Fabrikam", "Fabrikam Corporation", new EmailAddress("admin@fabrikam.com"), new Cnpj(cnpj), new InscricaoEstadual("001.115-550"));
+               "Fabrikam", "Fabrikam Corporation", new EmailAddress("admin@fabrikam.com"), new Cnpj(cnpj), new InscricaoEstadual("001.115-550"),
+               new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99")));
         }
 
         [TestMethod]

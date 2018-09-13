@@ -5,14 +5,12 @@ namespace Ledger.Activations.Domain.Factories.ActivationFactories
 {
     public class ActivationFactory : IActivationFactory
     {
-        public Activation CreateActivation(Guid companyId, Owner owner)
+        public Activation CreateActivation(Guid companyId)
         {
             if (companyId == null || companyId == Guid.Empty)
                 throw new ArgumentException(nameof(companyId));
-            if (owner == null)
-                throw new ArgumentException(nameof(owner));
-
-            Company company = new Company(companyId, owner);
+            
+            Company company = new Company(companyId);
             Activation activation = new Activation(company);
 
             return activation;

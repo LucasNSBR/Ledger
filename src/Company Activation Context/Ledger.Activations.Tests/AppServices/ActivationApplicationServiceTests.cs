@@ -37,10 +37,7 @@ namespace Ledger.Activations.Tests.AppServices
         {
             RegisterActivationCommand command = new RegisterActivationCommand()
             {
-                CompanyId = companyId,
-                OwnerBirthday = DateTime.Now.AddDays(-20),
-                OwnerCpf = "135.262.959-55",
-                OwnerName = "Lucas Pereira"
+                CompanyId = companyId
             };
 
             service.RegisterActivation(command);

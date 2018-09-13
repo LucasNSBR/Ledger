@@ -5,6 +5,6 @@ namespace Ledger.Activations.Domain.Factories.ActivationFactories
 {
     public interface IActivationFactory
     {
-        Activation CreateActivation(Guid companyId, Owner owner);
+        Activation CreateActivation(Guid companyId);
     }
 }
