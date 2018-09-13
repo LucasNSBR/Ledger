@@ -97,8 +97,9 @@ namespace Ledger.Activations.Tests.Aggregates
             byte[] owner = new byte[8];
             byte[] contratoSocial = new byte[8];
             byte[] alteracaoContratoSocial = new byte[8];
+            byte[] extraDocument = new byte[8];
 
-            activation.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, owner);
+            activation.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, owner, extraDocument);
             IReadOnlyList<byte[]> documents = activation.GetCompanyDocuments();
 
             Assert.IsNotNull(documents);

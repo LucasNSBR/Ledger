@@ -9,6 +9,7 @@ namespace Ledger.Activations.Domain.Commands
         public string ContratoSocialPicture { get; set; }
         public string AlteracaoContratoSocialPicture { get; set; }
         public string OwnerDocumentPicture { get; set; }
+        public string ExtraDocument { get; set; }
 
         public override void Validate()
         {

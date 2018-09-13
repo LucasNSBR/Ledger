@@ -120,6 +120,7 @@ namespace Ledger.Activations.Tests.AppServices
             PopulateRepository();
 
             string owner = "base64Image";
+            string extra = "base64Image";
             string contratoSocial = "base64Image";
             string alteracaoContratoSocial = "base64Image";
 
@@ -129,6 +130,7 @@ namespace Ledger.Activations.Tests.AppServices
                 OwnerDocumentPicture = owner,
                 ContratoSocialPicture = contratoSocial,
                 AlteracaoContratoSocialPicture = alteracaoContratoSocial,
+                ExtraDocument = extra 
             };
 
             service.AttachCompanyDocuments(command);

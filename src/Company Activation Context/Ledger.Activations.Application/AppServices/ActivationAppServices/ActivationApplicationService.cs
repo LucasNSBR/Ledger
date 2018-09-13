@@ -42,7 +42,8 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(),
                 command.AlteracaoContratoSocialPicture.ToBytes(),
-                command.OwnerDocumentPicture.ToBytes());
+                command.OwnerDocumentPicture.ToBytes(),
+                command.ExtraDocument.ToBytes());
 
             if (AddNotifications(activation))
                 return;

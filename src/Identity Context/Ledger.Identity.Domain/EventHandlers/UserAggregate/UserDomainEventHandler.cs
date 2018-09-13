@@ -1,5 +1,5 @@
-﻿using Ledger.CrossCutting.EmailService.Dispatchers;
-using Ledger.CrossCutting.EmailService.Models;
+﻿using Ledger.CrossCutting.EmailService.Models;
+using Ledger.CrossCutting.EmailService.Services.Dispatchers;
 using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;

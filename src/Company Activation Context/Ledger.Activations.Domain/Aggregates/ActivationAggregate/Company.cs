@@ -11,8 +11,11 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         //Updated Company Social Contract (similar to Operating Agreement Contract with last changes)
         public byte[] AlteracaoContratoSocialPicture { get; private set; }
 
-        //Owner Document (CPF, RG or Drive license)
+        //Owner Document (CPF, RG or Driver license)
         public byte[] OwnerDocumentPicture { get; private set; }
+
+        //Extra Document (Can be anything)
+        public byte[] ExtraDocumentPicture { get; private set; }
 
         protected Company() { }
 
@@ -21,11 +24,12 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
             Id = id;
         }
 
-        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
+        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument, byte[] extraDocument)
         {
             ContratoSocialPicture = contratoSocial;
             AlteracaoContratoSocialPicture = alteracaoContratoSocial;
             OwnerDocumentPicture = ownerDocument;
+            ExtraDocumentPicture = extraDocument;
         }
     }
 }

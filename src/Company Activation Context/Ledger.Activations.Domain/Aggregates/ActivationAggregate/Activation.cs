@@ -61,14 +61,14 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
                 AddNotification("Erro de reinício", "Não é possível recomeçar o processo a partir do status atual.");
         }
 
-        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument)
+        public void AttachCompanyDocuments(byte[] contratoSocial, byte[] alteracaoContratoSocial, byte[] ownerDocument, byte[] extraDocument)
         {
             if (Company == null)
                 AddNotification("Erro na entidade", "Não há uma empresa válida presente no processo de ativação.");
             else
             {
                 if (IsPending())
-                    Company.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, ownerDocument);
+                    Company.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, ownerDocument, extraDocument);
                 else
                     AddNotification("Erro de anexação", "Não é possível anexar os documentos a partir do status atual.");
             }
