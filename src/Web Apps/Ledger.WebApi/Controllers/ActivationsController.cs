@@ -10,7 +10,7 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/activations")]
-    //[Authorize(Policy = "ActivatedAccount")]
+    [Authorize(Policy = "ActivatedAccount")]
     public class ActivationsController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;

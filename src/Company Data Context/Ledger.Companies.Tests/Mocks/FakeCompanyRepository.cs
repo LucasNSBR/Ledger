@@ -61,5 +61,10 @@ namespace Ledger.Companies.Tests.Mocks
         {
             return _companies.Count;
         }
+
+        public bool CnpjExists(Cnpj cnpj, Guid id)
+        {
+            return true;
+        }
     }
 }
