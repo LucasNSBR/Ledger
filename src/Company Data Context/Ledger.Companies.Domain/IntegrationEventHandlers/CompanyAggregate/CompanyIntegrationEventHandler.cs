@@ -12,23 +12,23 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
     public class CompanyIntegrationEventHandler : IConsumer<AcceptedCompanyActivationIntegrationEvent>,
                                                   IConsumer<RejectedCompanyActivationIntegrationEvent>
     {
-        private readonly ICompanyRepository _companyRepository;
+        private readonly ICompanyRepository _repository;
         private readonly IUnitOfWork<ILedgerCompanyDbAbstraction> _unitOfWork;
 
-        public CompanyIntegrationEventHandler(ICompanyRepository companyRepository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork)
+        public CompanyIntegrationEventHandler(ICompanyRepository repository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork)
         {
-            _companyRepository = companyRepository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
 
         public Task Consume(ConsumeContext<AcceptedCompanyActivationIntegrationEvent> context)
         {
             Guid id = context.Message.CompanyId;
-            Company company = _companyRepository.GetById(id);
+            Company company = _repository.GetById(id);
 
             company.SetActive();
 
-            _companyRepository.Update(company);
+            _repository.Update(company);
             _unitOfWork.Commit();             
 
             //TODO: Add Email Service here
@@ -39,11 +39,11 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
         public Task Consume(ConsumeContext<RejectedCompanyActivationIntegrationEvent> context)
         {
             Guid id = context.Message.CompanyId;
-            Company company = _companyRepository.GetById(id);
+            Company company = _repository.GetById(id);
 
             company.SetInactive();
 
-            _companyRepository.Update(company);
+            _repository.Update(company);
             _unitOfWork.Commit();
 
             //TODO: Add Email Service here

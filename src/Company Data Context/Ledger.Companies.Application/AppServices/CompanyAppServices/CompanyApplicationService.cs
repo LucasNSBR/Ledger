@@ -5,6 +5,7 @@ using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.IntegrationEvents.Events.CompanyEvents;
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
 using System;
@@ -16,7 +17,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
         private readonly ICompanyRepository _repository;
         private readonly ICompanyFactory _factory;
 
-        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IDomainServiceBus serviceBus) : base(domainNotificationHandler, unitOfWork, serviceBus)
+        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
         {
             _repository = repository;
             _factory = factory;
@@ -47,7 +48,8 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
             _repository.Register(company);
 
-            Commit();
+            if (Commit())
+                Publish(new RegisteredCompanyIntegrationEvent(company.Id));
         }
 
         public void Update(UpdateCompanyCommand command)

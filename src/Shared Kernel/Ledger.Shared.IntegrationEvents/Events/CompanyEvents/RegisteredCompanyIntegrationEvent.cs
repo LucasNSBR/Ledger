@@ -4,6 +4,11 @@ namespace Ledger.Shared.IntegrationEvents.Events.CompanyEvents
 {
     public class RegisteredCompanyIntegrationEvent : IntegrationEvent, IIntegrationEvent
     {
-        Guid CompanyId { get; }
+        public Guid CompanyId { get; }
+
+        public RegisteredCompanyIntegrationEvent(Guid companyId)
+        {
+            CompanyId = companyId;
+        }
     }
 }
