@@ -1,4 +1,4 @@
-﻿using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+﻿using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

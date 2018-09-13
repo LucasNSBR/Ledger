@@ -2,12 +2,12 @@
 using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Identity.Domain.Events.UserEvents;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Shared.EventHandlers;
 using System.Threading.Tasks;
 
-namespace Ledger.Identity.Domain.EventHandlers.UserEventHandlers
+namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
 {
     public class UserDomainEventHandler : IDomainEventHandler<UserRegisteredEvent>,
                                           IDomainEventHandler<UserLoggedInEvent>,

@@ -1,7 +1,7 @@
 ﻿using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Identity.Domain.Commands;
 using Ledger.Identity.Domain.Events.UserEvents;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
@@ -50,7 +50,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (result.Succeeded)
             {
                 string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                await Publish(new UserRegisteredEvent(user.Email, confirmationToken));
+                await PublishLocal(new UserRegisteredEvent(user.Email, confirmationToken));
 
                 return user;
             }
@@ -78,7 +78,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
                 GenericIdentity identity = new GenericIdentity(user.Id.ToString());
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(identity, claims);
 
-                await Publish(new UserLoggedInEvent(user.Id, user.Email));
+                await PublishLocal(new UserLoggedInEvent(user.Id, user.Email));
 
                 return claimsIdentity;
             }
@@ -111,7 +111,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
                 if (!claimResult.Succeeded)
                     AddNotifications(claimResult);
                 else
-                    await Publish(new UserEmailConfirmedEvent(user.Email));
+                    await PublishLocal(new UserEmailConfirmedEvent(user.Email));
             }
         }
 
@@ -132,7 +132,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (!result.Succeeded)
                 AddNotifications(result);
             else
-                await Publish(new UserChangedPasswordEvent(user.Email));
+                await PublishLocal(new UserChangedPasswordEvent(user.Email));
         }
 
         public async Task ForgotPassword(ForgotUserPasswordCommand command)
@@ -149,7 +149,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
 
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            await Publish(new UserForgotPasswordEvent(user.Email, resetToken));
+            await PublishLocal(new UserForgotPasswordEvent(user.Email, resetToken));
         }
 
         public async Task ResetPassword(ResetUserPasswordCommand command)
@@ -169,7 +169,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (!result.Succeeded)
                 AddNotifications(result);
             else
-                await Publish(new UserResetedPasswordEvent(user.Email));
+                await PublishLocal(new UserResetedPasswordEvent(user.Email));
         }
 
         private bool NotifyNullUser(LedgerIdentityUser user)

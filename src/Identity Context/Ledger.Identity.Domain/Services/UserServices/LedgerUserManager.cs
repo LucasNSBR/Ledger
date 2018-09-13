@@ -1,4 +1,4 @@
-﻿using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+﻿using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

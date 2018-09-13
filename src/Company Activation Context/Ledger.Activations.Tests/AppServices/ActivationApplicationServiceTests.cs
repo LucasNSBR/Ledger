@@ -19,6 +19,7 @@ namespace Ledger.Activations.Tests.AppServices
         DomainNotificationHandler domainNotificationHandler;
         FakeUnitOfWork fakeUnitOfWork;
         FakeServiceBus serviceBus;
+        FakeDomainServiceBus domainBus;
         ActivationApplicationService service;
 
         public ActivationApplicationServiceTests()
@@ -27,20 +28,17 @@ namespace Ledger.Activations.Tests.AppServices
             domainNotificationHandler = new DomainNotificationHandler();
             fakeUnitOfWork = new FakeUnitOfWork();
             serviceBus = new FakeServiceBus();
+            domainBus = new FakeDomainServiceBus();
             activationRepository = new FakeActivationRepository();
 
-            service = new ActivationApplicationService(activationRepository, activationFactory, domainNotificationHandler, fakeUnitOfWork, serviceBus);
+            service = new ActivationApplicationService(activationRepository, activationFactory, domainNotificationHandler, fakeUnitOfWork, serviceBus, domainBus);
         }
 
         //Helpers
         private void PopulateRepository()
         {
-            RegisterActivationCommand command = new RegisterActivationCommand()
-            {
-                CompanyId = companyId
-            };
-
-            service.RegisterActivation(command);
+            activationRepository.Register(new Activation
+                (new Company(companyId)));   
         }
 
         private Activation GetActivation()

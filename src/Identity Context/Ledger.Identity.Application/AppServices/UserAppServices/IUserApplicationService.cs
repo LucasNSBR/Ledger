@@ -1,5 +1,5 @@
 ﻿using Ledger.Identity.Domain.Commands;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate.User;
+using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;

@@ -1,5 +1,4 @@
-﻿using Ledger.Activations.Domain.Events;
-using Ledger.Shared.Entities;
+﻿using Ledger.Shared.Entities;
 using System.Collections.Generic;
 
 namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
@@ -31,10 +30,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         public void SetAccepted()
         {
             if (IsPending())
-            {
                 Status = ActivationStatus.Accepted;
-                AddEvent(new CompanyActivationAcceptedEvent());
-            }
             else
                 AddNotification("Erro de aceitação", "Não é possível validar a ativação a partir do status atual.");
         }
@@ -42,10 +38,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         public void SetRejected()
         {
             if (IsPending())
-            {
                 Status = ActivationStatus.Rejected;
-                AddEvent(new CompanyActivationRejectedEvent());
-            }
             else
                 AddNotification("Erro de rejeição", "Não é possível rejeitar a ativação a partir do status atual.");
         }
@@ -63,10 +56,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
         public void ResetActivationProcess()
         {
             if (Status == ActivationStatus.Rejected)
-            {
                 SetPending();
-                AddEvent(new CompanyActivationResetedEvent());
-            }
             else
                 AddNotification("Erro de reinício", "Não é possível recomeçar o processo a partir do status atual.");
         }

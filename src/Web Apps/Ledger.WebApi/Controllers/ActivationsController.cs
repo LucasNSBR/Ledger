@@ -70,7 +70,6 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("{id:guid}/reset")]
-        [Authorize(Policy = "AdminAccount")]
         public IActionResult Reset(Guid id)
         {
             ResetActivationCommand command = new ResetActivationCommand

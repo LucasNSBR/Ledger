@@ -17,7 +17,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
         private readonly IActivationRepository _repository;
         private readonly IActivationFactory _factory;
 
-        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
+        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, integrationBus, domainBus)
         {
             _repository = repository;
             _factory = factory;
@@ -117,8 +117,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             _repository.Update(activation);
 
-            if (Commit())
-                Publish(new ResetedCompanyActivationIntegrationEvent(command.ActivationId));
+            Commit();
         }
 
         private bool NotifyNullActivation(Activation activation)

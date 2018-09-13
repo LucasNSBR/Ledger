@@ -50,7 +50,7 @@ namespace Ledger.Identity.Application.AppServices
             _domainNotificationHandler.AddNotification(title, description);
         }
 
-        public async Task Publish<TDomainEvent>(TDomainEvent @event, CancellationToken? cancellationToken = null) where TDomainEvent: DomainEvent
+        public async Task PublishLocal<TDomainEvent>(TDomainEvent @event, CancellationToken? cancellationToken = null) where TDomainEvent: DomainEvent
         {
             await _domainServiceBus.Publish(@event, cancellationToken);
         }

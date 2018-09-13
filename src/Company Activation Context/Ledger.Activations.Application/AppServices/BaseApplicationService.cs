@@ -1,6 +1,7 @@
 ﻿using Ledger.Activations.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.Events;
 using Ledger.Shared.IntegrationEvents.Events;
 using Ledger.Shared.Notifications;
 
@@ -10,13 +11,15 @@ namespace Ledger.Activations.Application.AppServices
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
         private readonly IIntegrationServiceBus _integrationBus;
+        private readonly IDomainServiceBus _domainBus;
         private readonly IUnitOfWork<ILedgerActivationDbAbstraction> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;
             _integrationBus = integrationBus;
+            _domainBus = domainBus;
         }
 
         public bool AddNotifications(IDomainNotifier notifier)
@@ -43,6 +46,11 @@ namespace Ledger.Activations.Application.AppServices
         public void Publish<TIntegrationEvent>(TIntegrationEvent integrationEvent) where TIntegrationEvent : IntegrationEvent
         {
             _integrationBus.Publish(integrationEvent);
+        }
+
+        public void PublishLocal<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent: DomainEvent
+        {
+            _domainBus.Publish(domainEvent);
         }
     }
 }
