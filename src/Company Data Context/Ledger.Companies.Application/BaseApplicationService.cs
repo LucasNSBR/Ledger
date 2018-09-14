@@ -21,13 +21,7 @@ namespace Ledger.Companies.Application.AppServices
         
         public bool AddNotifications(IDomainNotifier notifier)
         {
-            if (notifier.HasNotifications())
-            {
-                _domainNotificationHandler.AddNotifications(notifier);
-                return true;
-            }
-
-            return false;
+            return _domainNotificationHandler.AddNotifications(notifier);
         }
 
         public void AddNotification(string title, string description)

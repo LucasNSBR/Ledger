@@ -6,6 +6,7 @@ using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
 using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
+using Ledger.Shared.Notifications;
 using MassTransit;
 using System;
 using System.Threading.Tasks;
@@ -15,13 +16,15 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
     public class CompanyIntegrationEventHandler : IConsumer<AcceptedCompanyActivationIntegrationEvent>,
                                                   IConsumer<RejectedCompanyActivationIntegrationEvent>
     {
+        private readonly IDomainNotificationHandler _domainNotificationHandler;
         private readonly ICompanyRepository _repository;
         private readonly IUnitOfWork<ILedgerCompanyDbAbstraction> _unitOfWork;
         private readonly IEmailFactory _emailFactory;
         private readonly IEmailDispatcher _emailDispatcher;
 
-        public CompanyIntegrationEventHandler(ICompanyRepository repository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
+        public CompanyIntegrationEventHandler(IDomainNotificationHandler domainNotificationHandler, ICompanyRepository repository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
         {
+            _domainNotificationHandler = domainNotificationHandler;
             _repository = repository;
             _unitOfWork = unitOfWork;
             _emailFactory = emailFactory;
@@ -35,8 +38,13 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
 
             company.SetActive();
 
-            _repository.Update(company);
-            _unitOfWork.Commit();
+            if (!_domainNotificationHandler.AddNotifications(company))
+            {
+                _repository.Update(company);
+                _unitOfWork.Commit();
+            }
+            else
+                throw new InvalidOperationException(_domainNotificationHandler.GetAndFormatNotifications());
 
             EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationAcceptedEmail(company.Email.Email);
             await _emailDispatcher.SendEmailAsync(emailTemplate);
@@ -49,8 +57,13 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
 
             company.SetInactive();
 
-            _repository.Update(company);
-            _unitOfWork.Commit();
+            if (!_domainNotificationHandler.AddNotifications(company))
+            {
+                _repository.Update(company);
+                _unitOfWork.Commit();
+            }
+            else
+                throw new InvalidOperationException(_domainNotificationHandler.GetAndFormatNotifications());
 
             EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationRejectedEmail(company.Email.Email);
             await _emailDispatcher.SendEmailAsync(emailTemplate);

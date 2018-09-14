@@ -7,9 +7,10 @@ namespace Ledger.Shared.Notifications
         bool HasNotifications();
         void AddNotification(DomainNotification domainNotification);
         void AddNotification(string title, string description);
-        void AddNotifications(IDomainNotifier notifier);
+        bool AddNotifications(IDomainNotifier notifier);
         IReadOnlyList<DomainNotification> GetNotifications();
         IEnumerable<DomainNotification> GetAtomicNotifications();
+        string GetAndFormatNotifications();
         void Dispose();
     }
 }
