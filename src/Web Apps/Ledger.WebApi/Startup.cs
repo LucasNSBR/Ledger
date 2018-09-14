@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 
 namespace Ledger.WebApi
@@ -60,6 +61,21 @@ namespace Ledger.WebApi
             });
 
             services
+                .AddSwaggerGen(cfg =>
+                {
+                    cfg.SwaggerDoc("v1", new Info
+                    {
+                        Title = "Ledger v1",
+                        Contact = new Contact
+                        {
+                            Name = "Lucas Campos",
+                            Url = "http://github.com/lucasnsbr"
+                        },
+                        Version = "v1",
+                    });
+                });
+
+            services
                    .AddMvc()
                    .AddJsonOptions(options =>
                    {
@@ -80,6 +96,12 @@ namespace Ledger.WebApi
             app.UseResponseCompression();
             app.UseAuthentication();
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(cfg =>
+            {
+                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Ledger v1");
+            });
         }
     }
 }
