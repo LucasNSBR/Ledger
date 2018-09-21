@@ -10,6 +10,18 @@ namespace Ledger.Activations.Data.EntityTypeConfiguration
         {
             builder
                 .HasKey(k => k.Id);
+
+            builder
+                .OwnsOne(c => c.ContratoSocialPicture);
+
+            builder
+                .OwnsOne(c => c.AlteracaoContratoSocialPicture);
+
+            builder
+                .OwnsOne(c => c.OwnerDocumentPicture);
+
+            builder
+                .OwnsOne(c => c.ExtraDocumentPicture);
         }
     }
 }
