@@ -1,4 +1,6 @@
 ﻿using Ledger.Shared.Commands;
+using Ledger.Shared.Extensions;
+using LilValidation.Core;
 using System;
 
 namespace Ledger.Companies.Domain.Commands
@@ -17,6 +19,59 @@ namespace Ledger.Companies.Domain.Commands
 
         public override void Validate()
         {
+            new ValidationContract<UpdateCompanyCommand, Guid>(this, command => command.Id)
+                .NotEmpty()
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.Name)
+                .NotEmpty()
+                .MinLength(10)
+                .MaxLength(150)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.Email)
+                .NotEmpty()
+                .MinLength(10)
+                .MaxLength(150)
+                .Email()
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.Description)
+                .MaxLength(2000)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.Cnpj)
+                .NotEmpty()
+                .ExactlyLength(14)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.InscricaoEstadual)
+                .NotEmpty()
+                .MaxLength(16)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.OwnerName)
+                .NotEmpty()
+                .MinLength(10)
+                .MaxLength(120)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, DateTime>(this, command => command.OwnerBirthday)
+                .GreaterOrEqualThan(DateTime.Now.AddYears(-80))
+                .LessOrEqualThan(DateTime.Now.AddYears(-17))
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<UpdateCompanyCommand, string>(this, command => command.OwnerCpf)
+                .NotEmpty()
+                .ExactlyLength(11);
         }
     }
 }

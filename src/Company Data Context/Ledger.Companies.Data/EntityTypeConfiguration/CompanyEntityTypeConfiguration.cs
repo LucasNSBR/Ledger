@@ -53,6 +53,7 @@ namespace Ledger.Companies.Data.EntityTypeConfiguration
                     cfg.Property(address => address.Complementation).HasMaxLength(250);
                     cfg.Property(address => address.City).IsRequired().HasMaxLength(100);
                     cfg.Property(address => address.State).IsRequired().HasMaxLength(100);
+                    cfg.Property(address => address.Cep).IsRequired().HasMaxLength(8);
                 });
 
             builder
@@ -60,7 +61,10 @@ namespace Ledger.Companies.Data.EntityTypeConfiguration
                 {
                     cfg.Property(o => o.Name).IsRequired().HasMaxLength(120);
                     cfg.Property(o => o.Birthday).IsRequired();
-                    cfg.OwnsOne(o => o.Cpf);
+                    cfg.OwnsOne(o => o.Cpf, scfg =>
+                    {
+                        scfg.Property(c => c.Number).IsRequired().HasMaxLength(11);
+                    });
                 });
         }
     }

@@ -30,8 +30,9 @@ namespace Ledger.Shared.Notifications
                 foreach (DomainNotification notification in notifier.GetNotifications())
                 {
                     AddNotification(notification.Title, notification.Description);
-                    return true;
                 }
+
+                return true;
             }
 
             return false;
