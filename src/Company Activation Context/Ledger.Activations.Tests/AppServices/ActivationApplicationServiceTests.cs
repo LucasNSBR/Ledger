@@ -119,10 +119,10 @@ namespace Ledger.Activations.Tests.AppServices
         {
             PopulateRepository();
 
-            string owner = "base64Image";
-            string extra = "base64Image";
-            string contratoSocial = "base64Image";
-            string alteracaoContratoSocial = "base64Image";
+            string owner = "bHVjYXM=";
+            string extra = "bHVjYXM=";
+            string contratoSocial = "bHVjYXM=";
+            string alteracaoContratoSocial = "bHVjYXM=";
 
             AttachCompanyDocumentsCommand command = new AttachCompanyDocumentsCommand
             {
@@ -138,7 +138,7 @@ namespace Ledger.Activations.Tests.AppServices
             Activation activation = GetActivation();
 
             Assert.IsNotNull(activation.GetCompanyDocuments());
-            Assert.AreEqual(3, activation.GetCompanyDocuments().Count);
+            Assert.AreEqual(4, activation.GetCompanyDocuments().Count);
         }
     }
 }

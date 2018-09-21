@@ -24,7 +24,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 
         private void SetPending()
         {
-            if(!IsPending())
+            if (!IsPending())
                 Status = ActivationStatus.Pending;
         }
 
@@ -74,7 +74,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
                     AddNotification("Erro de anexação", "Não é possível anexar os documentos a partir do status atual.");
             }
         }
-        
+
         public IReadOnlyList<Image> GetCompanyDocuments()
         {
             if (Company == null)
@@ -84,12 +84,17 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
             }
             else
             {
-                return new List<Image>
+                List<Image> documents = new List<Image>
                 {
                     Company.ContratoSocialPicture,
                     Company.AlteracaoContratoSocialPicture,
-                    Company.OwnerDocumentPicture
+                    Company.OwnerDocumentPicture,
+                    Company.ExtraDocumentPicture
                 };
+
+                documents.RemoveAll(i => i == null);
+
+                return documents;
             }
         }
     }
