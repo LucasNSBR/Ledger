@@ -8,6 +8,7 @@ using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Extensions;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
 using Ledger.Shared.Notifications;
+using Ledger.Shared.ValueObjects;
 using System;
 
 namespace Ledger.Activations.Application.AppServices.ActivationAppServices
@@ -35,15 +36,20 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             if (AddNotifications(command))
                 return;
 
+            Image contratoSocialPicture = new Image(command.ContratoSocialPicture.ToBytes());
+            Image alteracaoContratoSocialPicture = new Image(command.AlteracaoContratoSocialPicture.ToBytes());
+            Image ownerDocumentPicture = new Image(command.OwnerDocumentPicture.ToBytes());
+            Image extraDocumentPicture = new Image(command.ExtraDocument.ToBytes());
+
             Activation activation = _repository.GetById(command.ActivationId);
 
             if (NotifyNullActivation(activation))
                 return;
 
-            activation.AttachCompanyDocuments(command.ContratoSocialPicture.ToBytes(),
-                command.AlteracaoContratoSocialPicture.ToBytes(),
-                command.OwnerDocumentPicture.ToBytes(),
-                command.ExtraDocument.ToBytes());
+            activation.AttachCompanyDocuments(contratoSocialPicture,
+                alteracaoContratoSocialPicture,
+                ownerDocumentPicture,
+                extraDocumentPicture);
 
             if (AddNotifications(activation))
                 return;

@@ -94,13 +94,14 @@ namespace Ledger.Activations.Tests.Aggregates
         [TestMethod]
         public void ShouldAttachAndReturnDocuments()
         {
-            byte[] owner = new byte[8];
-            byte[] contratoSocial = new byte[8];
-            byte[] alteracaoContratoSocial = new byte[8];
-            byte[] extraDocument = new byte[8];
+            Image owner = new Image(new byte[8]);
+            Image contratoSocial = new Image(new byte[8]);
+            Image alteracaoContratoSocial = new Image(new byte[8]);
+            Image extraDocument = new Image(new byte[8]);
+            
 
             activation.AttachCompanyDocuments(contratoSocial, alteracaoContratoSocial, owner, extraDocument);
-            IReadOnlyList<byte[]> documents = activation.GetCompanyDocuments();
+            IReadOnlyList<Image> documents = activation.GetCompanyDocuments();
 
             Assert.IsNotNull(documents);
             Assert.AreEqual(3, documents.Count);
