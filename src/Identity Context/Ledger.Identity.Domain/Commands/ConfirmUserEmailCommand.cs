@@ -1,4 +1,6 @@
 ﻿using Ledger.Shared.Commands;
+using Ledger.Shared.Extensions;
+using LilValidation.Core;
 
 namespace Ledger.Identity.Domain.Commands
 {
@@ -9,6 +11,17 @@ namespace Ledger.Identity.Domain.Commands
 
         public override void Validate()
         {
+            new ValidationContract<ConfirmUserEmailCommand, string>(this, command => command.Email)
+                .NotEmpty()
+                .Email()
+                .MaxLength(150)
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<ConfirmUserEmailCommand, string>(this, command => command.ConfirmationToken)
+                .NotEmpty()
+                .Build()
+                .AddToNotifier(this);
         }
     }
 }
