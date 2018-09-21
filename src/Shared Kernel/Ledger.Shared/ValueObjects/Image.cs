@@ -1,4 +1,6 @@
-﻿namespace Ledger.Shared.ValueObjects
+﻿using System;
+
+namespace Ledger.Shared.ValueObjects
 {
     public class Image : ValueObject<Image>
     {
@@ -10,6 +12,7 @@
         public Image(byte[] data)
         {
             Data = data;
+            Name = Guid.NewGuid().ToString();
         }
 
         public Image(byte[] data, string name)
