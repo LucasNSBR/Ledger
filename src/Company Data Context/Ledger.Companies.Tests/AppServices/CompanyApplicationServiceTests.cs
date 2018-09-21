@@ -42,7 +42,7 @@ namespace Ledger.Companies.Tests.AppServices
         [TestMethod]
         public void ShouldGetByCnpj()
         {
-            Company company = service.GetByCnpj("59.009.518/0001-41");
+            Company company = service.GetByCnpj("59009518000141");
 
             Assert.IsNotNull(company);
         }
@@ -52,11 +52,14 @@ namespace Ledger.Companies.Tests.AppServices
         {
             RegisterCompanyCommand command = new RegisterCompanyCommand
             {
-                Name = "Contoso",
+                Name = "Contoso University",
                 Description = "Contoso corporation",
-                Cnpj = "55.888.518/0001-41",
+                Cnpj = "55888518000141",
                 InscricaoEstadual = "115153",
                 Email = "admin@contoso.com",
+                OwnerName = "Satya Nadella",
+                OwnerBirthday = DateTime.Now.AddYears(-30),
+                OwnerCpf = "23854410099"
             };
 
             service.Register(command);
@@ -70,11 +73,14 @@ namespace Ledger.Companies.Tests.AppServices
             //Register with same CNPJ of the seed company 
             RegisterCompanyCommand command = new RegisterCompanyCommand
             {
-                Name = "Microsoft",
+                Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
-                Cnpj = "59.009.518/0001-41",
+                Cnpj = "59009518000141",
                 InscricaoEstadual = "115153",
                 Email = "admin@microsoft.com",
+                OwnerName = "Satya Nadella",
+                OwnerBirthday = DateTime.Now.AddYears(-30),
+                OwnerCpf = "23854410099"
             };
 
             service.Register(command);
@@ -88,19 +94,22 @@ namespace Ledger.Companies.Tests.AppServices
             UpdateCompanyCommand command = new UpdateCompanyCommand
             {
                 Id = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
-                Name = "Microsoft",
+                Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
-                Cnpj = "55.888.518/0001-41",
+                Cnpj = "55888518000141",
                 InscricaoEstadual = "115153",
                 Email = "admin@microsoft.com",
+                OwnerName = "Satya Nadella",
+                OwnerBirthday = DateTime.Now.AddYears(-30),
+                OwnerCpf = "23854410099"
             };
 
             service.Update(command);
 
             Company company = service.GetById(new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"));
 
-            Assert.AreEqual("Microsoft", company.Name);
-            Assert.AreEqual("55.888.518/0001-41", company.Cnpj.Number);
+            Assert.AreEqual("Microsoft Corporation", company.Name);
+            Assert.AreEqual("55888518000141", company.Cnpj.Number);
         }
 
         [TestMethod]
@@ -109,11 +118,14 @@ namespace Ledger.Companies.Tests.AppServices
             //Register a new company 
             RegisterCompanyCommand registerCommand = new RegisterCompanyCommand
             {
-                Name = "Microsoft",
+                Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
-                Cnpj = "59.009.518/0001-41",
+                Cnpj = "59009518000141",
                 InscricaoEstadual = "115153",
                 Email = "admin@microsoft.com",
+                OwnerName = "Satya Nadella",
+                OwnerBirthday = DateTime.Now.AddYears(-30),
+                OwnerCpf = "23854410099"
             };
 
             service.Register(registerCommand);
@@ -122,11 +134,14 @@ namespace Ledger.Companies.Tests.AppServices
             UpdateCompanyCommand command = new UpdateCompanyCommand
             {
                 Id = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
-                Name = "Microsoft",
+                Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
-                Cnpj = "49.009.518/0001-41",
+                Cnpj = "49009518000141",
                 InscricaoEstadual = "115153",
                 Email = "admin@microsoft.com",
+                OwnerName = "Satya Nadella",
+                OwnerBirthday = DateTime.Now.AddYears(-30),
+                OwnerCpf = "23854410099"
             };
 
             service.Update(command);
@@ -158,8 +173,8 @@ namespace Ledger.Companies.Tests.AppServices
                 Number = 22,
                 Street = "One Way",
                 City = "São Paulo",
-                State = "SP",
-                Cep = "005133111313",
+                State = "São Paulo",
+                Cep = "00112233",
                 Complementation = "Central Square",
                 Neighborhood = "Central",
                 CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1")
@@ -169,7 +184,7 @@ namespace Ledger.Companies.Tests.AppServices
             Assert.AreEqual(null, company.Address);
 
             service.ChangeAddress(command);
-            Assert.AreEqual("005133111313", company.Address.Cep);
+            Assert.AreEqual("00112233", company.Address.Cep);
         }
 
 
