@@ -50,7 +50,21 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketCategoryAppServices
 
             TicketCategory ticketCategory = new TicketCategory(command.Id, command.Name);
 
+            if (NotifyNullCategory(ticketCategory))
+                return;
+
             _repository.Update(ticketCategory);
+        }
+
+        private bool NotifyNullCategory(TicketCategory category)
+        {
+            if (category == null)
+            {
+                AddNotification("Id inválido", "A Categoria do Ticket não pôde ser encontrada.");
+                return true;
+            }
+
+            return false;
         }
     }
 }

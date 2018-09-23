@@ -12,4 +12,12 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Aggregates\" />
+    <Folder Include="Mocks\" />
+    <Folder Include="AppServices\" />
+    <Folder Include="Factories\" />
+    <Folder Include="Specifications\" />
+  </ItemGroup>
+
 </Project>

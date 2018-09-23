@@ -58,6 +58,11 @@ namespace Ledger.WebApi
                 {
                     cfgPolicy.RequireClaim("admin-account", "true");
                 });
+
+                cfg.AddPolicy("SupportAccount", cfgPolicy =>
+                {
+                    cfgPolicy.RequireClaim("support-account", "true");
+                });
             });
 
             services
