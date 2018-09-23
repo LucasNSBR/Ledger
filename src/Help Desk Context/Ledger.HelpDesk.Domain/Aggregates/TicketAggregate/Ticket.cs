@@ -35,8 +35,6 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
             TicketStatus = new TicketStatus();
             TicketConversation = new TicketConversation();
-
-            Open();
         }
 
         public Ticket(Guid id, string title, string details, TicketCategory category, TicketUser user)
@@ -49,19 +47,16 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
             TicketStatus = new TicketStatus();
             TicketConversation = new TicketConversation();
-
-            Open();
         }
-        
+
         public bool IsOpened()
         {
             return TicketStatus.Status == Status.Open;
         }
 
-        private void Open()
+        public bool IsClosed()
         {
-            if (!IsOpened())
-                TicketStatus.SetOpen();
+            return TicketStatus.Status == Status.Closed;
         }
 
         public void AttachIssuePicture(Image issuePicture)
@@ -69,7 +64,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             IssuePicture = issuePicture;
         }
 
-        private bool AlreadyHaveSupport()
+        public bool AlreadyHaveSupport()
         {
             return SupportUser != null;
         }
@@ -84,10 +79,10 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void AddSupportMessage(string body)
         {
-            if (SupportUser == null)
-                throw new ArgumentNullException("You need to assign a Support to handle this ticket first.", "SupportUser");
-
-            AddMessage(body, SupportUser);
+            if (AlreadyHaveSupport())
+                AddMessage(body, SupportUser);
+            else
+                AddNotification("Sem suporte", "Esse ticket ainda não tem nenhum usuário de suporte resolvendo o problema.");
         }
 
         public void AddUserMessage(string body)
@@ -110,14 +105,14 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         private IReadOnlyList<TicketMessage> GetMessagesFrom(User user)
         {
             return TicketConversation.GetMessagesFrom(user);
-        } 
+        }
 
-        private IReadOnlyList<TicketMessage> GetSupportMessages()
+        public IReadOnlyList<TicketMessage> GetSupportMessages()
         {
             return GetMessagesFrom(SupportUser);
         }
 
-        private IReadOnlyList<TicketMessage> GetUserMessages()
+        public IReadOnlyList<TicketMessage> GetUserMessages()
         {
             return GetMessagesFrom(TicketUser);
         }

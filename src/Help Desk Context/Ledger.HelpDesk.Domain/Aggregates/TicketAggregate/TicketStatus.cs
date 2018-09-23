@@ -8,6 +8,11 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public DateTime DateOpened { get; private set; }
         public DateTime? DateClosed { get; private set; }
 
+        public TicketStatus()
+        {
+            SetOpen();
+        }
+
         public void SetOpen()
         {
             DateOpened = DateTime.Now;
