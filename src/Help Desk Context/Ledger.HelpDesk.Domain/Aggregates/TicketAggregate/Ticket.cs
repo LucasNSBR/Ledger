@@ -99,7 +99,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public IReadOnlyList<TicketMessage> GetMessages()
         {
-            return TicketConversation.Messages;
+            return TicketConversation.GetMessages();
         }
 
         private IReadOnlyList<TicketMessage> GetMessagesFrom(User user)

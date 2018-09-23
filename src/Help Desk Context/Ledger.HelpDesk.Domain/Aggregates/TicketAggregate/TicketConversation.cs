@@ -8,17 +8,17 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
     public class TicketConversation : Entity<TicketConversation>
     {
         private readonly List<TicketMessage> _messages;
-        public IReadOnlyList<TicketMessage> Messages
-        {
-            get
-            {
-                return _messages;
-            }
-        }
 
         public TicketConversation()
         {
             _messages = new List<TicketMessage>();
+        }
+
+        public IReadOnlyList<TicketMessage> GetMessages()
+        {
+            return _messages
+                .OrderBy(c => c.MessageDate)
+                .ToList();
         }
 
         public void AddMessage(TicketMessage message)
@@ -28,7 +28,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         
         public IReadOnlyList<TicketMessage> GetMessagesFrom(User user)
         {
-            return _messages
+            return GetMessages()
                 .Where(m => m.TicketUser == user)
                 .ToList();
         }
