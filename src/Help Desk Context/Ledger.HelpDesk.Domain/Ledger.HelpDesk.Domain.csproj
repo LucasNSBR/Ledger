@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Aggregates\TicketAggregate\" />
+    <Folder Include="Events\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

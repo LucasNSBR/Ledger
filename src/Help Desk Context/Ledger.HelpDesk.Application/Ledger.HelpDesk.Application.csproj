@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+    <ProjectReference Include="..\Ledger.HelpDesk.Domain\Ledger.HelpDesk.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
