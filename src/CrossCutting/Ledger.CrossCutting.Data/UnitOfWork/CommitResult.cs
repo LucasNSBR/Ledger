@@ -19,7 +19,6 @@ namespace Ledger.CrossCutting.Data.UnitOfWork
             Exception = exception;
         }
 
-
         public static CommitResult Ok()
         {
             return new CommitResult();

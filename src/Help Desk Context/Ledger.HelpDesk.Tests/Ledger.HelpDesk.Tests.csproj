@@ -13,11 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregates\" />
-    <Folder Include="Mocks\" />
-    <Folder Include="AppServices\" />
     <Folder Include="Factories\" />
-    <Folder Include="Specifications\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ledger.HelpDesk.Application\Ledger.HelpDesk.Application.csproj" />
+    <ProjectReference Include="..\Ledger.HelpDesk.Domain\Ledger.HelpDesk.Domain.csproj" />
   </ItemGroup>
 
 </Project>
