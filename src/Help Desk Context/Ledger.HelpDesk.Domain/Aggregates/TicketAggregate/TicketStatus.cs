@@ -1,8 +1,23 @@
-﻿namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
+﻿using System;
+
+namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 {
-    public enum TicketStatus
+    public class TicketStatus
     {
-        Open = 0,
-        Closed = 1,
+        public Status Status { get; private set; }
+        public DateTime DateOpened { get; private set; }
+        public DateTime? DateClosed { get; private set; }
+
+        public void SetOpen()
+        {
+            DateOpened = DateTime.Now;
+            Status = Status.Open;
+        }
+
+        public void SetClosed()
+        {
+            DateClosed = DateTime.Now;
+            Status = Status.Closed;
+        }
     }
 }

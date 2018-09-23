@@ -1,4 +1,5 @@
-﻿using Ledger.Shared.Entities;
+﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+using Ledger.Shared.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,8 +25,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         {
             _messages.Add(message);
         }
-
-        public IReadOnlyList<TicketMessage> GetMessagesFrom(TicketUser user)
+        
+        public IReadOnlyList<TicketMessage> GetMessagesFrom(User user)
         {
             return _messages
                 .Where(m => m.TicketUser == user)

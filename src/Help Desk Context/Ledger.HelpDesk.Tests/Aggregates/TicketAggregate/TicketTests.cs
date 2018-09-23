@@ -1,5 +1,6 @@
 ﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -10,20 +11,19 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
     {
         public Ticket ticket;
         public TicketCategory category;
+        public TicketUser user;
 
         public TicketTests()
         {
             category = new TicketCategory("Problemas de ativação");
-            ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category);
+            user = new TicketUser(Guid.NewGuid(), "contoso@contoso.com");
+            ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category, user);
         }
 
         [TestMethod]
         public void ShouldAddMessageToTicket()
         {
-            TicketUser user = new TicketUser(Guid.NewGuid());
-            TicketMessage message = new TicketMessage("Quando irão resolver meu problema?", user);
-
-            ticket.AddMessage(message);
+            ticket.AddMessage("Quando irão resolver meu problema?", user);
 
             Assert.AreEqual(1, ticket.GetMessages().Count);
         }
@@ -31,10 +31,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldGetMessagesFromUser()
         {
-            TicketUser user = new TicketUser(Guid.NewGuid());
-            TicketMessage message = new TicketMessage("Quando irão resolver meu problema?", user);
-
-            ticket.AddMessage(message);
+            ticket.AddMessage("Quando irão resolver meu problema?", user);
 
             Assert.AreEqual(1, ticket.GetMessagesFrom(user).Count);
         }
