@@ -15,6 +15,11 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             }
         }
 
+        public TicketConversation()
+        {
+            _messages = new List<TicketMessage>();
+        }
+
         public void AddMessage(TicketMessage message)
         {
             _messages.Add(message);

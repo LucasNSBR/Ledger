@@ -12,6 +12,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public TicketMessage(string body, TicketUser user)
         {
             Body = body;
+            TicketUser = user;
         }
     }
 }
