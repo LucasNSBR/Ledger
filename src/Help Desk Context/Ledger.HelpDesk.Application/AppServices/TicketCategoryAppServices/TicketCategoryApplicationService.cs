@@ -48,7 +48,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketCategoryAppServices
             if (AddNotifications(command))
                 return;
 
-            TicketCategory ticketCategory = new TicketCategory(command.Name);
+            TicketCategory ticketCategory = new TicketCategory(command.Id, command.Name);
 
             _repository.Update(ticketCategory);
         }
