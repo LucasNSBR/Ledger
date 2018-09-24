@@ -104,7 +104,7 @@ namespace Ledger.Activations.Tests.Aggregates
             IReadOnlyList<Image> documents = activation.GetCompanyDocuments();
 
             Assert.IsNotNull(documents);
-            Assert.AreEqual(3, documents.Count);
+            Assert.AreEqual(4, documents.Count);
         }
     }
 }
