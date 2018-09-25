@@ -11,11 +11,11 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
     {
         public TicketStatus TicketStatus { get; private set; }
 
-        public Guid TicketCategoryId { get; private set; }
-        public TicketCategory TicketCategory { get; private set; }
+        public Guid CategoryId { get; private set; }
+        public TicketCategory Category { get; private set; }
 
         public Guid ConversationId { get; private set; }
-        public TicketConversation TicketConversation { get; private set; }
+        public TicketConversation Conversation { get; private set; }
 
         public Guid TicketUserId { get; private set; }
         public TicketUser TicketUser { get; private set; }
@@ -30,11 +30,11 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         {
             Title = title;
             Details = details;
-            TicketCategory = category;
+            Category = category;
             TicketUser = user;
 
             TicketStatus = new TicketStatus();
-            TicketConversation = new TicketConversation();
+            Conversation = new TicketConversation();
         }
 
         public Ticket(Guid id, string title, string details, TicketCategory category, TicketUser user)
@@ -42,11 +42,11 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             Id = id;
             Title = title;
             Details = details;
-            TicketCategory = category;
+            Category = category;
             TicketUser = user;
 
             TicketStatus = new TicketStatus();
-            TicketConversation = new TicketConversation();
+            Conversation = new TicketConversation();
         }
 
         public bool IsOpened()
@@ -94,17 +94,17 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         {
             TicketMessage message = new TicketMessage(body, user);
 
-            TicketConversation.AddMessage(message);
+            Conversation.AddMessage(message);
         }
 
         public IReadOnlyList<TicketMessage> GetMessages()
         {
-            return TicketConversation.GetMessages();
+            return Conversation.GetMessages();
         }
 
         private IReadOnlyList<TicketMessage> GetMessagesFrom(User user)
         {
-            return TicketConversation.GetMessagesFrom(user);
+            return Conversation.GetMessagesFrom(user);
         }
 
         public IReadOnlyList<TicketMessage> GetSupportMessages()

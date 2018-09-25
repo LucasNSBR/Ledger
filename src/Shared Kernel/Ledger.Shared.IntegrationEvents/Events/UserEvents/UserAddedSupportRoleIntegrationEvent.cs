@@ -4,12 +4,12 @@ namespace Ledger.Shared.IntegrationEvents.Events.UserEvents
 {
     public class UserAddedSupportRoleIntegrationEvent : IntegrationEvent
     {
-        public Guid Id { get; }
+        public Guid UserId { get; }
         public string Email { get; }
 
         public UserAddedSupportRoleIntegrationEvent(Guid id, string email)
         {
-            Id = id;
+            UserId = id;
             Email = email;
         }
     }
