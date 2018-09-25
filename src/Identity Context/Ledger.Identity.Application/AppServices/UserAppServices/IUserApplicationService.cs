@@ -15,6 +15,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
         Task ForgotPassword(ForgotUserPasswordCommand command);
         Task ResetPassword(ResetUserPasswordCommand command);
         Task ChangePassword(ChangeUserPasswordCommand command);
+        Task AddSupportRole(AddUserSupportRoleCommand command);
         Task<ClaimsIdentity> Login(LoginUserCommand command);
     }
 }

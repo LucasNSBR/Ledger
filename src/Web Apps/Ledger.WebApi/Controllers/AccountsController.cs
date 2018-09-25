@@ -82,6 +82,21 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("addtosupport/{email}")]
+        //[Authorize(Policy = "AdminAccount")]
+        public async Task<IActionResult> AddToSupport(string email)
+        {
+            AddUserSupportRoleCommand command = new AddUserSupportRoleCommand
+            {
+                Email = email
+            };
+
+            await _userApplicationService.AddSupportRole(command);
+
+            return CreateResponse();
+        }
+
+        [HttpPost]
         [Route("resetpassword")]
         public async Task<IActionResult> ResetPassword([FromBody]ResetUserPasswordCommand command)
         {

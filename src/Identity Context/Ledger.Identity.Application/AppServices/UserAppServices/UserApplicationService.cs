@@ -3,6 +3,7 @@ using Ledger.Identity.Domain.Commands;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
+using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -18,8 +19,8 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
         private readonly LedgerUserManager _userManager;
         private readonly LedgerSignInManager _signInManager;
 
-        public UserApplicationService(LedgerUserManager userManager, LedgerSignInManager signInManager, IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus)
-                                                                                                                                : base(domainNotificationHandler, domainServiceBus)
+        public UserApplicationService(LedgerUserManager userManager, LedgerSignInManager signInManager, IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
+                                                                                                                                : base(domainNotificationHandler, domainServiceBus, integrationBus)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -51,6 +52,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             {
                 string confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 await PublishLocal(new UserRegisteredEvent(user.Email, confirmationToken));
+                await Publish(new UserRegisteredIntegrationEvent(user.Id, user.Email));
 
                 return user;
             }
@@ -170,6 +172,26 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
                 AddNotifications(result);
             else
                 await PublishLocal(new UserResetedPasswordEvent(user.Email));
+        }
+
+        public async Task AddSupportRole(AddUserSupportRoleCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            LedgerIdentityUser user = await GetByEmail(command.Email);
+
+            if (NotifyNullUser(user))
+                return;
+
+            IdentityResult result = await _userManager.AddClaimAsync(user, new Claim("support-account", "true"));
+
+            if (!result.Succeeded)
+                AddNotifications(result);
+            else
+                await Publish(new UserAddedSupportRoleIntegrationEvent(user.Id, user.Email));
         }
 
         private bool NotifyNullUser(LedgerIdentityUser user)

@@ -1,5 +1,6 @@
 ﻿using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Events;
+using Ledger.Shared.IntegrationEvents.Events;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace Ledger.Identity.Application.AppServices
     {
         private readonly IDomainNotificationHandler _domainNotificationHandler;
         private readonly IDomainServiceBus _domainServiceBus;
+        private readonly IIntegrationServiceBus _integrationBus;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus)
+        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _domainServiceBus = domainServiceBus;
+            _integrationBus = integrationBus;
         }
 
         public bool AddNotifications(IDomainNotifier notifier)
@@ -53,6 +56,11 @@ namespace Ledger.Identity.Application.AppServices
         public async Task PublishLocal<TDomainEvent>(TDomainEvent @event, CancellationToken? cancellationToken = null) where TDomainEvent: DomainEvent
         {
             await _domainServiceBus.Publish(@event, cancellationToken);
+        }
+
+        public async Task Publish<TIntegrationEvent>(TIntegrationEvent integrationEvent) where TIntegrationEvent : IntegrationEvent
+        {
+            await _integrationBus.Publish(integrationEvent);
         }
     }
 }
