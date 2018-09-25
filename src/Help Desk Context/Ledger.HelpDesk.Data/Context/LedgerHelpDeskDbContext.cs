@@ -11,8 +11,7 @@ namespace Ledger.HelpDesk.Data.Context
     {
         public DbSet<TicketCategory> TicketCategories { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<SupportUser> SupportUsers { get; set; }
-        public DbSet<TicketUser> TicketUsers { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public LedgerHelpDeskDbContext(DbContextOptions<LedgerHelpDeskDbContext> options) : base(options)
         {

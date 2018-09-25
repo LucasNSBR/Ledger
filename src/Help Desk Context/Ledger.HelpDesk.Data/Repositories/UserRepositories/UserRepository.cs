@@ -10,38 +10,27 @@ namespace Ledger.HelpDesk.Data.Repositories.UserRepositories
     public class UserRepository : IUserRepository
     {
         private readonly LedgerHelpDeskDbContext _dbContext;
-        private readonly DbSet<SupportUser> _supportUsers;
-        private readonly DbSet<TicketUser> _ticketUsers;
+        private readonly DbSet<User> _dbSet;
 
         public UserRepository(LedgerHelpDeskDbContext dbContext)
         {
             _dbContext = dbContext;
-            _supportUsers = dbContext.SupportUsers;
-            _ticketUsers = dbContext.TicketUsers;
+            _dbSet = dbContext.Users;
         }
 
-        public IQueryable<SupportUser> GetSupportUsers()
-        {
-            return _supportUsers
-                .AsNoTracking();
-        }
-
-        public IQueryable<TicketUser> GetTicketUsers()
-        {
-            return _ticketUsers
-                .AsNoTracking();
-        }
         public SupportUser GetSupportUserById(Guid id)
         {
-            return _supportUsers
+            return _dbSet
                 .AsNoTracking()
+                .OfType<SupportUser>()
                 .FirstOrDefault(x => x.Id == id);
         }
 
         public TicketUser GetTicketUserById(Guid id)
         {
-            return _ticketUsers
+            return _dbSet
                 .AsNoTracking()
+                .OfType<TicketUser>()
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -50,7 +39,7 @@ namespace Ledger.HelpDesk.Data.Repositories.UserRepositories
             _dbContext.Add(user);
         }
 
-        public void AddToSupport(SupportUser user)
+        public void AddToSupport(TicketUser user)
         {
             _dbContext.Add(user);
         }

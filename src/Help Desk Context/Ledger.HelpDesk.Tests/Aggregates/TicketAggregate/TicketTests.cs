@@ -98,7 +98,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         }
 
         [TestMethod]
-        public void ShouldGetAllMessages()
+        public void ShouldGetMessages()
         {
             SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
             ticket.AssignSupportUser(user);
@@ -112,40 +112,6 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
             ticket.AddUserMessage("Consegui!");
 
             Assert.AreEqual(7, ticket.GetMessages().Count);
-        }
-
-        [TestMethod]
-        public void ShouldGetUserMessages()
-        {
-            SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
-            ticket.AssignSupportUser(user);
-
-            ticket.AddSupportMessage("Olá, como eu posso te ajudar?");
-            ticket.AddUserMessage("Estou com um problema para ativar minha conta.");
-            ticket.AddSupportMessage("Qual problema você está tendo?");
-            ticket.AddUserMessage("Não consigo anexar meus documentos para efetuar a ativação.");
-            ticket.AddSupportMessage("Um momento enquanto eu faço alguns testes.");
-            ticket.AddSupportMessage("Pronto. Tente agora.");
-            ticket.AddUserMessage("Consegui!");
-
-            Assert.AreEqual(3, ticket.GetUserMessages().Count);
-        }
-
-        [TestMethod]
-        public void ShouldGetSupportMessages()
-        {
-            SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
-            ticket.AssignSupportUser(user);
-
-            ticket.AddSupportMessage("Olá, como eu posso te ajudar?");
-            ticket.AddUserMessage("Estou com um problema para ativar minha conta.");
-            ticket.AddSupportMessage("Qual problema você está tendo?");
-            ticket.AddUserMessage("Não consigo anexar meus documentos para efetuar a ativação.");
-            ticket.AddSupportMessage("Um momento enquanto eu faço alguns testes.");
-            ticket.AddSupportMessage("Pronto. Tente agora.");
-            ticket.AddUserMessage("Consegui!");
-
-            Assert.AreEqual(4, ticket.GetSupportMessages().Count);
         }
     }
 }

@@ -82,9 +82,9 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("addtosupport/{email}")]
-        //[Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> AddToSupport(string email)
+        [Route("addsupportrole/{email}")]
+        [Authorize(Policy = "AdminAccount")]
+        public async Task<IActionResult> AddSupportRole(string email)
         {
             AddUserSupportRoleCommand command = new AddUserSupportRoleCommand
             {

@@ -104,21 +104,6 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return Conversation.GetMessages();
         }
 
-        private IReadOnlyList<TicketMessage> GetMessagesFrom(User user)
-        {
-            return Conversation.GetMessagesFrom(user);
-        }
-
-        public IReadOnlyList<TicketMessage> GetSupportMessages()
-        {
-            return GetMessagesFrom(SupportUser);
-        }
-
-        public IReadOnlyList<TicketMessage> GetUserMessages()
-        {
-            return GetMessagesFrom(TicketUser);
-        }
-
         public void Close()
         {
             TicketStatus.SetClosed();
