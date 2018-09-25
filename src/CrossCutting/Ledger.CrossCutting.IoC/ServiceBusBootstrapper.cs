@@ -1,4 +1,5 @@
-﻿using Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate;
+﻿using GreenPipes;
+using Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate;
 using Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate;
 using Ledger.CrossCutting.ServiceBus;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
@@ -51,6 +52,7 @@ namespace Ledger.CrossCutting.IoC
                 transport.ReceiveEndpoint(host, "company_events", endpoint =>
                 {
                     endpoint.LoadFrom(provider);
+                    endpoint.UseRetry(r => r.Immediate(5));
                 });
             }));
 

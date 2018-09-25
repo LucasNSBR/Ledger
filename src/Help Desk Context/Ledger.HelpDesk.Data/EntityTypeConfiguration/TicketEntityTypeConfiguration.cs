@@ -18,9 +18,8 @@ namespace Ledger.HelpDesk.Data.EntityTypeConfiguration
                 });
 
             builder
-                .HasOne(t => t.Category)
-                .WithMany()
-                .HasForeignKey(t => t.CategoryId);
+                .Property(t => t.CategoryId)
+                .IsRequired();
 
             builder
                 .HasOne(t => t.Conversation)
@@ -28,14 +27,8 @@ namespace Ledger.HelpDesk.Data.EntityTypeConfiguration
                 .HasForeignKey<TicketConversation>(tc => tc.Id);
 
             builder
-                .HasOne(t => t.TicketUser)
-                .WithMany()
-                .HasForeignKey(t => t.TicketUserId);
-
-            builder
-                .HasOne(t => t.SupportUser)
-                .WithMany()
-                .HasForeignKey(t => t.SupportUserId);
+                .Property(p => p.TicketUserId)
+                .IsRequired();
 
             builder
                 .Property(t => t.Title)

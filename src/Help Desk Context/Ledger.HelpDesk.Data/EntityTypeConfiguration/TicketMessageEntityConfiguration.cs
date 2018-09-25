@@ -12,9 +12,8 @@ namespace Ledger.HelpDesk.Data.EntityTypeConfiguration
                 .HasKey(k => k.Id);
 
             builder
-                .HasOne(m => m.TicketUser)
-                .WithMany()
-                .HasForeignKey(m => m.TicketUserId);
+                .Property(m => m.UserId)
+                .IsRequired();
 
             builder
                 .Property(m => m.MessageDate)

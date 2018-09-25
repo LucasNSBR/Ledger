@@ -1,5 +1,5 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
 using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
 using System;
@@ -12,15 +12,12 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public TicketStatus TicketStatus { get; private set; }
 
         public Guid CategoryId { get; private set; }
-        public TicketCategory Category { get; private set; }
 
         public Guid ConversationId { get; private set; }
         public TicketConversation Conversation { get; private set; }
 
         public Guid TicketUserId { get; private set; }
-        public TicketUser TicketUser { get; private set; }
         public Guid SupportUserId { get; private set; }
-        public SupportUser SupportUser { get; private set; }
 
         public string Title { get; private set; }
         public string Details { get; private set; }
@@ -28,24 +25,24 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         protected Ticket() { }
 
-        public Ticket(string title, string details, TicketCategory category, TicketUser user)
+        public Ticket(string title, string details, Guid categoryId, Guid userId)
         {
             Title = title;
             Details = details;
-            Category = category;
-            TicketUser = user;
+            CategoryId = categoryId;
+            TicketUserId = userId;
 
             TicketStatus = new TicketStatus();
             Conversation = new TicketConversation();
         }
 
-        public Ticket(Guid id, string title, string details, TicketCategory category, TicketUser user)
+        public Ticket(Guid id, string title, string details, Guid categoryId, Guid userId)
         {
             Id = id;
             Title = title;
             Details = details;
-            Category = category;
-            TicketUser = user;
+            CategoryId = categoryId;
+            TicketUserId = userId;
 
             TicketStatus = new TicketStatus();
             Conversation = new TicketConversation();
@@ -56,11 +53,6 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return TicketStatus.Status == Status.Open;
         }
 
-        public bool IsClosed()
-        {
-            return TicketStatus.Status == Status.Closed;
-        }
-
         public void AttachIssuePicture(Image issuePicture)
         {
             IssuePicture = issuePicture;
@@ -68,35 +60,37 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public bool AlreadyHaveSupport()
         {
-            return SupportUser != null;
+            return SupportUserId != null;
         }
 
-        public void AssignSupportUser(SupportUser user)
+        public void AssignSupportUser(User user)
         {
             if (!AlreadyHaveSupport())
-                SupportUser = user;
+            {
+                if (user.IsInRole(RoleTypes.Support))
+                    SupportUserId = user.Id;
+                else
+                    AddNotification("Usuário proibido", "O usuário especificado não possui as permissões necessárias para prestar suporte.");
+            }
             else
                 AddNotification("Suporte já definido", "Já existe um usuário de suporte resolvendo esse problema.");
         }
 
-        public void AddSupportMessage(string body)
+        public void AddMessage(string body, Guid userId)
         {
-            if (AlreadyHaveSupport())
-                AddMessage(body, SupportUser);
+            if (!IsOpened())
+            {
+                AddNotification("Ticket finalizado", "Não é possível modificar um ticket que já foi resolvido.");
+                return;
+            }
+
+            if (userId == SupportUserId || userId == TicketUserId)
+            {
+                TicketMessage message = new TicketMessage(body, userId);
+                Conversation.AddMessage(message);
+            }
             else
-                AddNotification("Sem suporte", "Esse ticket ainda não tem nenhum usuário de suporte resolvendo o problema.");
-        }
-
-        public void AddUserMessage(string body)
-        {
-            AddMessage(body, TicketUser);
-        }
-
-        private void AddMessage(string body, User user)
-        {
-            TicketMessage message = new TicketMessage(body, user);
-
-            Conversation.AddMessage(message);
+                AddNotification("Não possui acesso às mensagens", "O usuário não tem permissão para participar dessa conversa.");
         }
 
         public IReadOnlyList<TicketMessage> GetMessages()
@@ -106,7 +100,10 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void Close()
         {
-            TicketStatus.SetClosed();
+            if (!IsOpened())
+                AddNotification("Ticket finalizado", "Não é possível finalizar um ticket que já foi finalizado.");
+            else
+                TicketStatus.SetClosed();
         }
     }
 }

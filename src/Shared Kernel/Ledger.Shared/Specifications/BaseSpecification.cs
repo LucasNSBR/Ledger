@@ -13,6 +13,11 @@ namespace Ledger.Shared.Specifications
                 .Invoke(entity);
         }
 
+        public Func<T, bool> Compile()
+        {
+            return ToExpression().Compile();
+        }
+
         public abstract Expression<Func<T, bool>> ToExpression();
     }
 }

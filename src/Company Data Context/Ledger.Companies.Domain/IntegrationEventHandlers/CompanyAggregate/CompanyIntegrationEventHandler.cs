@@ -36,15 +36,13 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
             Guid id = context.Message.CompanyId;
             Company company = _repository.GetById(id);
 
+            if (company == null)
+                throw new InvalidOperationException("Company not found");
+
             company.SetActive();
 
-            if (!_domainNotificationHandler.AddNotifications(company))
-            {
-                _repository.Update(company);
-                _unitOfWork.Commit();
-            }
-            else
-                throw new InvalidOperationException(_domainNotificationHandler.GetAndFormatNotifications());
+            _repository.Update(company);
+            _unitOfWork.Commit();
 
             EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationAcceptedEmail(company.Email.Email);
             await _emailDispatcher.SendEmailAsync(emailTemplate);
@@ -55,15 +53,13 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
             Guid id = context.Message.CompanyId;
             Company company = _repository.GetById(id);
 
+            if (company == null)
+                throw new InvalidOperationException("Company not found");
+
             company.SetInactive();
 
-            if (!_domainNotificationHandler.AddNotifications(company))
-            {
-                _repository.Update(company);
-                _unitOfWork.Commit();
-            }
-            else
-                throw new InvalidOperationException(_domainNotificationHandler.GetAndFormatNotifications());
+            _repository.Update(company);
+            _unitOfWork.Commit();
 
             EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationRejectedEmail(company.Email.Email);
             await _emailDispatcher.SendEmailAsync(emailTemplate);

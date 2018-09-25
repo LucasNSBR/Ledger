@@ -1,22 +1,20 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.Shared.Entities;
+﻿using Ledger.Shared.Entities;
 using System;
 
 namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 {
     public class TicketMessage : Entity<TicketMessage>
     {
-        public Guid TicketUserId { get; private set; }
-        public User TicketUser { get; private set; }
+        public Guid UserId { get; private set; }
         public string Body { get; private set; }
-        public DateTime MessageDate { get; private set; }
+        public DateTime MessageDate { get; }
 
         protected TicketMessage() { }
 
-        public TicketMessage(string body, User user)
+        public TicketMessage(string body, Guid userId)
         {
             Body = body;
-            TicketUser = user;
+            UserId = userId;
 
             MessageDate = DateTime.Now;
         }

@@ -1,4 +1,7 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+﻿using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
+using Ledger.HelpDesk.Domain.Context;
 using Ledger.HelpDesk.Domain.Repositories.UserRepositories;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using MassTransit;
@@ -11,10 +14,12 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
                                                IConsumer<UserAddedSupportRoleIntegrationEvent>
     {
         private readonly IUserRepository _repository;
+        private readonly IUnitOfWork<ILedgerHelpDeskDbAbstraction> _unitOfWork;
 
-        public UserIntegrationEventHandler(IUserRepository repository)
+        public UserIntegrationEventHandler(IUserRepository repository, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public Task Consume(ConsumeContext<UserRegisteredIntegrationEvent> context)
@@ -22,9 +27,10 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
             Guid id = context.Message.UserId;
             string email = context.Message.Email;
 
-            TicketUser user = new TicketUser(id, email);
+            User user = new User(id, email);
 
             _repository.Register(user);
+            _unitOfWork.Commit();
 
             return Task.CompletedTask;
         }
@@ -32,11 +38,16 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
         public Task Consume(ConsumeContext<UserAddedSupportRoleIntegrationEvent> context)
         {
             Guid id = context.Message.UserId;
-            string email = context.Message.Email;
+            User user = _repository.GetById(id);
 
-            SupportUser user = new SupportUser(id, email);
+            if (user == null)
+                throw new NotSupportedException("User not found");
 
-            _repository.AddToSupport(user);
+            SupportRole supportRole = new SupportRole(user.Id);
+            user.AddRole(supportRole);
+
+            _repository.Update(user);
+            _unitOfWork.Commit();
 
             return Task.CompletedTask;
         }

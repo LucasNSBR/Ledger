@@ -7,9 +7,9 @@ namespace Ledger.HelpDesk.Domain.Factories
 {
     public class TicketFactory : ITicketFactory
     {
-        public Ticket Open(Guid id, string title, string details, TicketCategory category, TicketUser user)
-        {
-            return new Ticket(id, title, details, category, user);
-        }
+        //public Ticket Open(Guid id, string title, string details, TicketCategory category, TicketUser user)
+        //{
+        //    return new Ticket(id, title, details, category, user);
+        //}
     }
 }

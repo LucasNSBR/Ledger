@@ -1,6 +1,7 @@
 ﻿using Ledger.HelpDesk.Data.Context;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Repositories.UserRepositories;
+using Ledger.HelpDesk.Domain.Specifications.UserSpecifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -18,30 +19,28 @@ namespace Ledger.HelpDesk.Data.Repositories.UserRepositories
             _dbSet = dbContext.Users;
         }
 
-        public SupportUser GetSupportUserById(Guid id)
+        public User GetByEmail(string email)
         {
-            return _dbSet
-                .AsNoTracking()
-                .OfType<SupportUser>()
-                .FirstOrDefault(x => x.Id == id);
+            throw new NotImplementedException();
         }
 
-        public TicketUser GetTicketUserById(Guid id)
+        public User GetById(Guid id)
         {
+            UserIdSpecification specification = new UserIdSpecification(id);
+
             return _dbSet
                 .AsNoTracking()
-                .OfType<TicketUser>()
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(specification.ToExpression());
         }
-
-        public void Register(TicketUser user)
+        
+        public void Register(User user)
         {
             _dbContext.Add(user);
         }
 
-        public void AddToSupport(TicketUser user)
+        public void Update(User user)
         {
-            _dbContext.Add(user);
+            _dbContext.Update(user);
         }
     }
 }

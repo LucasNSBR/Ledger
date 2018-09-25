@@ -5,9 +5,9 @@ namespace Ledger.HelpDesk.Domain.Repositories.UserRepositories
 {
     public interface IUserRepository
     {
-        SupportUser GetSupportUserById(Guid id);
-        TicketUser GetTicketUserById(Guid id);
-        void Register(TicketUser user);
-        void AddToSupport(SupportUser user);
+        User GetByEmail(string email);
+        User GetById(Guid id);
+        void Register(User user);
+        void Update(User user);
     }
 }

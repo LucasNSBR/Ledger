@@ -7,6 +7,6 @@ namespace Ledger.HelpDesk.Domain.Factories
 {
     public interface ITicketFactory
     {
-        Ticket Open(Guid id, string title, string details, TicketCategory category, TicketUser user);
+        //Ticket Open(Guid id, string title, string details, TicketCategory category, TicketUser user);
     }
 }
