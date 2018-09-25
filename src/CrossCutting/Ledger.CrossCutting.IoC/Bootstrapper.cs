@@ -3,8 +3,6 @@ using Ledger.Activations.Domain.Context;
 using Ledger.Companies.Data.Context;
 using Ledger.Companies.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
-using Ledger.CrossCutting.ServiceBus;
-using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Notifications;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +22,7 @@ namespace Ledger.CrossCutting.IoC
             IdentityBootstrapper.Initialize(services, configuration);
             ActivationContextBootstrapper.Initialize(services);
             CompanyContextBootstrapper.Initialize(services);
+            HelpDeskContextBootstrapper.Initialize(services);
         }
 
         private static void InitializeCore(IServiceCollection services)
