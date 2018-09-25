@@ -3,6 +3,8 @@ using Ledger.Activations.Domain.Context;
 using Ledger.Companies.Data.Context;
 using Ledger.Companies.Domain.Context;
 using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.HelpDesk.Data.Context;
+using Ledger.HelpDesk.Domain.Context;
 using Ledger.Shared.Notifications;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,9 +36,11 @@ namespace Ledger.CrossCutting.IoC
         {
             services.AddScoped<ILedgerActivationDbAbstraction, LedgerActivationDbContext>(provider => provider.GetRequiredService<LedgerActivationDbContext>());
             services.AddScoped<ILedgerCompanyDbAbstraction, LedgerCompanyDbContext>(provider => provider.GetRequiredService<LedgerCompanyDbContext>());
+            services.AddScoped<ILedgerHelpDeskDbAbstraction, LedgerHelpDeskDbContext>(provider => provider.GetRequiredService<LedgerHelpDeskDbContext>());
 
             services.AddScoped<IUnitOfWork<ILedgerActivationDbAbstraction>, UnitOfWork<ILedgerActivationDbAbstraction>>();
             services.AddScoped<IUnitOfWork<ILedgerCompanyDbAbstraction>, UnitOfWork<ILedgerCompanyDbAbstraction>>();
+            services.AddScoped<IUnitOfWork<ILedgerHelpDeskDbAbstraction>, UnitOfWork<ILedgerHelpDeskDbAbstraction>>();
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.UserAggregate
     {
         public string Email { get; private set; }
 
+        protected User() { }
+
         public User(Guid id, string email)
         {
             Id = id;

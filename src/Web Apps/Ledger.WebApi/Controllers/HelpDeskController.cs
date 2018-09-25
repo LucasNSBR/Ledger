@@ -25,7 +25,7 @@ namespace Ledger.WebApi.Controllers
         {
             IQueryable<TicketCategory> ticketCategory = _ticketCategoryAppService.GetAllCategories();
 
-            return CreateErrorResponse(ticketCategory);
+            return CreateResponse(ticketCategory);
         }
 
         [HttpGet("categories/{id:guid}")]

@@ -46,6 +46,9 @@ namespace Ledger.HelpDesk.Data.EntityTypeConfiguration
                 .Property(t => t.Details)
                 .IsRequired()
                 .HasMaxLength(2000);
+
+            builder
+                .OwnsOne(t => t.IssuePicture);
         }
     }
 }

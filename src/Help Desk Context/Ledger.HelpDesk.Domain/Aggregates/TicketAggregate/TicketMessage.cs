@@ -11,6 +11,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public string Body { get; private set; }
         public DateTime MessageDate { get; private set; }
 
+        protected TicketMessage() { }
+
         public TicketMessage(string body, User user)
         {
             Body = body;
