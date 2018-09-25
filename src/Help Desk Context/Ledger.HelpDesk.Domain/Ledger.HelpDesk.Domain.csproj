@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregates\TicketAggregate\" />
     <Folder Include="Events\" />
   </ItemGroup>
 

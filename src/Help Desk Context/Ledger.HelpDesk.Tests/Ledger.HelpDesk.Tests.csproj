@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ledger.HelpDesk.Application\Ledger.HelpDesk.Application.csproj" />
     <ProjectReference Include="..\Ledger.HelpDesk.Domain\Ledger.HelpDesk.Domain.csproj" />
   </ItemGroup>
