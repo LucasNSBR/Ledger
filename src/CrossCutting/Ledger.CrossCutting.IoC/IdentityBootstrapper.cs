@@ -1,10 +1,10 @@
 ﻿using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Data.Context;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Configuration.JwtConfigurations;
 using Ledger.Identity.Domain.Configuration.SigningConfigurations;
 using Ledger.Identity.Domain.EventHandlers.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services;
 using Ledger.Identity.Domain.Services.SigningServices;

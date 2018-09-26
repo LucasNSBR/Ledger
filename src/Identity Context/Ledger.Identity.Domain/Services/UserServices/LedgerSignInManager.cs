@@ -1,4 +1,4 @@
-﻿using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
+﻿using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

@@ -1,7 +1,7 @@
 ﻿using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Commands;
 using Ledger.Identity.Domain.Events.UserEvents;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using Ledger.Shared.Notifications;

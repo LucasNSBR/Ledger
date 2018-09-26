@@ -55,6 +55,5 @@ namespace Ledger.WebApi.Controllers
 
             return CreateResponse();
         }
-
     }
 }

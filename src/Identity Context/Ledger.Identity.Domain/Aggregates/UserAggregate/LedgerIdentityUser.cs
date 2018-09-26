@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace Ledger.Identity.Domain.Models.Aggregates.UserAggregate
+namespace Ledger.Identity.Domain.Aggregates.UserAggregate
 {
     public class LedgerIdentityUser : IdentityUser<Guid>
     {

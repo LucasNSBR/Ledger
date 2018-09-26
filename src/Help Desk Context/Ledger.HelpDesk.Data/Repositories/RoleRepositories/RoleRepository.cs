@@ -19,6 +19,12 @@ namespace Ledger.HelpDesk.Data.Repositories.RoleRepositories
             _dbSet = _dbContext.Roles;
         }
 
+        public IQueryable<Role> GetAllRoles()
+        {
+            return _dbSet
+                .AsNoTracking();
+        }
+
         public Role GetById(Guid id)
         {
             RoleIdSpecification specification = new RoleIdSpecification(id);

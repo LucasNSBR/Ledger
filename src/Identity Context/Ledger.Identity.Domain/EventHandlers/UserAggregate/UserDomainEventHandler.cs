@@ -1,8 +1,8 @@
 ﻿using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
 using Ledger.CrossCutting.EmailService.Services.Factories;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
-using Ledger.Identity.Domain.Models.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Shared.EventHandlers;
 using System.Threading.Tasks;
