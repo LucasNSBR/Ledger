@@ -1,6 +1,7 @@
 ﻿using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.Roles;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
 using Ledger.HelpDesk.Domain.Context;
 using Ledger.HelpDesk.Domain.Repositories.UserRepositories;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
@@ -43,7 +44,7 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
             if (user == null)
                 throw new NotSupportedException("User not found");
 
-            SupportRole supportRole = new SupportRole(user.Id);
+            Role supportRole = new Role(RoleTypes.Support);
             user.AddRole(supportRole);
 
             _repository.Update(user);

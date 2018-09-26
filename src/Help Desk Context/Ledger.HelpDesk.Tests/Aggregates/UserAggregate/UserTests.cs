@@ -1,5 +1,6 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
+﻿using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.Roles;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void ShouldAddRoleToUser()
         {
-            SupportRole supportRole = new SupportRole(userId);
+            Role supportRole = new Role(RoleTypes.Support);
 
             user.AddRole(supportRole);
 
@@ -30,19 +31,20 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldHaveRole()
         {
-            SupportRole supportRole = new SupportRole(userId);
+            Role supportRole = new Role(RoleTypes.Support);
             user.AddRole(supportRole);
 
-            Assert.IsTrue(user.IsInRole(supportRole.RoleName));
+            Assert.IsTrue(user.IsInRole(supportRole));
         }
 
         [TestMethod]
         public void UserShouldBeRemovedFromRole()
         {
-            SupportRole supportRole = new SupportRole(userId);
+
+            Role supportRole = new Role(RoleTypes.Support);
             user.AddRole(supportRole);
 
-            Assert.IsTrue(user.IsInRole(supportRole.RoleName));
+            Assert.IsTrue(user.IsInRole(supportRole));
             Assert.AreEqual(1, user.Roles.Count);
 
             user.RemoveRole(supportRole);
@@ -53,12 +55,12 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldBeAddedOnMultipleRoles()
         {
-            SupportRole supportRole = new SupportRole(userId);
-            AdminRole adminRole = new AdminRole(userId);
+            Role supportRole = new Role(RoleTypes.Support);
+            Role adminRole = new Role(RoleTypes.Admin);
             user.AddRole(supportRole);
             user.AddRole(adminRole);
 
-            Assert.IsTrue(user.IsInRole(supportRole.RoleName));
+            Assert.IsTrue(user.IsInRole(supportRole));
             Assert.AreEqual(2, user.Roles.Count);
 
             user.RemoveRole(supportRole);
@@ -71,11 +73,10 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldFailToBeAddedOnMultipleRoles()
         {
-            SupportRole supportRole = new SupportRole(userId);
-            SupportRole supportRole2 = new SupportRole(userId);
-
+            Role supportRole = new Role(RoleTypes.Support);
+            
             user.AddRole(supportRole);
-            user.AddRole(supportRole2);
+            user.AddRole(supportRole);
 
             Assert.AreEqual("Já possui a permissão", user.GetNotifications().First().Title);
         }
@@ -83,8 +84,8 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldFailToBeRemovedFromRole()
         {
-            SupportRole supportRole = new SupportRole(userId);
-            
+            Role supportRole = new Role(RoleTypes.Support);
+
             user.RemoveRole(supportRole);
             
             Assert.AreEqual("Não possui a permissão", user.GetNotifications().First().Title);

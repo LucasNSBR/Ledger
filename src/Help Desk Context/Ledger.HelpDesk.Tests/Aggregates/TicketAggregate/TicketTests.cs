@@ -1,7 +1,6 @@
 ﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -44,9 +43,6 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         {
             //Come from repository
             User user = new User(Guid.NewGuid(), "support@contoso.com");
-            SupportRole role = new SupportRole(user.Id);
-
-            user.AddRole(role);
 
             ticket.AssignSupportUser(user);
 
@@ -55,24 +51,11 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         }
 
         [TestMethod]
-        public void TicketShouldFailToAttachASupportUserWithoutSupportRoleToHelp()
-        {
-            //Come from repository
-            User user = new User(Guid.NewGuid(), "support@contoso.com");
-
-            ticket.AssignSupportUser(user);
-
-            Assert.AreEqual("Usuário proibido", ticket.GetNotifications().First().Title);
-        }
-
-        [TestMethod]
         public void TicketShouldFailToAttachASupportUserToHelp()
         {
             //Come from repository
             User user = new User(Guid.NewGuid(), "support@contoso.com");
-            SupportRole role = new SupportRole(user.Id);
-            user.AddRole(role);
-
+           
             ticket.AssignSupportUser(user);
 
             ticket.AssignSupportUser(user);
@@ -128,8 +111,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void ShouldGetMessages()
         {
             User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
-            supportUser.AddRole(new SupportRole(supportUser.Id));
-
+            
             ticket.AssignSupportUser(supportUser);
 
             ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);
@@ -147,8 +129,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void ShouldGetMessagesFromUser()
         {
             User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
-            supportUser.AddRole(new SupportRole(supportUser.Id));
-
+           
             ticket.AssignSupportUser(supportUser);
 
             ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);

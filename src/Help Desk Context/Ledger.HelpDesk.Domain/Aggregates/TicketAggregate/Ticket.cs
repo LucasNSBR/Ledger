@@ -1,5 +1,5 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
+﻿using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Specifications.TicketSpecifications.TicketMessageSpecifications;
 using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
@@ -68,12 +68,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public void AssignSupportUser(User user)
         {
             if (!AlreadyHaveSupport())
-            {
-                if (user.IsInRole(RoleTypes.Support))
-                    SupportUserId = user.Id;
-                else
-                    AddNotification("Usuário proibido", "O usuário especificado não possui as permissões necessárias para prestar suporte.");
-            }
+                SupportUserId = user.Id;
             else
                 AddNotification("Suporte já definido", "Já existe um usuário de suporte resolvendo esse problema.");
         }

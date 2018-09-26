@@ -1,5 +1,4 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
-using Ledger.HelpDesk.Domain.Specifications.UserSpecifications.RoleSpecifications;
+﻿using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
 using Ledger.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ namespace Ledger.HelpDesk.Domain.Aggregates.UserAggregate
     {
         public string Email { get; private set; }
         private List<UserRole> _roles;
-
         public IReadOnlyList<UserRole> Roles
         {
             get
@@ -30,24 +28,27 @@ namespace Ledger.HelpDesk.Domain.Aggregates.UserAggregate
             _roles = new List<UserRole>();
         }
 
-        public bool IsInRole(string name)
+        public bool IsInRole(Role role)
         {
-            RoleNameSpecification specification = new RoleNameSpecification(name);
-            return _roles.Any(specification.Compile());
+            return _roles.Any(ur => ur.RoleId == role.Id);
         }
 
-        public void AddRole(UserRole role)
+        public void AddRole(Role role)
         {
-            if (!IsInRole(role.RoleName))
-                _roles.Add(role);
+            UserRole userRole = new UserRole(Id, role.Id);
+
+            if (!IsInRole(role))
+                _roles.Add(userRole);
             else
                 AddNotification("Já possui a permissão", "O usuário já possui a permissão especificada.");
         }
 
-        public void RemoveRole(UserRole role)
+        public void RemoveRole(Role role)
         {
-            if (IsInRole(role.RoleName))
-                _roles.Remove(role);
+            UserRole userRole = new UserRole(Id, role.Id);
+
+            if (IsInRole(role))
+                _roles.Remove(userRole);
             else
                 AddNotification("Não possui a permissão", "O usuário não possui a permissão especificada.");
         }
