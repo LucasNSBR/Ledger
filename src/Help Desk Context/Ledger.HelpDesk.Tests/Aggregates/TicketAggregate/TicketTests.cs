@@ -1,8 +1,11 @@
 ﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
+using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
 {
@@ -17,99 +20,146 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         {
             category = new TicketCategory("Problemas de ativação");
             user = new User(Guid.NewGuid(), "contoso@contoso.com");
-            ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category, user);
+            ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category.Id, user.Id);
         }
 
-        //[TestMethod]
-        //public void TicketShouldBeOpenedAtConstructor()
-        //{
-        //    Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateOpened);
-        //    Assert.IsTrue(ticket.IsOpened());
-        //}
+        [TestMethod]
+        public void TicketShouldBeOpenedAtConstructor()
+        {
+            Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateOpened);
+            Assert.IsTrue(ticket.IsOpened());
+        }
 
-        //[TestMethod]
-        //public void TicketShouldAttachImage()
-        //{
-        //    Image issuePrint = new Image(new byte[8]);
-        //    ticket.AttachIssuePicture(issuePrint);
+        [TestMethod]
+        public void TicketShouldAttachImage()
+        {
+            Image issuePrint = new Image(new byte[8]);
+            ticket.AttachIssuePicture(issuePrint);
 
-        //    Assert.IsNotNull(ticket.IssuePicture);
-        //}
+            Assert.IsNotNull(ticket.IssuePicture);
+        }
 
-        //[TestMethod]
-        //public void TicketShouldAttachASupportUserToHelp()
-        //{
-        //    //Come from repository
-        //    SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
+        [TestMethod]
+        public void TicketShouldAttachASupportUserToHelp()
+        {
+            //Come from repository
+            User user = new User(Guid.NewGuid(), "support@contoso.com");
+            SupportRole role = new SupportRole(user.Id);
 
-        //    ticket.AssignSupportUser(user);
+            user.AddRole(role);
 
-        //    Assert.AreEqual(user, ticket.SupportUser);
-        //    Assert.IsTrue(ticket.AlreadyHaveSupport());
-        //}
+            ticket.AssignSupportUser(user);
 
-        //[TestMethod]
-        //public void TicketShouldFailToAttachASupportUserToHelp()
-        //{
-        //    //Come from repository
-        //    SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
+            Assert.AreEqual(user.Id, ticket.SupportUserId);
+            Assert.IsTrue(ticket.AlreadyHaveSupport());
+        }
 
-        //    ticket.AssignSupportUser(user);
+        [TestMethod]
+        public void TicketShouldFailToAttachASupportUserWithoutSupportRoleToHelp()
+        {
+            //Come from repository
+            User user = new User(Guid.NewGuid(), "support@contoso.com");
 
-        //    ticket.AssignSupportUser(user);
+            ticket.AssignSupportUser(user);
 
-        //    Assert.AreEqual("Suporte já definido", ticket.GetNotifications().First().Title);
-        //}
+            Assert.AreEqual("Usuário proibido", ticket.GetNotifications().First().Title);
+        }
 
-        //[TestMethod]
-        //public void TicketShouldBeClosed()
-        //{
-        //    ticket.Close();
+        [TestMethod]
+        public void TicketShouldFailToAttachASupportUserToHelp()
+        {
+            //Come from repository
+            User user = new User(Guid.NewGuid(), "support@contoso.com");
+            SupportRole role = new SupportRole(user.Id);
+            user.AddRole(role);
 
-        //    Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateClosed);
-        //    Assert.IsTrue(ticket.IsClosed());
-        //}
+            ticket.AssignSupportUser(user);
 
-        //[TestMethod]
-        //public void ShouldAddMessageFromUser()
-        //{
-        //    ticket.AddUserMessage("Olá, mundo!");
-        //    Assert.AreEqual(1, ticket.GetMessages().Count());  
-        //}
+            ticket.AssignSupportUser(user);
 
-        //[TestMethod]
-        //public void ShouldAddMessageFromSupport()
-        //{
-        //    SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
 
-        //    ticket.AssignSupportUser(user);
+            Assert.AreEqual("Suporte já definido", ticket.GetNotifications().First().Title);
+        }
 
-        //    ticket.AddSupportMessage("Olá, mundo!");
-        //    Assert.AreEqual(1, ticket.GetMessages().Count());
-        //}
+        [TestMethod]
+        public void TicketShouldBeClosed()
+        {
+            ticket.Close();
 
-        //[TestMethod]
-        //public void ShouldFailToAddMessageFromSupport()
-        //{
-        //    ticket.AddSupportMessage("Olá, mundo!");
-        //    Assert.AreEqual("Sem suporte", ticket.GetNotifications().First().Title);
-        //}
+            Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateClosed);
+            Assert.IsTrue(!ticket.IsOpened());
+        }
 
-        //[TestMethod]
-        //public void ShouldGetMessages()
-        //{
-        //    SupportUser user = new SupportUser(Guid.NewGuid(), "support@contoso.com");
-        //    ticket.AssignSupportUser(user);
+        [TestMethod]
+        public void ShouldFailToCloseTicketAfterTicketClosed()
+        {
+            ticket.Close();
+            ticket.Close();
 
-        //    ticket.AddSupportMessage("Olá, como eu posso te ajudar?");
-        //    ticket.AddUserMessage("Estou com um problema para ativar minha conta.");
-        //    ticket.AddSupportMessage("Qual problema você está tendo?");
-        //    ticket.AddUserMessage("Não consigo anexar meus documentos para efetuar a ativação.");
-        //    ticket.AddSupportMessage("Um momento enquanto eu faço alguns testes.");
-        //    ticket.AddSupportMessage("Pronto. Tente agora.");
-        //    ticket.AddUserMessage("Consegui!");
+            Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);
+        }
 
-        //    Assert.AreEqual(7, ticket.GetMessages().Count);
-        //}
+        [TestMethod]
+        public void ShouldAddMessageFromUser()
+        {
+            ticket.AddMessage("Olá, mundo!", user.Id);
+            Assert.AreEqual(1, ticket.GetMessages().Count());
+        }
+
+        [TestMethod]
+        public void ShouldFailToAddMessageAfterTicketClosed()
+        {
+            ticket.Close();
+            ticket.AddMessage("Olá, mundo!", user.Id);
+
+            Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);
+        }
+
+        [TestMethod]
+        public void ShouldFailToAddMessageFromSupport()
+        {
+            User user = new User(Guid.NewGuid(), "support@contoso.com");
+
+            ticket.AddMessage("Olá, mundo!", user.Id);
+            Assert.AreEqual("Não possui acesso às mensagens", ticket.GetNotifications().First().Title);
+        }
+
+        [TestMethod]
+        public void ShouldGetMessages()
+        {
+            User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
+            supportUser.AddRole(new SupportRole(supportUser.Id));
+
+            ticket.AssignSupportUser(supportUser);
+
+            ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);
+            ticket.AddMessage("Estou com um problema para ativar minha conta.", user.Id);
+            ticket.AddMessage("Qual problema você está tendo?", supportUser.Id);
+            ticket.AddMessage("Não consigo anexar meus documentos para efetuar a ativação.", user.Id);
+            ticket.AddMessage("Um momento enquanto eu faço alguns testes.", supportUser.Id);
+            ticket.AddMessage("Pronto. Tente agora.", supportUser.Id);
+            ticket.AddMessage("Consegui!", user.Id);
+
+            Assert.AreEqual(7, ticket.GetMessages().Count);
+        }
+
+        [TestMethod]
+        public void ShouldGetMessagesFromUser()
+        {
+            User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
+            supportUser.AddRole(new SupportRole(supportUser.Id));
+
+            ticket.AssignSupportUser(supportUser);
+
+            ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);
+            ticket.AddMessage("Estou com um problema para ativar minha conta.", user.Id);
+            ticket.AddMessage("Qual problema você está tendo?", supportUser.Id);
+            ticket.AddMessage("Não consigo anexar meus documentos para efetuar a ativação.", user.Id);
+            ticket.AddMessage("Um momento enquanto eu faço alguns testes.", supportUser.Id);
+            ticket.AddMessage("Pronto. Tente agora.", supportUser.Id);
+            ticket.AddMessage("Consegui!", user.Id);
+
+            Assert.AreEqual(3, ticket.GetMessages(user.Id).Count);
+        }
     }
 }

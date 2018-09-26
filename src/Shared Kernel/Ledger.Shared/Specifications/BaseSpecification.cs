@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Ledger.Shared.Entities;
+using System;
 using System.Linq.Expressions;
-using Ledger.Shared.Entities;
 
 namespace Ledger.Shared.Specifications
 {

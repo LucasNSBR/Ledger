@@ -1,9 +1,11 @@
 ﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate.Roles;
+using Ledger.HelpDesk.Domain.Specifications.TicketSpecifications.TicketMessageSpecifications;
 using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 {
@@ -17,7 +19,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public TicketConversation Conversation { get; private set; }
 
         public Guid TicketUserId { get; private set; }
-        public Guid SupportUserId { get; private set; }
+        public Guid? SupportUserId { get; private set; }
 
         public string Title { get; private set; }
         public string Details { get; private set; }
@@ -78,11 +80,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void AddMessage(string body, Guid userId)
         {
-            if (!IsOpened())
-            {
-                AddNotification("Ticket finalizado", "Não é possível modificar um ticket que já foi resolvido.");
+            if (NotifyClosedTicket())
                 return;
-            }
 
             if (userId == SupportUserId || userId == TicketUserId)
             {
@@ -93,17 +92,39 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
                 AddNotification("Não possui acesso às mensagens", "O usuário não tem permissão para participar dessa conversa.");
         }
 
-        public IReadOnlyList<TicketMessage> GetMessages()
+        public IReadOnlyList<TicketMessage> GetMessages(Guid? userId = null)
         {
-            return Conversation.GetMessages();
+            IReadOnlyList<TicketMessage> messages = Conversation.GetMessages();
+
+            if (userId != null)
+            {
+                TicketMessageUserIdSpecification specification = new TicketMessageUserIdSpecification(userId.Value);
+
+                return messages
+                    .Where(specification.Compile())
+                    .ToList();
+            }
+
+            return messages;
         }
 
         public void Close()
         {
+            if (NotifyClosedTicket())
+                return;
+
+            TicketStatus.SetClosed();
+        }
+
+        private bool NotifyClosedTicket()
+        {
             if (!IsOpened())
-                AddNotification("Ticket finalizado", "Não é possível finalizar um ticket que já foi finalizado.");
-            else
-                TicketStatus.SetClosed();
+            {
+                AddNotification("Ticket finalizado", "Não é possível modificar um ticket que já foi resolvido.");
+                return true;
+            }
+
+            return false;
         }
     }
 }

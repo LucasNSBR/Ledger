@@ -191,7 +191,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (!result.Succeeded)
                 AddNotifications(result);
             else
-                await Publish(new UserAddedSupportRoleIntegrationEvent(user.Id, user.Email));
+                await Publish(new UserAddedSupportRoleIntegrationEvent(user.Id));
         }
 
         private bool NotifyNullUser(LedgerIdentityUser user)
