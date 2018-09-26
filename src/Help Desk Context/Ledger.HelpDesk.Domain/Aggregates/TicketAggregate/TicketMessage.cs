@@ -7,7 +7,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
     {
         public Guid UserId { get; private set; }
         public string Body { get; private set; }
-        public DateTime MessageDate { get; }
+        public DateTime MessageDate { get; private set; }
 
         protected TicketMessage() { }
 

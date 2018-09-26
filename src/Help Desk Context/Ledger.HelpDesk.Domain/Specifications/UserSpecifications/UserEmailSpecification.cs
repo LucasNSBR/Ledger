@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq.Expressions;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.Shared.Specifications;
+using System;
+using System.Linq.Expressions;
 
 namespace Ledger.HelpDesk.Domain.Specifications.UserSpecifications
 {

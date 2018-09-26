@@ -7,6 +7,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.RoleAggregate
     {
         public Guid UserId { get; private set; }
         public Guid RoleId { get; private set; }
+        public Role Role { get; set; }
 
         protected UserRole() { }
 
@@ -33,7 +34,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.RoleAggregate
 
         public override int GetHashCode()
         {
-            return UserId.GetHashCode() + RoleId.GetHashCode();
+            return (UserId.GetHashCode() * 997) + (RoleId.GetHashCode() * 997);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ledger.HelpDesk.Data.EntityTypeConfiguration
+namespace Ledger.HelpDesk.Data.EntityTypeConfiguration.CategoryTypeConfiguration
 {
     public class TicketCategoryEntityTypeConfiguration : IEntityTypeConfiguration<TicketCategory>
     {
