@@ -28,7 +28,7 @@ namespace Ledger.Shared.Entities
 
             Entity<T> other = obj as Entity<T>;
 
-            if (other == null)
+            if (other is null)
                 return false;
             if (Id == other.Id)
                 return true;
@@ -43,21 +43,11 @@ namespace Ledger.Shared.Entities
 
         public static bool operator ==(Entity<T> a, Entity<T> b)
         {
-            if(a is null)
-            {
-                return b is null;
-            }
-
             return Equals(a, b);
         }
 
         public static bool operator !=(Entity<T> a, Entity<T> b)
         {
-            if (a is null)
-            {
-                return !(b is null);
-            }
-
             return !Equals(a, b);
         }
 
