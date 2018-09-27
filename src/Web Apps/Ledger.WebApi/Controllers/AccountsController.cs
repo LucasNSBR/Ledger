@@ -30,7 +30,11 @@ namespace Ledger.WebApi.Controllers
         {
             LedgerIdentityUser user = await _userApplicationService.Register(command);
 
-            return CreateResponse();
+            return CreateResponse(new
+            {
+                id = user.Id,
+                email = user.Email
+            });
         }
 
         [HttpPost]

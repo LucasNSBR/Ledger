@@ -15,7 +15,6 @@ namespace Ledger.CrossCutting.IoC
                 cfg.SenderName = configuration["SendGrid:SenderName"];
                 cfg.SendAddress = configuration["SendGrid:SenderEmail"];
                 cfg.SendGridKey = configuration["SendGrid:API_KEY"];
-                cfg.SendGridUser = configuration["SendGrid:USER"];
             });
 
             services.Configure<TemplateOptions>(cfg =>

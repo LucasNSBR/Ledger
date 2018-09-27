@@ -6,7 +6,7 @@ namespace Ledger.Shared.Notifications
 {
     public class DomainNotificationHandler : IDomainNotificationHandler
     {
-        private List<DomainNotification> _notifications;
+        private readonly List<DomainNotification> _notifications;
 
         public DomainNotificationHandler()
         {
@@ -18,9 +18,9 @@ namespace Ledger.Shared.Notifications
             return _notifications.Any();
         }
 
-        public void AddNotification(DomainNotification notification)
+        public void AddNotification(DomainNotification domainNotification)
         {
-            _notifications.Add(notification);
+            _notifications.Add(domainNotification);
         }
 
         public bool AddNotifications(IDomainNotifier notifier)
@@ -73,7 +73,7 @@ namespace Ledger.Shared.Notifications
             return string.Empty;
         }
 
-        public void Dispose()
+        public void Clear()
         {
             _notifications.Clear();
         }

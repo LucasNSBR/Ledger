@@ -14,10 +14,10 @@ namespace Ledger.Activations.Data.Context
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.ApplyConfiguration(new ActivationEntityTypeConfiguration());
-            builder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ActivationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
         }
     }
 }

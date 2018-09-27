@@ -10,9 +10,9 @@ namespace Ledger.Shared.Commands
         public Guid CommandId { get; }
         public DateTime DateCreated { get; }
 
-        private List<DomainNotification> _notifications;
+        private readonly List<DomainNotification> _notifications;
 
-        public Command()
+        protected Command()
         {
             CommandId = Guid.NewGuid();
             DateCreated = DateTime.Now;

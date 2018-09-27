@@ -5,6 +5,8 @@ namespace Ledger.WebApi
 {
     public class Program
     {
+        protected Program() { }
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();

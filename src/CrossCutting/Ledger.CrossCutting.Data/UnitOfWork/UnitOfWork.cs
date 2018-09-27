@@ -41,6 +41,7 @@ namespace Ledger.CrossCutting.Data.UnitOfWork
 
         public void Rollback()
         {
+            //EF Rollback's are automatic
         }
     }
 }

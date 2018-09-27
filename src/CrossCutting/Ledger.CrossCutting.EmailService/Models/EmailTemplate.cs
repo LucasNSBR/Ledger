@@ -8,7 +8,7 @@ namespace Ledger.CrossCutting.EmailService.Models
         public EmailAddress To { get; private set; }
         public string TemplateId { get; private set; }
 
-        private Dictionary<string, string> _sendGridSubstitutions;
+        private readonly Dictionary<string, string> _sendGridSubstitutions;
         public IReadOnlyDictionary<string, string> SendGridSubstitutions
         {
             get
@@ -17,7 +17,7 @@ namespace Ledger.CrossCutting.EmailService.Models
             }
         }
 
-        public EmailTemplate(string to, string templateId)
+        protected EmailTemplate(string to, string templateId)
         {
             To = new EmailAddress(to);
             TemplateId = templateId;

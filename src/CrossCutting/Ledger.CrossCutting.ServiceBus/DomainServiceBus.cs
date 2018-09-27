@@ -30,7 +30,7 @@ namespace Ledger.CrossCutting.ServiceBus
                 {
                     handler.Handle(@event);
                 }
-            };
+            }
 
             return Task.CompletedTask;
         }

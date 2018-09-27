@@ -22,14 +22,14 @@ namespace Ledger.HelpDesk.Data.Context
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.ApplyConfiguration(new TicketCategoryEntityTypeConfiguration());
-            builder.ApplyConfiguration(new TicketEntityTypeConfiguration());
-            builder.ApplyConfiguration(new TicketMessageEntityConfiguration());
-            builder.ApplyConfiguration(new UserEntityTypeConfiguration());
-            builder.ApplyConfiguration(new RoleEntityTypeConfiguration());
-            builder.ApplyConfiguration(new UserRoleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketCategoryEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketMessageEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleEntityTypeConfiguration());
         }
     }
 }

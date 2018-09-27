@@ -2,7 +2,7 @@
 
 namespace Ledger.Shared.IntegrationEvents.Events.CompanyEvents
 {
-    public class RegisteredCompanyIntegrationEvent : IntegrationEvent, IIntegrationEvent
+    public class RegisteredCompanyIntegrationEvent : IntegrationEvent
     {
         public Guid CompanyId { get; }
         public string Email { get; }

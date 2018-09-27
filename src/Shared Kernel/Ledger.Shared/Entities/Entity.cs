@@ -10,10 +10,10 @@ namespace Ledger.Shared.Entities
                              where T : Entity<T>
     {
         public Guid Id { get; protected set; }
-        private List<DomainNotification> _notifications;
-        private List<DomainEvent> _events;
+        private readonly List<DomainNotification> _notifications;
+        private readonly List<DomainEvent> _events;
 
-        public Entity()
+        protected Entity()
         {
             Id = Guid.NewGuid();
 

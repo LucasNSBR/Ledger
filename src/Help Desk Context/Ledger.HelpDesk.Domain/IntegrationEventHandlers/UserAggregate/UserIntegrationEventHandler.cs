@@ -67,8 +67,6 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 
             user.RemoveRole(role);
 
-            //TODO: REMOVE SUPPORT FROM ALL TICKETS
-
             _userRepository.Update(user);
             _unitOfWork.Commit();
 

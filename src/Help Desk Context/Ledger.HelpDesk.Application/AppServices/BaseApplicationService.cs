@@ -12,7 +12,7 @@ namespace Ledger.HelpDesk.Application.AppServices
         private readonly IDomainServiceBus _domainBus;
         private readonly IUnitOfWork<ILedgerHelpDeskDbAbstraction> _unitOfWork;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus)
+        protected BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _unitOfWork = unitOfWork;

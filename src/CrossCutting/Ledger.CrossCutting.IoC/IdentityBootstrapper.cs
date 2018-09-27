@@ -72,7 +72,6 @@ namespace Ledger.CrossCutting.IoC
             .AddDefaultTokenProviders();
         }
 
-        //TODO: REFACTORE THIS
         private static void InitializeJwtConfiguration(IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtTokenOptions>(cfg =>

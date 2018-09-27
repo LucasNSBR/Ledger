@@ -13,9 +13,9 @@ namespace Ledger.Companies.Data.Context
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CompanyEntityTypeConfiguration());
         }
     }
 }

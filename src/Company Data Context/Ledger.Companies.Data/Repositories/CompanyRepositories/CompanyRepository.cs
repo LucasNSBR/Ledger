@@ -42,11 +42,8 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
         {
             Company company = GetByCnpj(cnpj.Number);
 
-            if (company != null)
-            {
-                if (company.Id != id)
-                    return true;
-            }
+            if (company != null && company.Id != id)
+                return true;
 
             return false;
         }

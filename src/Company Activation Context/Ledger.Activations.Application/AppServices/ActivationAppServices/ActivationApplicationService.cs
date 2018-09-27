@@ -16,12 +16,10 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
     public class ActivationApplicationService : BaseApplicationService, IActivationApplicationService
     {
         private readonly IActivationRepository _repository;
-        private readonly IActivationFactory _factory;
 
-        public ActivationApplicationService(IActivationRepository repository, IActivationFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, integrationBus, domainBus)
+        public ActivationApplicationService(IActivationRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, integrationBus, domainBus)
         {
             _repository = repository;
-            _factory = factory;
         }
 
         public Activation GetById(Guid id)

@@ -11,13 +11,11 @@ namespace Ledger.CrossCutting.EmailService.Services.Dispatchers
     public class EmailDispatcher : IEmailDispatcher
     {
         private readonly string _sendGridKey;
-        private readonly string _sendGridUser;
         private readonly EmailAddress _senderAddress;
 
         public EmailDispatcher(IOptions<DispatcherOptions> options)
         {
             _sendGridKey = options.Value.SendGridKey;
-            _sendGridUser = options.Value.SendGridUser;
 
             _senderAddress = new EmailAddress(options.Value.SendAddress, options.Value.SenderName);
         }

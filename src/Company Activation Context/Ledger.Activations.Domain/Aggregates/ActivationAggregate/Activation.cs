@@ -80,7 +80,7 @@ namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
             if (Company == null)
             {
                 AddNotification("Erro na entidade", "Não há uma empresa válida presente no processo de ativação.");
-                return null;
+                return new List<Image>();
             }
             else
             {

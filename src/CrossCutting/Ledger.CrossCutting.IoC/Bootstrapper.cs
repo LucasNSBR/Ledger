@@ -13,7 +13,6 @@ namespace Ledger.CrossCutting.IoC
 {
     public static class Bootstrapper
     {
-        //TODO: REFACTORE THIS
         public static void Initialize(IServiceCollection services, IConfiguration configuration)
         {
             InitializeCore(services);

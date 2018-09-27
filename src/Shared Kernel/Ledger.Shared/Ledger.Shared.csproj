@@ -9,4 +9,8 @@
     <PackageReference Include="MassTransit" Version="5.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

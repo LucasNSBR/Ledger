@@ -67,7 +67,7 @@ namespace Ledger.CrossCutting.EmailService.Services.Factories
         public EmailTemplate CreateCompanyActivationAcceptedEmail(string to)
         {
             CompanyActivationAcceptedEmailTemplate template =
-                new CompanyActivationAcceptedEmailTemplate(to, _userPasswordPostChangeEmailTemplateId);
+                new CompanyActivationAcceptedEmailTemplate(to, _companyActivationAcceptedTemplateId);
 
             return template;
         }
@@ -75,7 +75,7 @@ namespace Ledger.CrossCutting.EmailService.Services.Factories
         public EmailTemplate CreateCompanyActivationRejectedEmail(string to)
         {
             CompanyActivationRejectedEmailTemplate template =
-                new CompanyActivationRejectedEmailTemplate(to, _userPasswordPostChangeEmailTemplateId);
+                new CompanyActivationRejectedEmailTemplate(to, _companyActivationRejectedTemplateId);
 
             return template;
         }

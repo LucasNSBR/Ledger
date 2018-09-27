@@ -8,13 +8,13 @@ namespace Ledger.Shared.IntegrationEvents.Events
         public DateTime DateCreated { get; }
         public Guid CorrelationId { get; }
 
-        public IntegrationEvent()
+        protected IntegrationEvent()
         {
             EventId = Guid.NewGuid();
             DateCreated = DateTime.Now;
         }
 
-        public IntegrationEvent(Guid correlationId)
+        protected IntegrationEvent(Guid correlationId)
         {
             CorrelationId = correlationId;
         }

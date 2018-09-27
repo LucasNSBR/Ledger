@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Ledger.Shared.EventHandlers
 {
-    public interface IDomainEventHandler<TDomainEvent> where TDomainEvent : DomainEvent
+    public interface IDomainEventHandler<in TDomainEvent> where TDomainEvent : DomainEvent
     {
         Task Handle(TDomainEvent @event);
     }

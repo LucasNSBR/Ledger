@@ -105,7 +105,7 @@ namespace Ledger.WebApi
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>
             {
-                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Ledger v1");
+                cfg.SwaggerEndpoint(Configuration["SwaggerEndpoint"], "Ledger v1");
             });
         }
     }

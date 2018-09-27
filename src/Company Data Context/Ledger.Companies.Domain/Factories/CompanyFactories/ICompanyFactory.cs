@@ -5,6 +5,6 @@ namespace Ledger.Companies.Domain.Factories.CompanyFactories
 {
     public interface ICompanyFactory
     {
-        Company CreateCompany(string name, string description, string email, string cnpj, string inscricaoEstadual, string ownerName, DateTime ownerBirthday, string ownerCpf, Guid? companyId = null);
+        Company CreateCompany(string companyName, string companyDescription, string companyEmail, string companyCnpj, string companyInscricaoEstadual, string ownerName, DateTime ownerBirthday, string ownerCpf, Guid? companyId = null);
     }
 }

@@ -31,7 +31,7 @@ namespace Ledger.Activations.Tests.AppServices
             domainBus = new FakeDomainServiceBus();
             activationRepository = new FakeActivationRepository();
 
-            service = new ActivationApplicationService(activationRepository, activationFactory, domainNotificationHandler, fakeUnitOfWork, serviceBus, domainBus);
+            service = new ActivationApplicationService(activationRepository, domainNotificationHandler, fakeUnitOfWork, serviceBus, domainBus);
         }
 
         //Helpers

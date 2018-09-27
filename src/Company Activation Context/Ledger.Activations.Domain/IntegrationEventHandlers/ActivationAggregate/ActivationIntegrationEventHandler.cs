@@ -7,7 +7,6 @@ using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
 using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Shared.IntegrationEvents.Events.CompanyEvents;
-using Ledger.Shared.Notifications;
 using MassTransit;
 using System;
 using System.Threading.Tasks;
@@ -16,17 +15,15 @@ namespace Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate
 {
     public class ActivationIntegrationEventHandler : IConsumer<RegisteredCompanyIntegrationEvent>
     {
-        private readonly IDomainNotificationHandler _domainNotificationHandler;
         private readonly IActivationRepository _repository;
         private readonly IUnitOfWork<ILedgerActivationDbAbstraction> _unitOfWork;
         private readonly IActivationFactory _factory;
         private readonly IEmailFactory _emailFactory;
         private readonly IEmailDispatcher _emailDispatcher;
 
-        public ActivationIntegrationEventHandler(DomainNotificationHandler domainNotificationHandler, IActivationRepository repository, IActivationFactory factory, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
+        public ActivationIntegrationEventHandler(IActivationRepository repository, IActivationFactory factory, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
         {
             _unitOfWork = unitOfWork;
-            _domainNotificationHandler = domainNotificationHandler;
             _repository = repository;
             _factory = factory;
             _emailFactory = emailFactory;

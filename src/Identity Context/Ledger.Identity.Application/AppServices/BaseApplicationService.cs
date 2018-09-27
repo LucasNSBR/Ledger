@@ -15,7 +15,7 @@ namespace Ledger.Identity.Application.AppServices
         private readonly IDomainServiceBus _domainServiceBus;
         private readonly IIntegrationServiceBus _integrationBus;
 
-        public BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
+        protected BaseApplicationService(IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
         {
             _domainNotificationHandler = domainNotificationHandler;
             _domainServiceBus = domainServiceBus;

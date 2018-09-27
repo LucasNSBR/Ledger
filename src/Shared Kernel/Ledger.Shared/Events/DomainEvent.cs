@@ -7,7 +7,7 @@ namespace Ledger.Shared.Events
         public Guid EventId { get; }
         public DateTime DateCreated { get; }
 
-        public DomainEvent()
+        protected DomainEvent()
         {
             EventId = Guid.NewGuid();
             DateCreated = DateTime.Now;

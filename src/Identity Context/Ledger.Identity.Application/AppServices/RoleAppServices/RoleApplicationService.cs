@@ -45,9 +45,8 @@ namespace Ledger.Identity.Application.AppServices.RoleAppServices
             IdentityResult result = await _roleManager.CreateAsync(role);
             if (result.Succeeded)
                 await Publish(new RoleRegisteredIntegrationEvent(role.Id, role.Name));
-
-            AddNotifications(result);
-            return;
+            else
+                AddNotifications(result);
         }
 
         public async Task Remove(RemoveRoleCommand command)
@@ -72,9 +71,8 @@ namespace Ledger.Identity.Application.AppServices.RoleAppServices
             IdentityResult result = await _roleManager.DeleteAsync(role);
             if (result.Succeeded)
                 await Publish(new RoleRemovedIntegrationEvent(role.Name));
-
-            AddNotifications(result);
-            return;
+            else
+                AddNotifications(result);
         }
 
         private bool NotifyNullRole(LedgerIdentityRole role)

@@ -9,7 +9,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.UserAggregate
     public class User : Entity<User>, IAggregateRoot
     {
         public string Email { get; private set; }
-        private List<UserRole> _roles;
+        private readonly List<UserRole> _roles;
         public IReadOnlyList<UserRole> Roles
         {
             get

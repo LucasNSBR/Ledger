@@ -11,6 +11,5 @@ namespace Ledger.Shared.Notifications
         IReadOnlyList<DomainNotification> GetNotifications();
         IEnumerable<DomainNotification> GetAtomicNotifications();
         string GetAndFormatNotifications();
-        void Dispose();
     }
 }
