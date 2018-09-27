@@ -28,7 +28,7 @@ namespace Ledger.CrossCutting.ServiceBus
             {
                 foreach (IDomainEventHandler<TDomainEvent> handler in handlers)
                 {
-                    return handler.Handle(@event);
+                    handler.Handle(@event);
                 }
             };
 

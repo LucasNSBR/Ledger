@@ -7,7 +7,7 @@ namespace Ledger.Activations.Domain.Factories.ActivationFactories
     {
         public Activation CreateActivation(Guid companyId)
         {
-            if (companyId == null || companyId == Guid.Empty)
+            if (companyId == Guid.Empty)
                 throw new ArgumentException(nameof(companyId));
             
             Company company = new Company(companyId);
