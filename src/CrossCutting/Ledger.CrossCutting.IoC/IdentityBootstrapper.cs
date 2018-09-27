@@ -1,5 +1,6 @@
 ﻿using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Data.Context;
+using Ledger.Identity.Domain.Aggregates.RoleAggregate;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Configuration.JwtConfigurations;
 using Ledger.Identity.Domain.Configuration.SigningConfigurations;

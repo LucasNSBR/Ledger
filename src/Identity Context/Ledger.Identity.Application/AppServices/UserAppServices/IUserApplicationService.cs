@@ -1,5 +1,5 @@
 ﻿using Ledger.Identity.Domain.Aggregates.UserAggregate;
-using Ledger.Identity.Domain.Commands;
+using Ledger.Identity.Domain.Commands.UserCommands;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
         Task ForgotPassword(ForgotUserPasswordCommand command);
         Task ResetPassword(ResetUserPasswordCommand command);
         Task ChangePassword(ChangeUserPasswordCommand command);
-        Task AddSupportRole(AddUserSupportRoleCommand command);
+        Task AddToRole(AddUserToRoleCommand command);
         Task<ClaimsIdentity> Login(LoginUserCommand command);
     }
 }

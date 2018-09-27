@@ -2,7 +2,7 @@
 using Ledger.Shared.Extensions;
 using LilValidation.Core;
 
-namespace Ledger.Identity.Domain.Commands
+namespace Ledger.Identity.Domain.Commands.UserCommands
 {
     public class RegisterUserCommand : Command
     {

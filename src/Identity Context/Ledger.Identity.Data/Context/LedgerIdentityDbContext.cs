@@ -1,4 +1,5 @@
 ﻿using Ledger.Identity.Data.EntityTypeConfiguration;
+using Ledger.Identity.Domain.Aggregates.RoleAggregate;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

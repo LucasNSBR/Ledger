@@ -1,4 +1,5 @@
 ﻿using Ledger.Shared.Entities;
+using System;
 
 namespace Ledger.HelpDesk.Domain.Aggregates.RoleAggregate
 {
@@ -6,8 +7,9 @@ namespace Ledger.HelpDesk.Domain.Aggregates.RoleAggregate
     {
         public string Name { get; private set; }
 
-        public Role(string name)
+        public Role(Guid id, string name)
         {
+            Id = id;
             Name = name;
         }
     }

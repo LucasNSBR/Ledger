@@ -12,6 +12,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
     {
         User user;
         Guid userId = Guid.NewGuid();
+        Guid roleId = Guid.NewGuid();
 
         public UserTests()
         {
@@ -21,7 +22,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void ShouldAddRoleToUser()
         {
-            Role supportRole = new Role(RoleTypes.Support);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
 
             user.AddRole(supportRole);
 
@@ -31,7 +32,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldHaveRole()
         {
-            Role supportRole = new Role(RoleTypes.Support);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
             user.AddRole(supportRole);
 
             Assert.IsTrue(user.IsInRole(supportRole));
@@ -41,7 +42,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         public void UserShouldBeRemovedFromRole()
         {
 
-            Role supportRole = new Role(RoleTypes.Support);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
             user.AddRole(supportRole);
 
             Assert.IsTrue(user.IsInRole(supportRole));
@@ -55,8 +56,8 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldBeAddedOnMultipleRoles()
         {
-            Role supportRole = new Role(RoleTypes.Support);
-            Role adminRole = new Role(RoleTypes.Admin);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
+            Role adminRole = new Role(Guid.NewGuid(), RoleTypes.Admin);
             user.AddRole(supportRole);
             user.AddRole(adminRole);
 
@@ -73,7 +74,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldFailToBeAddedOnMultipleRoles()
         {
-            Role supportRole = new Role(RoleTypes.Support);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
             
             user.AddRole(supportRole);
             user.AddRole(supportRole);
@@ -84,7 +85,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.UserAggregate
         [TestMethod]
         public void UserShouldFailToBeRemovedFromRole()
         {
-            Role supportRole = new Role(RoleTypes.Support);
+            Role supportRole = new Role(roleId, RoleTypes.Support);
 
             user.RemoveRole(supportRole);
             

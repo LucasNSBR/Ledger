@@ -1,8 +1,8 @@
 ﻿using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.Roles;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Context;
+using Ledger.HelpDesk.Domain.Repositories.RoleRepositories;
 using Ledger.HelpDesk.Domain.Repositories.UserRepositories;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using MassTransit;
@@ -12,14 +12,16 @@ using System.Threading.Tasks;
 namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 {
     public class UserIntegrationEventHandler : IConsumer<UserRegisteredIntegrationEvent>,
-                                               IConsumer<UserAddedSupportRoleIntegrationEvent>
+                                               IConsumer<UserAddedToRoleIntegrationEvent>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IUnitOfWork<ILedgerHelpDeskDbAbstraction> _unitOfWork;
 
-        public UserIntegrationEventHandler(IUserRepository repository, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork)
+        public UserIntegrationEventHandler(IUserRepository userRepository, IRoleRepository roleRepository, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork)
         {
-            _repository = repository;
+            _userRepository = userRepository;
+            _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -30,24 +32,28 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 
             User user = new User(id, email);
 
-            _repository.Register(user);
+            _userRepository.Register(user);
             _unitOfWork.Commit();
 
             return Task.CompletedTask;
         }
 
-        public Task Consume(ConsumeContext<UserAddedSupportRoleIntegrationEvent> context)
+        public Task Consume(ConsumeContext<UserAddedToRoleIntegrationEvent> context)
         {
             Guid id = context.Message.UserId;
-            User user = _repository.GetById(id);
+            string roleName = context.Message.RoleName;
+
+            User user = _userRepository.GetById(id);
+            Role role = _roleRepository.GetByName(roleName);
 
             if (user == null)
-                throw new NotSupportedException("User not found");
+                throw new InvalidOperationException($"User {id} not found");
+            if (role == null)
+                throw new InvalidOperationException($"Role {roleName} not found");
 
-            Role supportRole = new Role(RoleTypes.Support);
-            user.AddRole(supportRole);
+            user.AddRole(role);
 
-            _repository.Update(user);
+            _userRepository.Update(user);
             _unitOfWork.Commit();
 
             return Task.CompletedTask;

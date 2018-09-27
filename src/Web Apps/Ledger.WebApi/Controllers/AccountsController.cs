@@ -1,6 +1,6 @@
 ﻿using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
-using Ledger.Identity.Domain.Commands;
+using Ledger.Identity.Domain.Commands.UserCommands;
 using Ledger.Identity.Domain.Services;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Authorization;
@@ -49,7 +49,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("confirmemail")]
+        [Route("confirm-email")]
         public async Task<IActionResult> ConfirmEmail([FromBody]ConfirmUserEmailCommand command)
         {
             await _userApplicationService.ConfirmEmail(command);
@@ -59,7 +59,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("changepassword")]
+        [Route("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPasswordCommand command)
         {
             await _userApplicationService.ChangePassword(command);
@@ -68,39 +68,29 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("recoverpassword/{email}")]
-        public async Task<IActionResult> RecoverPassword(string email)
+        [Route("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody]ForgotUserPasswordCommand command)
         {
-            ForgotUserPasswordCommand command = new ForgotUserPasswordCommand
-            {
-                Email = email
-            };
-
             await _userApplicationService.ForgotPassword(command);
 
             return CreateResponse();
         }
 
         [HttpPost]
-        [Route("addsupportrole/{email}")]
-        [Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> AddSupportRole(string email)
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody]ResetUserPasswordCommand command)
         {
-            AddUserSupportRoleCommand command = new AddUserSupportRoleCommand
-            {
-                Email = email
-            };
-
-            await _userApplicationService.AddSupportRole(command);
+            await _userApplicationService.ResetPassword(command);
 
             return CreateResponse();
         }
 
         [HttpPost]
-        [Route("resetpassword")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetUserPasswordCommand command)
+        [Route("add-role")]
+        [Authorize(Policy = "AdminAccount")]
+        public async Task<IActionResult> AddToRole([FromBody]AddUserToRoleCommand command)
         {
-            await _userApplicationService.ResetPassword(command);
+            await _userApplicationService.AddToRole(command);
 
             return CreateResponse();
         }

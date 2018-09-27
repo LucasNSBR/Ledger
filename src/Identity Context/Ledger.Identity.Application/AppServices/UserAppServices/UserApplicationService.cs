@@ -1,8 +1,9 @@
 ﻿using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
-using Ledger.Identity.Domain.Commands;
+using Ledger.Identity.Domain.Commands.UserCommands;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
+using Ledger.Identity.Domain.Services.RoleServices;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
@@ -18,12 +19,14 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
     {
         private readonly LedgerUserManager _userManager;
         private readonly LedgerSignInManager _signInManager;
+        private readonly LedgerRoleManager _roleManager;
 
-        public UserApplicationService(LedgerUserManager userManager, LedgerSignInManager signInManager, IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
+        public UserApplicationService(LedgerUserManager userManager, LedgerSignInManager signInManager, LedgerRoleManager roleManager, IDomainNotificationHandler domainNotificationHandler, IDomainServiceBus domainServiceBus, IIntegrationServiceBus integrationBus)
                                                                                                                                 : base(domainNotificationHandler, domainServiceBus, integrationBus)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         public async Task<LedgerIdentityUser> GetById(Guid id)
@@ -174,7 +177,7 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
                 await PublishLocal(new UserResetedPasswordEvent(user.Email));
         }
 
-        public async Task AddSupportRole(AddUserSupportRoleCommand command)
+        public async Task AddToRole(AddUserToRoleCommand command)
         {
             command.Validate();
 
@@ -186,12 +189,12 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (NotifyNullUser(user))
                 return;
 
-            IdentityResult result = await _userManager.AddClaimAsync(user, new Claim("support-account", "true"));
+            IdentityResult result = await _userManager.AddToRoleAsync(user, command.RoleName);
 
             if (!result.Succeeded)
                 AddNotifications(result);
             else
-                await Publish(new UserAddedSupportRoleIntegrationEvent(user.Id));
+                await Publish(new UserAddedToRoleIntegrationEvent(user.Id, command.RoleName));
         }
 
         private bool NotifyNullUser(LedgerIdentityUser user)
