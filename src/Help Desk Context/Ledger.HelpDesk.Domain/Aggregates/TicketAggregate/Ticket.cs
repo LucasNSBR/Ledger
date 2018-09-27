@@ -1,5 +1,4 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
+﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Specifications.TicketSpecifications.TicketMessageSpecifications;
 using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
