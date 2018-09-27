@@ -18,18 +18,14 @@ namespace Ledger.HelpDesk.Data.Repositories.UserRepositories
             _dbContext = dbContext;
             _dbSet = dbContext.Users;
         }
-
-        public User GetByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public User GetById(Guid id)
         {
             UserIdSpecification specification = new UserIdSpecification(id);
 
             return _dbSet
                 .AsNoTracking()
+                .Include(r => r.Roles)
                 .FirstOrDefault(specification.ToExpression());
         }
         

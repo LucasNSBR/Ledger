@@ -7,6 +7,13 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
     public class TicketConversation : Entity<TicketConversation>
     {
         private readonly List<TicketMessage> _messages;
+        public IReadOnlyList<TicketMessage> Messages
+        {
+            get
+            {
+                return GetMessages();
+            }
+        }
 
         public TicketConversation()
         {
