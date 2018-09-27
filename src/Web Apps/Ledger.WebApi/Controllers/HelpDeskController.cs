@@ -21,7 +21,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpGet("categories")]
-        public IActionResult Get()
+        public IActionResult GetTicketCategories()
         {
             IQueryable<TicketCategory> ticketCategory = _ticketCategoryAppService.GetAllCategories();
 
@@ -29,7 +29,7 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpGet("categories/{id:guid}")]
-        public IActionResult Get(Guid id)
+        public IActionResult GetTicketCategoriesById(Guid id)
         {
             TicketCategory ticketCategory = _ticketCategoryAppService.GetById(id);
 
@@ -38,7 +38,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("categories")]
-        [Authorize(Policy = "SupportAccount")]
+        //[Authorize(Roles = "SupportAccount,AdminAccount")]
         public IActionResult RegisterTicketCategory([FromBody]RegisterTicketCategoryCommand command)
         {
             _ticketCategoryAppService.Register(command);
@@ -48,7 +48,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPut]
         [Route("categories")]
-        [Authorize(Policy = "SupportAccount")]
+        //[Authorize(Roles = "SupportAccount,AdminAccount")]
         public IActionResult UpdateTicketCategory([FromBody]UpdateTicketCategoryCommand command)
         {
             _ticketCategoryAppService.Update(command);

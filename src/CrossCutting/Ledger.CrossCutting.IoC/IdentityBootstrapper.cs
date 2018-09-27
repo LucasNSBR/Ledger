@@ -1,4 +1,5 @@
-﻿using Ledger.Identity.Application.AppServices.UserAppServices;
+﻿using Ledger.Identity.Application.AppServices.RoleAppServices;
+using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Data.Context;
 using Ledger.Identity.Domain.Aggregates.RoleAggregate;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
@@ -8,6 +9,7 @@ using Ledger.Identity.Domain.EventHandlers.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services;
+using Ledger.Identity.Domain.Services.RoleServices;
 using Ledger.Identity.Domain.Services.SigningServices;
 using Ledger.Shared.EventHandlers;
 using Microsoft.AspNetCore.Identity;
@@ -66,6 +68,7 @@ namespace Ledger.CrossCutting.IoC
             .AddEntityFrameworkStores<LedgerIdentityDbContext>()
             .AddUserManager<LedgerUserManager>()
             .AddSignInManager<LedgerSignInManager>()
+            .AddRoleManager<LedgerRoleManager>()
             .AddDefaultTokenProviders();
         }
 
@@ -93,6 +96,7 @@ namespace Ledger.CrossCutting.IoC
         private static void InitializeApplicationServices(IServiceCollection services)
         {
             services.AddScoped<IUserApplicationService, UserApplicationService>();
+            services.AddScoped<IRoleApplicationService, RoleApplicationService>();
         }
 
         private static void InitializeDomainEventHandlers(IServiceCollection services)

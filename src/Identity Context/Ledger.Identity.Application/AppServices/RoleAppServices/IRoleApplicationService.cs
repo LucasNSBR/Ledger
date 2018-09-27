@@ -9,7 +9,7 @@ namespace Ledger.Identity.Application.AppServices.RoleAppServices
     {
         IQueryable<LedgerIdentityRole> GetAllRoles();
         Task<LedgerIdentityRole> GetByName(string name);
-        Task AddRole(RegisterRoleCommand command);
-        Task RemoveRole(RemoveRoleCommand command);
+        Task Register(RegisterRoleCommand command);
+        Task Remove(RemoveRoleCommand command);
     }
 }

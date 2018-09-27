@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 {
     public class UserIntegrationEventHandler : IConsumer<UserRegisteredIntegrationEvent>,
-                                               IConsumer<UserAddedToRoleIntegrationEvent>
+                                               IConsumer<UserAddedToRoleIntegrationEvent>,
+                                               IConsumer<UserRemovedFromRoleIntegrationEvent>
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
@@ -40,16 +41,12 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 
         public Task Consume(ConsumeContext<UserAddedToRoleIntegrationEvent> context)
         {
-            Guid id = context.Message.UserId;
+            Guid userId = context.Message.UserId;
             string roleName = context.Message.RoleName;
 
-            User user = _userRepository.GetById(id);
-            Role role = _roleRepository.GetByName(roleName);
-
-            if (user == null)
-                throw new InvalidOperationException($"User {id} not found");
-            if (role == null)
-                throw new InvalidOperationException($"Role {roleName} not found");
+            GetUserAndRole(userId, roleName,
+                out User user,
+                out Role role);
 
             user.AddRole(role);
 
@@ -57,6 +54,36 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
             _unitOfWork.Commit();
 
             return Task.CompletedTask;
+        }
+
+        public Task Consume(ConsumeContext<UserRemovedFromRoleIntegrationEvent> context)
+        {
+            Guid userId = context.Message.UserId;
+            string roleName = context.Message.RoleName;
+            
+            GetUserAndRole(userId, roleName, 
+                out User user, 
+                out Role role);
+
+            user.RemoveRole(role);
+
+            //TODO: REMOVE SUPPORT FROM ALL TICKETS
+
+            _userRepository.Update(user);
+            _unitOfWork.Commit();
+
+            return Task.CompletedTask;
+        }
+
+        private void GetUserAndRole(Guid userId, string roleName, out User user, out Role role)
+        {
+            user = _userRepository.GetById(userId);
+            role = _roleRepository.GetByName(roleName);
+
+            if (user == null)
+                throw new InvalidOperationException($"User {userId} not found");
+            if (role == null)
+                throw new InvalidOperationException($"Role {roleName} not found");
         }
     }
 }

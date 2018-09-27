@@ -4,6 +4,7 @@ using Ledger.Identity.Domain.Commands.UserCommands;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services.RoleServices;
+using Ledger.Shared.IntegrationEvents.Events.RoleEvents;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
@@ -189,6 +190,9 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (NotifyNullUser(user))
                 return;
 
+            if (await NotifyNullRole(command.RoleName))
+                return;
+
             IdentityResult result = await _userManager.AddToRoleAsync(user, command.RoleName);
 
             if (!result.Succeeded)
@@ -197,11 +201,47 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
                 await Publish(new UserAddedToRoleIntegrationEvent(user.Id, command.RoleName));
         }
 
+        public async Task RemoveFromRole(RemoveUserFromRoleCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            LedgerIdentityUser user = await GetByEmail(command.Email);
+
+            if (NotifyNullUser(user))
+                return;
+
+            if (await NotifyNullRole(command.RoleName))
+                return;
+
+            IdentityResult result = await _userManager.RemoveFromRoleAsync(user, command.RoleName);
+
+            if (!result.Succeeded)
+                AddNotifications(result);
+            else
+                await Publish(new UserRemovedFromRoleIntegrationEvent(user.Id, command.RoleName));
+        }
+
         private bool NotifyNullUser(LedgerIdentityUser user)
         {
             if (user == null)
             {
                 AddNotification("Erro ao encontrar usuário", "Não existe nenhum usuário registrado com esse e-mail.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private async Task<bool> NotifyNullRole(string roleName)
+        {
+            bool exists = await _roleManager.RoleExistsAsync(roleName);
+
+            if (!exists)
+            {
+                AddNotification("Role inexistente", "A role especificada não existe na base de dados.");
                 return true;
             }
 
