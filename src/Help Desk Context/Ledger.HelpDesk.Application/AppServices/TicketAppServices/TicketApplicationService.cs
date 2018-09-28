@@ -1,11 +1,14 @@
 ﻿using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.HelpDesk.Domain.Aggregates.RoleAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.Roles;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.HelpDesk.Domain.Commands.TicketCommands;
 using Ledger.HelpDesk.Domain.Context;
 using Ledger.HelpDesk.Domain.Events.TicketAggregate;
 using Ledger.HelpDesk.Domain.Factories;
+using Ledger.HelpDesk.Domain.Repositories.RoleRepositories;
 using Ledger.HelpDesk.Domain.Repositories.TicketRepositories;
 using Ledger.HelpDesk.Domain.Repositories.UserRepositories;
 using Ledger.Shared.Extensions;
@@ -20,12 +23,14 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
     {
         private readonly ITicketRepository _ticketRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly ITicketFactory _factory;
 
-        protected TicketApplicationService(ITicketRepository ticketRepository, IUserRepository userRepository, ITicketFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, domainBus)
+        protected TicketApplicationService(ITicketRepository ticketRepository, IUserRepository userRepository, IRoleRepository roleRepository, ITicketFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, domainBus)
         {
             _ticketRepository = ticketRepository;
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
             _factory = factory;
         }
 
@@ -102,7 +107,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 PublishLocal(new AddedTicketMessageEvent(command.Body, ticket.Id, user.Id));
         }
 
-        public void AssignSupport(AssignSupportUserCommand command)
+        public void AssignSupport(AssignSupportCommand command)
         {
             command.Validate();
 
@@ -111,11 +116,21 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
 
             Ticket ticket = _ticketRepository.GetById(command.TicketId);
             User user = _userRepository.GetById(command.UserId);
+            Role supportRole = _roleRepository.GetByName(RoleTypes.Support);
+
+            if (supportRole == null)
+                throw new InvalidOperationException("A role de suporte não existe.");
 
             if (NotifyNullTicket(ticket) || NotifyNullUser(user))
                 return;
 
-            ticket.AssignSupportUser(user);
+            if (user.IsInRole(supportRole))
+            {
+                AddNotification("Não autorizado", "O usuário não pode ser indicado esse ticket porque não possui a permissão necessária.");
+                return;
+            }
+            
+            ticket.AssignSupportUser(user.Id);
 
             if (AddNotifications(ticket))
                 return;
@@ -139,6 +154,9 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 return;
 
             ticket.Close();
+
+            if (AddNotifications(ticket))
+                return;
 
             if (Commit())
                 PublishLocal(new TicketClosedEvent(ticket.Id));

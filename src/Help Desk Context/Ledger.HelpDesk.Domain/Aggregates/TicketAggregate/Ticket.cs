@@ -72,10 +72,10 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return SupportUserId != null;
         }
 
-        public void AssignSupportUser(User user)
+        public void AssignSupportUser(Guid userId)
         {
             if (!AlreadyHaveSupport())
-                SupportUserId = user.Id;
+                SupportUserId = userId;
             else
                 AddNotification("Suporte já definido", "Já existe um usuário de suporte resolvendo esse problema.");
         }

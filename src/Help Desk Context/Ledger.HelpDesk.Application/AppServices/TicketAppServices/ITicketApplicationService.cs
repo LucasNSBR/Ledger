@@ -11,7 +11,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
         Ticket GetById(Guid id);
         void Register(RegisterTicketCommand command);
         void AttachIssuePicture(AttachIssuePictureCommand command);
-        void AssignSupport(AssignSupportUserCommand command);
+        void AssignSupport(AssignSupportCommand command);
         void AddMessage(AddMessageCommand command);
         void Close(CloseTicketCommand command);
     }

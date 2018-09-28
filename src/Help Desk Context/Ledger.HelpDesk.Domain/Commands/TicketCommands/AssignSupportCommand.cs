@@ -5,19 +5,19 @@ using System;
 
 namespace Ledger.HelpDesk.Domain.Commands.TicketCommands
 {
-    public class AssignSupportUserCommand : Command
+    public class AssignSupportCommand : Command
     {
         public Guid TicketId { get; set; }
         public Guid UserId { get; set; }
 
         public override void Validate()
         {
-            new ValidationContract<AssignSupportUserCommand, Guid>(this, command => command.TicketId)
+            new ValidationContract<AssignSupportCommand, Guid>(this, command => command.TicketId)
                 .NotEmpty()
                 .Build()
                 .AddToNotifier(this);
 
-            new ValidationContract<AssignSupportUserCommand, Guid>(this, command => command.UserId)
+            new ValidationContract<AssignSupportCommand, Guid>(this, command => command.UserId)
                 .NotEmpty()
                 .Build()
                 .AddToNotifier(this);
