@@ -54,9 +54,17 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return TicketStatus.Status == Status.Open;
         }
 
+        private bool ContainsPicture()
+        {
+            return IssuePicture != null;
+        }
+
         public void AttachIssuePicture(Image issuePicture)
         {
-            IssuePicture = issuePicture;
+            if (!ContainsPicture())
+                IssuePicture = issuePicture;
+            else
+                AddNotification("Imagem já existente", "Uma imagem do erro já está anexada ao ticket de suporte.");
         }
 
         public bool AlreadyHaveSupport()
