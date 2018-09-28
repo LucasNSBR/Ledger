@@ -35,7 +35,7 @@ namespace Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate
 
             _userRepository.Register(user);
             _unitOfWork.Commit();
-
+            
             return Task.CompletedTask;
         }
 

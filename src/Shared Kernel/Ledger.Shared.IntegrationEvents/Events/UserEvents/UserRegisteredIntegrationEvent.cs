@@ -7,9 +7,9 @@ namespace Ledger.Shared.IntegrationEvents.Events.UserEvents
         public Guid UserId { get; }
         public string Email { get; }
 
-        public UserRegisteredIntegrationEvent(Guid id, string email)
+        public UserRegisteredIntegrationEvent(Guid userId, string email)
         {
-            UserId = id;
+            UserId = userId;
             Email = email;
         }
     }

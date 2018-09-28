@@ -18,7 +18,10 @@ namespace Ledger.HelpDesk.Domain.Aggregates.UserAggregate
             }
         }
 
-        protected User() { }
+        protected User()
+        {
+            _roles = new List<UserRole>();
+        }
 
         public User(Guid id, string email)
         {

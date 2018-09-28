@@ -26,7 +26,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
         private readonly IRoleRepository _roleRepository;
         private readonly ITicketFactory _factory;
 
-        protected TicketApplicationService(ITicketRepository ticketRepository, IUserRepository userRepository, IRoleRepository roleRepository, ITicketFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, domainBus)
+        public TicketApplicationService(ITicketRepository ticketRepository, IUserRepository userRepository, IRoleRepository roleRepository, ITicketFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerHelpDeskDbAbstraction> unitOfWork, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, domainBus)
         {
             _ticketRepository = ticketRepository;
             _userRepository = userRepository;
