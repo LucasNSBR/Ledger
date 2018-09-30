@@ -11,10 +11,11 @@ namespace Ledger.Shared.ValueObjects
 
             ValueObject<T> other = obj as ValueObject<T>;
             
-            if (other == null)
+            if (other is null)
                 return false;
 
             bool isEqual = true;
+
             PropertyInfo[] properties = GetType().GetProperties();
             foreach (var property in properties)
             {
@@ -48,21 +49,11 @@ namespace Ledger.Shared.ValueObjects
 
         public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
         {
-            if (ReferenceEquals(a, null))
-            {
-                return ReferenceEquals(b, null);
-            }
-
             return Equals(a, b);
         }
 
         public static bool operator !=(ValueObject<T> a, ValueObject<T> b)
         {
-            if (ReferenceEquals(a, null))
-            {
-                return ReferenceEquals(b, null);
-            }
-
             return !Equals(a, b);
         }
 

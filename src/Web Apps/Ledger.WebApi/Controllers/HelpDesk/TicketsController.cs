@@ -1,5 +1,4 @@
 ﻿using Ledger.HelpDesk.Application.AppServices.TicketAppServices;
-using Ledger.HelpDesk.Application.AppServices.TicketCategoryAppServices;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
 using Ledger.HelpDesk.Domain.Commands.TicketCommands;
 using Ledger.Shared.Notifications;
@@ -16,13 +15,11 @@ namespace Ledger.WebApi.Controllers
     public class TicketsController : BaseController
     {
         private readonly ITicketApplicationService _ticketApplicationService;
-        private readonly ITicketCategoryApplicationService _ticketCategoryApplicationService;
 
-        public TicketsController(ITicketApplicationService ticketApplicationService, ITicketCategoryApplicationService ticketCategoryApplicationService, IDomainNotificationHandler domainNotificationHandler) 
+        public TicketsController(ITicketApplicationService ticketApplicationService, IDomainNotificationHandler domainNotificationHandler) 
                                                                                                                                                                                 : base(domainNotificationHandler)
         {
             _ticketApplicationService = ticketApplicationService;
-            _ticketCategoryApplicationService = ticketCategoryApplicationService;
         }
         
         [HttpGet]

@@ -59,7 +59,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void AttachIssuePicture(Image issuePicture)
         {
-            if (ContainsPicture())
+            if (!ContainsPicture())
                 IssuePicture = issuePicture;
             else
                 AddNotification("Imagem já existente", "Uma imagem do erro já está anexada ao ticket de suporte.");
