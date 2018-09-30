@@ -1,40 +1,34 @@
-﻿using Ledger.Identity.Application.AppServices.RoleAppServices;
+﻿using Ledger.CrossCutting.IoC.Configuration;
+using Ledger.Identity.Application.AppServices.RoleAppServices;
 using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Data.Context;
 using Ledger.Identity.Domain.Aggregates.RoleAggregate;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
-using Ledger.Identity.Domain.Configuration.JwtConfigurations;
-using Ledger.Identity.Domain.Configuration.SigningConfigurations;
 using Ledger.Identity.Domain.EventHandlers.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
-using Ledger.Identity.Domain.Services;
 using Ledger.Identity.Domain.Services.RoleServices;
-using Ledger.Identity.Domain.Services.SigningServices;
 using Ledger.Shared.EventHandlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Ledger.CrossCutting.IoC
 {
-    public static class IdentityBootstrapper
+    public static partial class DependencyInjectionExtensions
     {
-        public static void Initialize(IServiceCollection services, IConfiguration configuration)
+        /// <summary>
+        /// Add Dependencies for Identity Bounded Context
+        /// </summary>
+        /// <param name="services">List of services to register</param>
+        /// <param name="setupAction">Optional configurations to setup context</param>
+        /// <returns></returns>
+        public static IServiceCollection AddIdentity(this IServiceCollection services, Action<IdentityContextOptions> setupAction = null)
         {
             services.AddDbContext<LedgerIdentityDbContext>(options =>
                 options.UseInMemoryDatabase("IdentityDb"));
 
-            InitializeIdentity(services);
-            InitializeJwtConfiguration(services, configuration);
-            InitializeApplicationServices(services);
-            InitializeDomainEventHandlers(services);
-        }
-
-        private static void InitializeIdentity(IServiceCollection services)
-        {
             services.AddIdentity<LedgerIdentityUser, LedgerIdentityRole>(cfg =>
             {
                 cfg.User = new UserOptions
@@ -70,41 +64,17 @@ namespace Ledger.CrossCutting.IoC
             .AddSignInManager<LedgerSignInManager>()
             .AddRoleManager<LedgerRoleManager>()
             .AddDefaultTokenProviders();
-        }
 
-        private static void InitializeJwtConfiguration(IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<JwtTokenOptions>(cfg =>
-            {
-                cfg.Issuer = configuration["JwtToken:Issuer"];
-                cfg.Audience = configuration["JwtToken:Issuer"];
-                cfg.ExpiresInSeconds = configuration.GetValue<int>("JwtToken:ExpiresInSeconds");
-                cfg.IssuedAt = DateTime.Now;
-                cfg.NotBefore = DateTime.Now;
-            });
-
-            services.Configure<SigningOptions>(cfg =>
-            {
-                cfg.SALT_KEY = configuration["SALT_KEY"];
-            });
-
-            services.AddSingleton<ISigningService, SigningService>();
-            services.AddScoped<IJwtFactory, JwtFactory>();
-        }
-
-        private static void InitializeApplicationServices(IServiceCollection services)
-        {
             services.AddScoped<IUserApplicationService, UserApplicationService>();
             services.AddScoped<IRoleApplicationService, RoleApplicationService>();
-        }
 
-        private static void InitializeDomainEventHandlers(IServiceCollection services)
-        {
             services.AddScoped<IDomainEventHandler<UserRegisteredEvent>, UserDomainEventHandler>();
             services.AddScoped<IDomainEventHandler<UserLoggedInEvent>, UserDomainEventHandler>();
             services.AddScoped<IDomainEventHandler<UserForgotPasswordEvent>, UserDomainEventHandler>();
             services.AddScoped<IDomainEventHandler<UserResetedPasswordEvent>, UserDomainEventHandler>();
             services.AddScoped<IDomainEventHandler<UserChangedPasswordEvent>, UserDomainEventHandler>();
+
+            return services;
         }
     }
 }

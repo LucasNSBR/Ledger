@@ -1,4 +1,7 @@
 ﻿using Ledger.CrossCutting.IoC;
+using Ledger.Identity.Domain.Configuration.JwtConfigurations;
+using Ledger.Identity.Domain.Configuration.SigningConfigurations;
+using Ledger.Identity.Domain.Services;
 using Ledger.Identity.Domain.Services.SigningServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,11 +23,45 @@ namespace Ledger.WebApi
         }
 
         public IConfiguration Configuration { get; }
-        public IServiceProvider Provider { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            Bootstrapper.Initialize(services, Configuration);
+            services.AddCore();
+            services.AddIdentity();
+            services.AddActivations();
+            services.AddCompanies();
+            services.AddHelpDesk();
+
+            services.AddServiceBus(opt =>
+            {
+                opt.HostAddress = Configuration["MassTransit:RabbitMqHost"];
+                opt.RabbitMqHostUser = Configuration["MassTransit:RabbitMqHostUser"];
+                opt.RabbitMqHostPassword = Configuration["MassTransit:RabbitMqHostPassword"];
+            });
+
+            services.AddEmailService(opt =>
+            {
+                opt.SenderName = Configuration["SendGrid:SenderName"];
+                opt.SendAddress = Configuration["SendGrid:SenderEmail"];
+                opt.SendGridKey = Configuration["SendGrid:API_KEY"];
+            });
+
+            services.Configure<JwtTokenOptions>(cfg =>
+            {
+                cfg.Issuer = Configuration["JwtToken:Issuer"];
+                cfg.Audience = Configuration["JwtToken:Issuer"];
+                cfg.ExpiresInSeconds = Configuration.GetValue<int>("JwtToken:ExpiresInSeconds");
+                cfg.IssuedAt = DateTime.Now;
+                cfg.NotBefore = DateTime.Now;
+            });
+
+            services.Configure<SigningOptions>(cfg =>
+            {
+                cfg.SALT_KEY = Configuration["SALT_KEY"];
+            });
+
+            services.AddSingleton<ISigningService, SigningService>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
 
             services
                 .AddAuthentication(cfg =>
