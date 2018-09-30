@@ -20,12 +20,14 @@ namespace Ledger.HelpDesk.Data.Context
 
         public LedgerHelpDeskDbContext(DbContextOptions<LedgerHelpDeskDbContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TicketCategoryEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TicketEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketConversationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TicketMessageEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new RoleEntityTypeConfiguration());

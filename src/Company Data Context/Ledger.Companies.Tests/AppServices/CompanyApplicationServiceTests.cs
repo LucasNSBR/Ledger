@@ -93,7 +93,7 @@ namespace Ledger.Companies.Tests.AppServices
         {
             UpdateCompanyCommand command = new UpdateCompanyCommand
             {
-                Id = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
+                CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
                 Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
                 Cnpj = "55888518000141",
@@ -133,7 +133,7 @@ namespace Ledger.Companies.Tests.AppServices
             //Change existing seed company to same CNPJ from new company
             UpdateCompanyCommand command = new UpdateCompanyCommand
             {
-                Id = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
+                CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"),
                 Name = "Microsoft Corporation",
                 Description = "Microsoft corporation",
                 Cnpj = "49009518000141",

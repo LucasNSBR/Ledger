@@ -77,7 +77,7 @@ namespace Ledger.HelpDesk.Tests.AppServices
 
             UpdateTicketCategoryCommand command = new UpdateTicketCategoryCommand()
             {
-                Id = idOne,
+                CategoryId = idOne,
                 Name = "Problemas de na criação de ordens"
             };
 

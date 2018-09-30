@@ -1,28 +1,38 @@
-﻿using System;
+﻿using Ledger.Shared.ValueObjects;
+using System;
 
 namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 {
-    public class TicketStatus
+    public class TicketStatus : ValueObject<TicketStatus>
     {
         public Status Status { get; private set; }
         public DateTime DateOpened { get; private set; }
         public DateTime? DateClosed { get; private set; }
 
-        public TicketStatus()
+        protected TicketStatus()
         {
-            SetOpen();
         }
 
-        public void SetOpen()
+        private TicketStatus(Status status, DateTime? dateClosed = null)
         {
+            Status = status;
             DateOpened = DateTime.Now;
-            Status = Status.Open;
+            DateClosed = dateClosed;
         }
 
-        public void SetClosed()
+        public static TicketStatus SetOpen()
         {
-            DateClosed = DateTime.Now;
-            Status = Status.Closed;
+            return new TicketStatus(Status.Open);
+        }
+
+        public static TicketStatus SetClosed()
+        {
+            return new TicketStatus(Status.Closed, DateTime.Now);
+        }
+
+        public override string ToString()
+        {
+            return Status.ToString();
         }
     }
 }

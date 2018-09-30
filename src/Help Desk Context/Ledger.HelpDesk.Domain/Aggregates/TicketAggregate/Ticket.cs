@@ -1,5 +1,4 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Specifications.TicketSpecifications.TicketMessageSpecifications;
+﻿using Ledger.HelpDesk.Domain.Specifications.TicketSpecifications.TicketMessageSpecifications;
 using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
 using System;
@@ -14,7 +13,6 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public Guid CategoryId { get; private set; }
 
-        public Guid ConversationId { get; private set; }
         public TicketConversation Conversation { get; private set; }
 
         public Guid TicketUserId { get; private set; }
@@ -33,7 +31,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             CategoryId = categoryId;
             TicketUserId = userId;
 
-            TicketStatus = new TicketStatus();
+            TicketStatus = TicketStatus.SetOpen();
             Conversation = new TicketConversation();
         }
 
@@ -45,7 +43,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             CategoryId = categoryId;
             TicketUserId = userId;
 
-            TicketStatus = new TicketStatus();
+            TicketStatus = TicketStatus.SetOpen();
             Conversation = new TicketConversation();
         }
 
@@ -61,7 +59,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void AttachIssuePicture(Image issuePicture)
         {
-            if (!ContainsPicture())
+            if (ContainsPicture())
                 IssuePicture = issuePicture;
             else
                 AddNotification("Imagem já existente", "Uma imagem do erro já está anexada ao ticket de suporte.");
@@ -74,10 +72,16 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public void AssignSupportUser(Guid userId)
         {
-            if (!AlreadyHaveSupport())
-                SupportUserId = userId;
-            else
+            if (AlreadyHaveSupport())
+            {
                 AddNotification("Suporte já definido", "Já existe um usuário de suporte resolvendo esse problema.");
+                return; 
+            }
+
+            if (userId == TicketUserId)
+                AddNotification("Usuário inválido", "O usuário de suporte não pode ser o mesmo usuário que abriu o ticket.");
+            else
+                SupportUserId = userId;
         }
 
         public void AddMessage(string body, Guid userId)
@@ -86,17 +90,14 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
                 return;
 
             if (userId == SupportUserId || userId == TicketUserId)
-            {
-                TicketMessage message = new TicketMessage(body, userId);
-                Conversation.AddMessage(message);
-            }
+                Conversation.AddMessage(body, userId);
             else
                 AddNotification("Não possui acesso às mensagens", "O usuário não tem permissão para participar dessa conversa.");
         }
 
         public IReadOnlyList<TicketMessage> GetMessages(Guid? userId = null)
         {
-            IReadOnlyList<TicketMessage> messages = Conversation.GetMessages();
+            IReadOnlyList<TicketMessage> messages = Conversation.GetMessagesByDate();
 
             if (userId != null)
             {
@@ -115,14 +116,14 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             if (NotifyClosedTicket())
                 return;
 
-            TicketStatus.SetClosed();
+            TicketStatus = TicketStatus.SetClosed();
         }
 
         private bool NotifyClosedTicket()
         {
             if (!IsOpened())
             {
-                AddNotification("Ticket finalizado", "Não é possível modificar um ticket que já foi resolvido.");
+                AddNotification("Ticket finalizado", "Não é possível modificar um ticket que já foi finalizado.");
                 return true;
             }
 

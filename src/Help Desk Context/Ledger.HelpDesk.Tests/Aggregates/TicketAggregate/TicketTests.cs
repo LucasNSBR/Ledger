@@ -44,7 +44,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
             //Come from repository
             User user = new User(Guid.NewGuid(), "support@contoso.com");
 
-            ticket.AssignSupportUser(user);
+            ticket.AssignSupportUser(user.Id);
 
             Assert.AreEqual(user.Id, ticket.SupportUserId);
             Assert.IsTrue(ticket.AlreadyHaveSupport());
@@ -56,9 +56,9 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
             //Come from repository
             User user = new User(Guid.NewGuid(), "support@contoso.com");
            
-            ticket.AssignSupportUser(user);
+            ticket.AssignSupportUser(user.Id);
 
-            ticket.AssignSupportUser(user);
+            ticket.AssignSupportUser(user.Id);
 
 
             Assert.AreEqual("Suporte já definido", ticket.GetNotifications().First().Title);
@@ -112,7 +112,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         {
             User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
             
-            ticket.AssignSupportUser(supportUser);
+            ticket.AssignSupportUser(supportUser.Id);
 
             ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);
             ticket.AddMessage("Estou com um problema para ativar minha conta.", user.Id);
@@ -130,7 +130,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         {
             User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
            
-            ticket.AssignSupportUser(supportUser);
+            ticket.AssignSupportUser(supportUser.Id);
 
             ticket.AddMessage("Olá, como eu posso te ajudar?", supportUser.Id);
             ticket.AddMessage("Estou com um problema para ativar minha conta.", user.Id);

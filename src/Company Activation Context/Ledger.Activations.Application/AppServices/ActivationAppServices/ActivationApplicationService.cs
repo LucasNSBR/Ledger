@@ -56,7 +56,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             Commit();
         }
 
-        public void AcceptActivation(AcceptActivationCommand command)
+        public void Accept(AcceptActivationCommand command)
         {
             command.Validate();
 
@@ -79,7 +79,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
                 Publish(new AcceptedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
         }
 
-        public void RejectActivation(RejectActivationCommand command)
+        public void Reject(RejectActivationCommand command)
         {
             command.Validate();
 
@@ -102,7 +102,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
                 Publish(new RejectedCompanyActivationIntegrationEvent(command.ActivationId, DateTime.Now));
         }
 
-        public void ResetActivation(ResetActivationCommand command)
+        public void Reset(ResetActivationCommand command)
         {
             command.Validate();
 

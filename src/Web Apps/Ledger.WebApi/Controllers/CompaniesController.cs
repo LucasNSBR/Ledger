@@ -20,7 +20,8 @@ namespace Ledger.WebApi.Controllers
             _companyApplicationService = companyApplicationService;
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet]
+        [Route("{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             Company company = _companyApplicationService.GetById(id);
@@ -29,6 +30,7 @@ namespace Ledger.WebApi.Controllers
         }
         
         [HttpPost]
+        [Route("")]
         public IActionResult Register([FromBody]RegisterCompanyCommand command)
         {
             _companyApplicationService.Register(command);
@@ -37,26 +39,33 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody]UpdateCompanyCommand command)
+        [Route("{id:guid}")]
+        public IActionResult Update(Guid id, [FromBody]UpdateCompanyCommand command)
         {
+            command.CompanyId = id;
+
             _companyApplicationService.Update(command);
 
             return CreateResponse();
         }
         
-        [HttpPost]
-        [Route("changeaddress")]
-        public IActionResult ChangeAddress([FromBody]ChangeCompanyAddressCommand command)
+        [HttpPut]
+        [Route("{id:guid}/address")]
+        public IActionResult ChangeAddress(Guid id, [FromBody]ChangeCompanyAddressCommand command)
         {
+            command.CompanyId = id;
+
             _companyApplicationService.ChangeAddress(command);
 
             return CreateResponse();
         }
 
-        [HttpPost]
-        [Route("changephone")]
-        public IActionResult ChangePhone([FromBody]ChangeCompanyPhoneCommand command)
+        [HttpPut]
+        [Route("{id:guid}/phone")]
+        public IActionResult ChangePhone(Guid id, [FromBody]ChangeCompanyPhoneCommand command)
         {
+            command.CompanyId = id;
+
             _companyApplicationService.ChangePhone(command);
 
             return CreateResponse();

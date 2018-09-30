@@ -64,7 +64,7 @@ namespace Ledger.Activations.Tests.AppServices
                 ActivationId = companyId
             };
 
-            service.AcceptActivation(command);
+            service.Accept(command);
 
             Activation activation = GetActivation();
 
@@ -81,7 +81,7 @@ namespace Ledger.Activations.Tests.AppServices
                 ActivationId = companyId
             };
 
-            service.RejectActivation(command);
+            service.Reject(command);
 
             Activation activation = GetActivation();
 
@@ -98,7 +98,7 @@ namespace Ledger.Activations.Tests.AppServices
                 ActivationId = companyId
             };
 
-            service.RejectActivation(command);
+            service.Reject(command);
 
             Activation activation = GetActivation();
 
@@ -109,7 +109,7 @@ namespace Ledger.Activations.Tests.AppServices
                 ActivationId = companyId
             };
 
-            service.ResetActivation(resetCommand);
+            service.Reset(resetCommand);
 
             Assert.AreEqual(ActivationStatus.Pending, activation.Status);
         }

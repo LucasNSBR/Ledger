@@ -10,7 +10,7 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/activations")]
-    [Authorize(Policy = "ActivatedAccount")]
+    //[Authorize(Policy = "ActivatedAccount")]
     public class ActivationsController : BaseController
     {
         private readonly IActivationApplicationService _activationAppService;
@@ -21,26 +21,29 @@ namespace Ledger.WebApi.Controllers
             _activationAppService = activationAppService;
         }
 
-        [HttpGet("{id:guid}")]
-        public IActionResult Get(Guid id)
+        [HttpGet]
+        [Route("{id:guid}")]
+        public IActionResult GetById(Guid id)
         {
             Activation activation = _activationAppService.GetById(id);
 
             return CreateResponse(activation);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id:guid}/attach")]
-        public IActionResult AttachDocuments([FromBody]AttachCompanyDocumentsCommand command)
+        public IActionResult AttachCompanyDocuments(Guid id, [FromBody]AttachCompanyDocumentsCommand command)
         {
+            command.ActivationId = id;
+
             _activationAppService.AttachCompanyDocuments(command);
 
             return CreateResponse();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id:guid}/accept")]
-        [Authorize(Policy = "AdminAccount")]
+        //[Authorize(Policy = "AdminAccount")]
         public IActionResult Accept(Guid id)
         {
             AcceptActivationCommand command = new AcceptActivationCommand
@@ -48,14 +51,14 @@ namespace Ledger.WebApi.Controllers
                 ActivationId = id
             };
 
-            _activationAppService.AcceptActivation(command);
+            _activationAppService.Accept(command);
 
             return CreateResponse();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id:guid}/reject")]
-        [Authorize(Policy = "AdminAccount")]
+        //[Authorize(Policy = "AdminAccount")]
         public IActionResult Reject(Guid id)
         {
             RejectActivationCommand command = new RejectActivationCommand
@@ -63,12 +66,12 @@ namespace Ledger.WebApi.Controllers
                 ActivationId = id
             };
 
-            _activationAppService.RejectActivation(command);
+            _activationAppService.Reject(command);
 
             return CreateResponse();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id:guid}/reset")]
         public IActionResult Reset(Guid id)
         {
@@ -77,7 +80,7 @@ namespace Ledger.WebApi.Controllers
                 ActivationId = id
             };
 
-            _activationAppService.ResetActivation(command);
+            _activationAppService.Reset(command);
 
             return CreateResponse();
         }

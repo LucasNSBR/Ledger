@@ -7,10 +7,9 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
     public interface IActivationApplicationService
     {
         Activation GetById(Guid id);
-        
         void AttachCompanyDocuments(AttachCompanyDocumentsCommand command);
-        void AcceptActivation(AcceptActivationCommand command);
-        void RejectActivation(RejectActivationCommand command);
-        void ResetActivation(ResetActivationCommand command);
+        void Accept(AcceptActivationCommand command);
+        void Reject(RejectActivationCommand command);
+        void Reset(ResetActivationCommand command);
     }
 }

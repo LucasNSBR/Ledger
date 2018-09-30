@@ -1,6 +1,8 @@
 ﻿using Ledger.Identity.Application.AppServices.RoleAppServices;
+using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Domain.Aggregates.RoleAggregate;
 using Ledger.Identity.Domain.Commands.RoleCommands;
+using Ledger.Identity.Domain.Commands.UserCommands;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +13,22 @@ namespace Ledger.WebApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/permissions")]
+    //[Authorize(Policy = "AdminAccount")]
     public class PermissionsController : BaseController
     {
         private readonly IRoleApplicationService _roleApplicationService;
+        private readonly IUserApplicationService _userApplicationService;
         
-        public PermissionsController(IRoleApplicationService roleApplicationService, IDomainNotificationHandler domainNotificationHandler) : base(domainNotificationHandler)
+        public PermissionsController(IRoleApplicationService roleApplicationService, IUserApplicationService userApplicationService, IDomainNotificationHandler domainNotificationHandler) 
+                                                                                                                                                          : base(domainNotificationHandler)
         {
             _roleApplicationService = roleApplicationService;
+            _userApplicationService = userApplicationService;
         }
 
         [HttpGet]
         [Route("roles")]
-        //[Authorize(Policy = "AdminAccount")]
-        public IActionResult GetRoles()
+        public IActionResult GetAllRoles()
         {
             IQueryable<LedgerIdentityRole> roles = _roleApplicationService.GetAllRoles();
 
@@ -32,8 +37,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("roles/{name}")]
-        //[Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> GetRoleByName(string name)
+        public async Task<IActionResult> GetByName(string name)
         {
             LedgerIdentityRole role = await _roleApplicationService.GetByName(name);
 
@@ -42,7 +46,6 @@ namespace Ledger.WebApi.Controllers
 
         [HttpPost]
         [Route("roles")]
-        //[Authorize(Policy = "AdminAccount")]
         public async Task<IActionResult> Register([FromBody]RegisterRoleCommand command)
         {
             await _roleApplicationService.Register(command);
@@ -51,11 +54,34 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("roles")]
-        //[Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> Remove([FromBody]RemoveRoleCommand command)
+        [Route("roles/{name}")]
+        public async Task<IActionResult> Remove(string name, [FromBody]RemoveRoleCommand command)
         {
+            command.RoleName = name;
+
             await _roleApplicationService.Remove(command);
+
+            return CreateResponse();
+        }
+
+        [HttpPost]
+        [Route("users/{email}/roles")]
+        public async Task<IActionResult> AddToRole(string email, [FromBody]AddUserToRoleCommand command)
+        {
+            command.Email = email;
+
+            await _userApplicationService.AddToRole(command);
+
+            return CreateResponse();
+        }
+
+        [HttpDelete]
+        [Route("users/{email}/roles")]
+        public async Task<IActionResult> RemoveFromRole(string email, [FromBody]RemoveUserFromRoleCommand command)
+        {
+            command.Email = email;
+
+            await _userApplicationService.RemoveFromRole(command);
 
             return CreateResponse();
         }

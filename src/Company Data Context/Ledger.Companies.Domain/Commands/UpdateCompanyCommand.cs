@@ -7,7 +7,7 @@ namespace Ledger.Companies.Domain.Commands
 {
     public class UpdateCompanyCommand : Command
     {
-        public Guid Id { get; set; }
+        public Guid CompanyId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Description { get; set; }
@@ -19,7 +19,7 @@ namespace Ledger.Companies.Domain.Commands
 
         public override void Validate()
         {
-            new ValidationContract<UpdateCompanyCommand, Guid>(this, command => command.Id)
+            new ValidationContract<UpdateCompanyCommand, Guid>(this, command => command.CompanyId)
                 .NotEmpty()
                 .Build()
                 .AddToNotifier(this);

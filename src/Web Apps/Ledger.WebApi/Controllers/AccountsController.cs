@@ -62,16 +62,6 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        [Route("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPasswordCommand command)
-        {
-            await _userApplicationService.ChangePassword(command);
-
-            return CreateResponse();
-        }
-
-        [HttpPost]
         [Route("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody]ForgotUserPasswordCommand command)
         {
@@ -90,21 +80,11 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("add-role")]
-        //[Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> AddToRole([FromBody]AddUserToRoleCommand command)
+        [Authorize]
+        [Route("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangeUserPasswordCommand command)
         {
-            await _userApplicationService.AddToRole(command);
-
-            return CreateResponse();
-        }
-
-        [HttpPost]
-        [Route("remove-role")]
-        //[Authorize(Policy = "AdminAccount")]
-        public async Task<IActionResult> RemoveFromRole([FromBody]RemoveUserFromRoleCommand command)
-        {
-            await _userApplicationService.RemoveFromRole(command);
+            await _userApplicationService.ChangePassword(command);
 
             return CreateResponse();
         }

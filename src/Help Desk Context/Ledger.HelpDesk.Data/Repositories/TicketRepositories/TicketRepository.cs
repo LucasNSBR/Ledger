@@ -24,7 +24,6 @@ namespace Ledger.HelpDesk.Data.Repositories.TicketRepositories
             TicketUserIdSpecification specification = new TicketUserIdSpecification(userId);
 
             return _dbSet
-                .AsNoTracking()
                 .Include(c => c.Conversation)
                 .ThenInclude(tc => tc.Messages)
                 .Where(specification.ToExpression());
@@ -35,7 +34,6 @@ namespace Ledger.HelpDesk.Data.Repositories.TicketRepositories
             TicketIdSpecification specification = new TicketIdSpecification(id);
 
             return _dbSet
-                .AsNoTracking()
                 .Include(c => c.Conversation)
                 .ThenInclude(tc => tc.Messages)
                 .FirstOrDefault(specification.ToExpression());

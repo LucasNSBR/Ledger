@@ -65,7 +65,9 @@ namespace Ledger.Companies.Domain.Commands
 
             new ValidationContract<RegisterCompanyCommand, string>(this, command => command.OwnerCpf)
                 .NotEmpty()
-                .ExactlyLength(11);
+                .ExactlyLength(11)
+                .Build()
+                .AddToNotifier(this);
         }
     }
 }

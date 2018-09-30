@@ -60,7 +60,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
                 return;
 
             Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj, 
-                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, companyId: command.Id);
+                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, companyId: command.CompanyId);
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
                 return;
