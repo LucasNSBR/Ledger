@@ -1,4 +1,4 @@
-﻿using Ledger.Shared.Entities;
+﻿using Ledger.Shared.Entities.Locations;
 using System;
 using System.Linq;
 

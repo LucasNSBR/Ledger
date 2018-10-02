@@ -1,4 +1,4 @@
-﻿using Ledger.Shared.Entities;
+﻿using Ledger.Shared.Entities.Locations;
 using Ledger.Shared.Locations.EntityTypeConfiguration;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ledger.Shared.Entities
+namespace Ledger.Shared.Entities.Locations
 {
     public class City : Entity<City>
     {

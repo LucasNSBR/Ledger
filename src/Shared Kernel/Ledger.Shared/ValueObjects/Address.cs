@@ -1,4 +1,5 @@
 ﻿using Ledger.Shared.Entities;
+using Ledger.Shared.Entities.Locations;
 
 namespace Ledger.Shared.ValueObjects
 {

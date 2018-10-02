@@ -1,4 +1,4 @@
-﻿namespace Ledger.Shared.Entities
+﻿namespace Ledger.Shared.Entities.Locations
 {
     public class State : Entity<State>
     {
