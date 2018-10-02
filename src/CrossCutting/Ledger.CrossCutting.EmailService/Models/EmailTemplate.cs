@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ledger.CrossCutting.EmailService.Models
 {
-    public abstract class EmailTemplate
+    public class EmailTemplate
     {
         public EmailAddress To { get; private set; }
         public string TemplateId { get; private set; }
@@ -17,22 +17,42 @@ namespace Ledger.CrossCutting.EmailService.Models
             }
         }
 
-        protected EmailTemplate(string to, string templateId)
+        public EmailTemplate(string to)
         {
-            To = new EmailAddress(to);
-            TemplateId = templateId;
-
             _sendGridSubstitutions = new Dictionary<string, string>();
+            To = new EmailAddress(to);         
 
-            AddSendGridSubstitution("-to-", to);
+            AddSubstitution("-to-", to);
         }
 
-        public void AddSendGridSubstitution(string key, string value)
+        /// <summary>
+        /// Set SendGrid Email Template Id.
+        /// Please visit https://sendgrid.com/solutions/transactional-email-templates/
+        /// </summary>
+        /// <param name="templateId">Id of SendGrid template</param>
+        /// <returns></returns>
+        public EmailTemplate SetTemplate(string templateId)
+        {
+            TemplateId = templateId;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add substitution key to be replaced in SendGrid Email template.
+        /// Please visit https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
+        /// </summary>
+        /// <param name="key">The key to be replaced</param>
+        /// <param name="value">The value that will replace the key</param>
+        /// <returns></returns>
+        public EmailTemplate AddSubstitution(string key, string value)
         {
             if (_sendGridSubstitutions.ContainsKey(key))
                 _sendGridSubstitutions[key] = value;
             else
                 _sendGridSubstitutions.Add(key, value);
+
+            return this;
         }
     }
 }

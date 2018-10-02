@@ -1,6 +1,6 @@
-﻿using Ledger.CrossCutting.EmailService.Models;
+﻿using Ledger.CrossCutting.EmailService.Configuration;
+using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
-using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
@@ -15,13 +15,11 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
                                           IDomainEventHandler<UserResetedPasswordEvent>,
                                           IDomainEventHandler<UserChangedPasswordEvent>
     {
-        private readonly IEmailFactory _emailFactory;
         private readonly IEmailDispatcher _emailDispatcher;
         private readonly LedgerUserManager _userManager;
 
-        public UserDomainEventHandler(IEmailFactory emailFactory, IEmailDispatcher emailDispatcher, LedgerUserManager userManager)
+        public UserDomainEventHandler(IEmailDispatcher emailDispatcher, LedgerUserManager userManager)
         {
-            _emailFactory = emailFactory;
             _emailDispatcher = emailDispatcher;
             _userManager = userManager;
         }
@@ -31,7 +29,9 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
             string email = @event.Email;
             string confirmationToken = @event.EmailConfirmationToken;
 
-            EmailTemplate template = _emailFactory.CreateAccountConfirmationEmail(email, confirmationToken);
+            EmailTemplate template = new EmailTemplate(email)
+                .SetTemplate(EmailTemplateTypes.UserRegistered)
+                .AddSubstitution("-code-", confirmationToken);
 
             await _emailDispatcher.SendEmailAsync(template);
         }
@@ -45,7 +45,10 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
 
             if (!confirmedEmail)
             {
-                EmailTemplate template = _emailFactory.CreateAccountConfirmationEmail(@event.Email, confirmationToken);
+                EmailTemplate template = new EmailTemplate(@event.Email)
+                    .SetTemplate(EmailTemplateTypes.UserLoggedIn)
+                    .AddSubstitution("-code-", confirmationToken);
+
                 await _emailDispatcher.SendEmailAsync(template);
             }
         }
@@ -55,20 +58,26 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
             string email = @event.Email;
             string resetToken = @event.PasswordResetToken;
 
-            EmailTemplate template = _emailFactory.CreatePasswordResetEmail(email, resetToken);
+            EmailTemplate template = new EmailTemplate(@event.Email)
+                    .SetTemplate(EmailTemplateTypes.ResetUserPassword)
+                    .AddSubstitution("-code-", resetToken);
 
             await _emailDispatcher.SendEmailAsync(template);
         }
 
         public async Task Handle(UserResetedPasswordEvent @event)
         {
-            EmailTemplate template = _emailFactory.CreatePostPasswordResetEmail(@event.Email);
+            EmailTemplate template = new EmailTemplate(@event.Email)
+                    .SetTemplate(EmailTemplateTypes.UsedResetedPassword);
+                    
             await _emailDispatcher.SendEmailAsync(template);
         }
 
         public async Task Handle(UserChangedPasswordEvent @event)
         {
-            EmailTemplate template = _emailFactory.CreatePostPasswordChangeEmail(@event.Email);
+            EmailTemplate template = new EmailTemplate(@event.Email)
+                    .SetTemplate(EmailTemplateTypes.UserChangedPassword);
+
             await _emailDispatcher.SendEmailAsync(template);
         }
     }

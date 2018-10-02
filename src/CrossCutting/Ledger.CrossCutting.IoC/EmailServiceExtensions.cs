@@ -1,6 +1,5 @@
 ﻿using Ledger.CrossCutting.EmailService.Configuration;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
-using Ledger.CrossCutting.EmailService.Services.Factories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -18,7 +17,6 @@ namespace Ledger.CrossCutting.IoC
         {
             services.Configure(setupAction); 
 
-            services.AddScoped<IEmailFactory, EmailFactory>();
             services.AddScoped<IEmailDispatcher, EmailDispatcher>();
 
             return services;

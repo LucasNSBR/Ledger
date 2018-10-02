@@ -3,9 +3,9 @@ using Ledger.Activations.Domain.Context;
 using Ledger.Activations.Domain.Factories.ActivationFactories;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
 using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.CrossCutting.EmailService.Configuration;
 using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
-using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Shared.IntegrationEvents.Events.CompanyEvents;
 using MassTransit;
 using System;
@@ -18,15 +18,13 @@ namespace Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate
         private readonly IActivationRepository _repository;
         private readonly IUnitOfWork<ILedgerActivationDbAbstraction> _unitOfWork;
         private readonly IActivationFactory _factory;
-        private readonly IEmailFactory _emailFactory;
         private readonly IEmailDispatcher _emailDispatcher;
 
-        public ActivationIntegrationEventHandler(IActivationRepository repository, IActivationFactory factory, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
+        public ActivationIntegrationEventHandler(IActivationRepository repository, IActivationFactory factory, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IEmailDispatcher emailDispatcher)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
             _factory = factory;
-            _emailFactory = emailFactory;
             _emailDispatcher = emailDispatcher;
         }
 
@@ -40,7 +38,9 @@ namespace Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate
             _repository.Register(activation);
             _unitOfWork.Commit();
 
-            EmailTemplate emailTemplate = _emailFactory.CreateCompanyRegisteredEmail(email);
+            EmailTemplate emailTemplate = new EmailTemplate(email)
+                .SetTemplate(EmailTemplateTypes.CompanyRegistered);
+
             await _emailDispatcher.SendEmailAsync(emailTemplate);
         }
     }

@@ -2,9 +2,9 @@
 using Ledger.Companies.Domain.Context;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.CrossCutting.EmailService.Configuration;
 using Ledger.CrossCutting.EmailService.Models;
 using Ledger.CrossCutting.EmailService.Services.Dispatchers;
-using Ledger.CrossCutting.EmailService.Services.Factories;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
 using MassTransit;
 using System;
@@ -17,14 +17,12 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
     {
         private readonly ICompanyRepository _repository;
         private readonly IUnitOfWork<ILedgerCompanyDbAbstraction> _unitOfWork;
-        private readonly IEmailFactory _emailFactory;
         private readonly IEmailDispatcher _emailDispatcher;
 
-        public CompanyIntegrationEventHandler(ICompanyRepository repository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IEmailFactory emailFactory, IEmailDispatcher emailDispatcher)
+        public CompanyIntegrationEventHandler(ICompanyRepository repository, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IEmailDispatcher emailDispatcher)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
-            _emailFactory = emailFactory;
             _emailDispatcher = emailDispatcher;
         }
 
@@ -41,7 +39,9 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
             _repository.Update(company);
             _unitOfWork.Commit();
 
-            EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationAcceptedEmail(company.Email.Email);
+            EmailTemplate emailTemplate = new EmailTemplate(company.Email.Email)
+                .SetTemplate(EmailTemplateTypes.ActivationAccepted);
+
             await _emailDispatcher.SendEmailAsync(emailTemplate);
         }
 
@@ -58,7 +58,9 @@ namespace Ledger.Companies.Domain.IntegrationEventHandlers.CompanyAggregate
             _repository.Update(company);
             _unitOfWork.Commit();
 
-            EmailTemplate emailTemplate = _emailFactory.CreateCompanyActivationRejectedEmail(company.Email.Email);
+            EmailTemplate emailTemplate = new EmailTemplate(company.Email.Email)
+                .SetTemplate(EmailTemplateTypes.ActivationRejected);
+
             await _emailDispatcher.SendEmailAsync(emailTemplate);
         }
     }
