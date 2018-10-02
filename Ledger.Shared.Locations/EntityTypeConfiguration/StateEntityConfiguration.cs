@@ -12,7 +12,7 @@ namespace Ledger.Shared.Locations.EntityTypeConfiguration
                 .HasKey(k => k.Id);
 
             builder
-                .Property(s => s.Initials)
+                .Property(s => s.ShortName)
                 .IsRequired()
                 .HasMaxLength(2);
 
