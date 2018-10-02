@@ -9,7 +9,7 @@ namespace Ledger.Shared.Locations.Specifications.CountrySpecifications
     {
         private readonly Guid _id;
 
-        protected CountryIdSpecification(Guid id)
+        public CountryIdSpecification(Guid id)
         {
             _id = id;
         }

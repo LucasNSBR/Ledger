@@ -16,7 +16,7 @@ namespace Ledger.Shared.Locations.Specifications.CountrySpecifications
 
         public override Expression<Func<Country, bool>> ToExpression()
         {
-            return c => c.Name == _name;
+            return c => c.Name.ToLower() == _name.ToLower();
         }
     }
 }

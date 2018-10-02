@@ -6,7 +6,7 @@ namespace Ledger.Shared.Locations.Repositories.StateRepositories
 {
     public interface IStateRepository
     {
-        IQueryable<State> GetAllStates();
+        IQueryable<State> GetByCountry(Guid id);
         State GetById(Guid id);
     }
 }
