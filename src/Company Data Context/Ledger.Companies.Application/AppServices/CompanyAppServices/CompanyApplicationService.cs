@@ -82,7 +82,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (NotifyNullCompany(company))
                 return;
 
-            Address address = new Address(command.Number, command.State, command.Neighborhood, command.Complementation, command.City, command.State, command.Cep);
+            Address address = new Address(command.Number, command.Street, command.Neighborhood, command.Complementation, command.City, command.State, command.Country, command.Cep);
             company.ChangeAddress(address);
 
             if (AddNotifications(company))
