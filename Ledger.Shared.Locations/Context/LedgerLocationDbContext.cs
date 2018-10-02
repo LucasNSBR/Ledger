@@ -8,6 +8,7 @@ namespace Ledger.Shared.Locations.Context
     {
         public DbSet<City> Cities { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         public LedgerLocationDbContext(DbContextOptions<LedgerLocationDbContext> options) : base(options)
         {
@@ -17,6 +18,7 @@ namespace Ledger.Shared.Locations.Context
         {
             modelBuilder.ApplyConfiguration(new CityEntityConfiguration());
             modelBuilder.ApplyConfiguration(new StateEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CountryEntityConfiguration());
         }
     }
 }
