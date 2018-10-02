@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\CityRepositories\" />
+    <Folder Include="Repositories\StateRepositories\" />
+  </ItemGroup>
+
 </Project>
