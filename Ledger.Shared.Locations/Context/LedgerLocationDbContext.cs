@@ -1,4 +1,5 @@
 ﻿using Ledger.Shared.Entities;
+using Ledger.Shared.Locations.EntityTypeConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Shared.Locations.Context
@@ -14,6 +15,8 @@ namespace Ledger.Shared.Locations.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new CityEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new StateEntityConfiguration());
         }
     }
 }
