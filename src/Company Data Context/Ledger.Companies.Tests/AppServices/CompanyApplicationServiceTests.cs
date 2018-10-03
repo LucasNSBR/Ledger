@@ -5,6 +5,7 @@ using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Tests.Mocks;
 using Ledger.Shared.Locations.Services;
 using Ledger.Shared.Notifications;
+using Ledger.Shared.Tests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Ledger.Companies.Tests.AppServices
         public CompanyApplicationServiceTests()
         {
             repository = new FakeCompanyRepository();
-            locationService = new LocationService(null, null, null);
+            locationService = new LocationService(new FakeCityRepository(), new StateFakeRepository(), new CountryFakeRepository());
             bus = new FakeServiceBus();
             uow = new FakeUnitOfWork();
             domainNotificationHandler = new DomainNotificationHandler();
