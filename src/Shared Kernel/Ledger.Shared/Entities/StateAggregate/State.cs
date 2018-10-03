@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ledger.Shared.Entities.CountryAggregate;
+using System;
 
 namespace Ledger.Shared.Entities.StateAggregate
 {
@@ -13,6 +14,11 @@ namespace Ledger.Shared.Entities.StateAggregate
             ShortName = shortName;
             Name = name;
             CountryId = countryId;
+        }
+
+        public bool IsInCountry(Country country)
+        {
+            return CountryId == country.Id;
         }
     }
 }

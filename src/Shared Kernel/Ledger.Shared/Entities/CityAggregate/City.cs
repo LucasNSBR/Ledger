@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ledger.Shared.Entities.StateAggregate;
+using System;
 
 namespace Ledger.Shared.Entities.CityAggregate
 {
@@ -11,6 +12,11 @@ namespace Ledger.Shared.Entities.CityAggregate
         {
             Name = name;
             StateId = stateId;
+        }
+
+        public bool IsInState(State state)
+        {
+            return StateId == state.Id;
         }
     }
 }

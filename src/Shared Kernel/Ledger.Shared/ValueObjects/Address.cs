@@ -9,6 +9,9 @@
         //Notes or extra details about this address
         public string Complementation { get; private set; }
 
+        //Since names never tend to change, Address will keep just weak references 
+        //If name changes, this need to be changed manually on Database or by every user
+        //Very uncommon
         public string City { get; private set; }
         public string State { get; private set; }
         public string Country { get; private set; }
