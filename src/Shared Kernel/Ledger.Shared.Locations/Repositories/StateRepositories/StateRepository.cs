@@ -18,6 +18,15 @@ namespace Ledger.Shared.Locations.Repositories.StateRepositories
             _dbSet = _dbContext.States;
         }
 
+        public IQueryable<State> GetByName(string name)
+        {
+            StateNameSpecification specification = new StateNameSpecification(name);
+
+            return _dbSet
+                .AsNoTracking()
+                .Where(specification.ToExpression());
+        }
+
         public IQueryable<State> GetByCountry(Guid id)
         {
             StateCountryIdSpecification specification = new StateCountryIdSpecification(id);

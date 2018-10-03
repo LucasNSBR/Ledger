@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <ProjectReference Include="..\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 
 </Project>
