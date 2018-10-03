@@ -11,6 +11,6 @@ namespace Ledger.Shared.Notifications
         bool AddNotifications(List<DomainNotification> notifications);
         IReadOnlyList<DomainNotification> GetNotifications();
         IEnumerable<DomainNotification> GetAtomicNotifications();
-        string GetAndFormatNotifications();
+        string GetNotificationsAsString();
     }
 }

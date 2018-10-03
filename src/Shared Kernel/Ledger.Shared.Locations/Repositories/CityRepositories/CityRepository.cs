@@ -9,13 +9,11 @@ namespace Ledger.Shared.Locations.Repositories.CityRepositories
 {
     public class CityRepository : ICityRepository
     {
-        private readonly LedgerLocationDbContext _dbContext;
         private readonly DbSet<City> _dbSet;
 
         public CityRepository(LedgerLocationDbContext dbContext)
         {
-            _dbContext = dbContext;
-            _dbSet = _dbContext.Cities;
+            _dbSet = dbContext.Cities;
         }
 
         public City GetById(Guid id)

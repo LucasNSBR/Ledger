@@ -176,9 +176,9 @@ namespace Ledger.Companies.Tests.AppServices
             {
                 Number = 22,
                 Street = "One Way",
-                CityId = Guid.NewGuid(),
-                StateId = Guid.NewGuid(),
-                CountryId = Guid.NewGuid(),
+                CityId = new Guid("baa3b30e-8da9-4f3e-a0c3-fae93da05346"),
+                StateId = new Guid("066ed615-e330-4e85-a79c-68e498b3d363"),
+                CountryId = new Guid("43231eb6-2aab-463c-9286-93827dd0eb17"),
                 Cep = "00112233",
                 Complementation = "Central Square",
                 Neighborhood = "Central",
@@ -190,8 +190,79 @@ namespace Ledger.Companies.Tests.AppServices
 
             service.ChangeAddress(command);
             Assert.AreEqual("00112233", company.Address.Cep);
+            Assert.AreEqual("Redmond", company.Address.City);
+            Assert.AreEqual("Washington", company.Address.State);
+            Assert.AreEqual("United States of America", company.Address.Country);
+        }
+
+        [TestMethod]
+        public void ShouldFailChangeCompanyAddressInvalidLocation()
+        {
+            ChangeCompanyAddressCommand command = new ChangeCompanyAddressCommand
+            {
+                Number = 22,
+                Street = "One Way",
+                CityId = new Guid("baa3b30e-8da9-4f3e-a0c3-fae93da05346"),
+                StateId = new Guid("066ed615-e330-4e85-a79c-68e498b3d363"),
+                CountryId = new Guid("00000000-0000-0000-0000-000000000009"),
+                Cep = "00112233",
+                Complementation = "Central Square",
+                Neighborhood = "Central",
+                CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1")
+            };
+
+            Company company = service.GetById(new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"));
+           
+            service.ChangeAddress(command);
+
+            Assert.AreEqual("Não foi possível encontrar a localização pelo Id.", domainNotificationHandler.GetNotifications().First().Description);
+        }
+
+        [TestMethod]
+        public void ShouldFailChangeCompanyAddressIncompatibleStateCountry()
+        {
+            ChangeCompanyAddressCommand command = new ChangeCompanyAddressCommand
+            {
+                Number = 22,
+                Street = "One Way",
+                CityId = new Guid("baa3b30e-8da9-4f3e-a0c3-fae93da05346"),
+                StateId = new Guid("066ed615-e330-4e85-a79c-68e498b3d363"),
+                CountryId = new Guid("5aa5f409-dac4-42ee-8683-4f3087d81932"),
+                Cep = "00112233",
+                Complementation = "Central Square",
+                Neighborhood = "Central",
+                CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1")
+            };
+
+            Company company = service.GetById(new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"));
+
+            service.ChangeAddress(command);
+
+            Assert.AreEqual("O estado especificado não pertence à nação.", domainNotificationHandler.GetNotifications().First().Description);
         }
 
 
+        [TestMethod]
+        public void ShouldFailChangeCompanyAddressIncompatibleCityState()
+        {
+            ChangeCompanyAddressCommand command = new ChangeCompanyAddressCommand
+            {
+                Number = 22,
+                Street = "One Way",
+                CityId = new Guid("7a73e15f-67ac-4e92-9434-bfe7ab32a2e4"),
+                StateId = new Guid("066ed615-e330-4e85-a79c-68e498b3d363"),
+                CountryId = new Guid("5aa5f409-dac4-42ee-8683-4f3087d81932"),
+                Cep = "00112233",
+                Complementation = "Central Square",
+                Neighborhood = "Central",
+                CompanyId = new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1")
+            };
+
+            Company company = service.GetById(new Guid("354f3d5b-52e9-4e71-917f-c1a6d977c5a1"));
+
+            service.ChangeAddress(command);
+
+            Assert.AreEqual("A cidade especificada não pertence ao estado.", domainNotificationHandler.GetNotifications().First().Description);
+        }
     }
 }

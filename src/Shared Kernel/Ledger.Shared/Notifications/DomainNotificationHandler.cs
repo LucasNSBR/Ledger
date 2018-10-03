@@ -71,7 +71,7 @@ namespace Ledger.Shared.Notifications
             }
         }
 
-        public string GetAndFormatNotifications()
+        public string GetNotificationsAsString()
         {
             StringBuilder builder = new StringBuilder();
 

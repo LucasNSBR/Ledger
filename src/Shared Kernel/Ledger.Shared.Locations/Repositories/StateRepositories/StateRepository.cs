@@ -9,13 +9,11 @@ namespace Ledger.Shared.Locations.Repositories.StateRepositories
 {
     public class StateRepository : IStateRepository
     {
-        private readonly LedgerLocationDbContext _dbContext;
         private readonly DbSet<State> _dbSet;
 
         public StateRepository(LedgerLocationDbContext dbContext)
         {
-            _dbContext = dbContext;
-            _dbSet = _dbContext.States;
+            _dbSet = dbContext.States;
         }
 
         public IQueryable<State> GetByName(string name)

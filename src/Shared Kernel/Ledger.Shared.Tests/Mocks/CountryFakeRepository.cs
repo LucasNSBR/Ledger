@@ -15,6 +15,7 @@ namespace Ledger.Shared.Tests.Mocks
             _countries = new List<Country>();
 
             _countries.Add(new Country(new Guid("5aa5f409-dac4-42ee-8683-4f3087d81932"), "BR", "Brazil"));
+            _countries.Add(new Country(new Guid("43231eb6-2aab-463c-9286-93827dd0eb17"), "USA", "United States of America"));
         }
 
         public IQueryable<Country> GetAllCountries()

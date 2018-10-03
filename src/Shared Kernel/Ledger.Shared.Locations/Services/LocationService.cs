@@ -32,9 +32,13 @@ namespace Ledger.Shared.Locations.Services
                 return LocationResult.Failure(
                     new DomainNotification("Id Inválido", "Não foi possível encontrar a localização pelo Id."));
 
-            if (!city.IsInState(state) || !state.IsInCountry(country))
+            if (!city.IsInState(state))
                 return LocationResult.Failure(
-                    new DomainNotification("Localização inválida", "A cidade e/ou estado não pertence à nação."));
+                    new DomainNotification("Cidade inválida", "A cidade especificada não pertence ao estado."));
+
+            if (!state.IsInCountry(country))
+                return LocationResult.Failure(
+                    new DomainNotification("Estado inválido", "O estado especificado não pertence à nação."));
 
             return LocationResult.Ok(city, state, country);
         }

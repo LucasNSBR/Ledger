@@ -9,13 +9,11 @@ namespace Ledger.Shared.Locations.Repositories.CountryRepositories
 {
     public class CountryRepository : ICountryRepository
     {
-        private readonly LedgerLocationDbContext _dbContext;
         private readonly DbSet<Country> _dbSet;
 
         public CountryRepository(LedgerLocationDbContext dbContext)
         {
-            _dbContext = dbContext;
-            _dbSet = _dbContext.Countries;
+            _dbSet = dbContext.Countries;
         }
 
         public IQueryable<Country> GetAllCountries()
