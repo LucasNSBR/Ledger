@@ -3,6 +3,7 @@ using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
 using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Tests.Mocks;
+using Ledger.Shared.Locations.Services;
 using Ledger.Shared.Notifications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -14,6 +15,7 @@ namespace Ledger.Companies.Tests.AppServices
     public class CompanyApplicationServiceTests
     {
         FakeCompanyRepository repository;
+        LocationService locationService;
         FakeServiceBus bus;
         FakeUnitOfWork uow;
         CompanyApplicationService service;
@@ -23,12 +25,13 @@ namespace Ledger.Companies.Tests.AppServices
         public CompanyApplicationServiceTests()
         {
             repository = new FakeCompanyRepository();
+            locationService = new LocationService(null, null, null);
             bus = new FakeServiceBus();
             uow = new FakeUnitOfWork();
             domainNotificationHandler = new DomainNotificationHandler();
             factory = new CompanyFactory();
 
-            service = new CompanyApplicationService(repository, factory, domainNotificationHandler, uow, bus);
+            service = new CompanyApplicationService(repository, factory, locationService, domainNotificationHandler, uow, bus);
         }
 
         [TestMethod]

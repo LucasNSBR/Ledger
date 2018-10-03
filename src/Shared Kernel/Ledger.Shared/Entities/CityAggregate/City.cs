@@ -14,6 +14,13 @@ namespace Ledger.Shared.Entities.CityAggregate
             StateId = stateId;
         }
 
+        public City(Guid id, string name, Guid stateId)
+        {
+            Id = id;
+            Name = name;
+            StateId = stateId;
+        }
+
         public bool IsInState(State state)
         {
             return StateId == state.Id;

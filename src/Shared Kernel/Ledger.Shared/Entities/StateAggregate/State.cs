@@ -16,6 +16,14 @@ namespace Ledger.Shared.Entities.StateAggregate
             CountryId = countryId;
         }
 
+        public State(Guid id, string shortName, string name, Guid countryId)
+        {
+            Id = id;
+            ShortName = shortName;
+            Name = name;
+            CountryId = countryId;
+        }
+
         public bool IsInCountry(Country country)
         {
             return CountryId == country.Id;

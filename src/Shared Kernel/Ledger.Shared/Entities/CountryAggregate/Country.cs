@@ -1,4 +1,6 @@
-﻿namespace Ledger.Shared.Entities.CountryAggregate
+﻿using System;
+
+namespace Ledger.Shared.Entities.CountryAggregate
 {
     public class Country : Entity<Country>
     {
@@ -7,6 +9,13 @@
 
         public Country(string shortName, string name)
         {
+            ShortName = shortName;
+            Name = name;
+        }
+
+        public Country(Guid id, string shortName, string name)
+        {
+            Id = id;
             ShortName = shortName;
             Name = name;
         }
