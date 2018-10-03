@@ -1,4 +1,4 @@
-﻿using Ledger.Shared.Entities.Locations;
+﻿using Ledger.Shared.Entities.CountryAggregate;
 using Ledger.Shared.Specifications;
 using System;
 using System.Linq.Expressions;

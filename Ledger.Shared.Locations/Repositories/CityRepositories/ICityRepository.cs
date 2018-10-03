@@ -1,4 +1,4 @@
-﻿using Ledger.Shared.Entities.Locations;
+﻿using Ledger.Shared.Entities.CityAggregate;
 using System;
 using System.Linq;
 

@@ -172,8 +172,9 @@ namespace Ledger.Companies.Tests.AppServices
             {
                 Number = 22,
                 Street = "One Way",
-                City = "São Paulo",
-                State = "São Paulo",
+                CityId = Guid.NewGuid(),
+                StateId = Guid.NewGuid(),
+                CountryId = Guid.NewGuid(),
                 Cep = "00112233",
                 Complementation = "Central Square",
                 Neighborhood = "Central",

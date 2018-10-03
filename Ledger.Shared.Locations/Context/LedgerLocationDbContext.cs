@@ -1,5 +1,9 @@
-﻿using Ledger.Shared.Entities.Locations;
-using Ledger.Shared.Locations.EntityTypeConfiguration;
+﻿using Ledger.Shared.Entities.CityAggregate;
+using Ledger.Shared.Entities.CountryAggregate;
+using Ledger.Shared.Entities.StateAggregate;
+using Ledger.Shared.Locations.EntityTypeConfiguration.CityEntityConfiguration;
+using Ledger.Shared.Locations.EntityTypeConfiguration.CountryEntityConfiguration;
+using Ledger.Shared.Locations.EntityTypeConfiguration.StateEntityConfiguraiton;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Shared.Locations.Context

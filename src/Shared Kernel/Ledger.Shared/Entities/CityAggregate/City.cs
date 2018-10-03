@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace Ledger.Shared.Entities.Locations
+namespace Ledger.Shared.Entities.CityAggregate
 {
     public class City : Entity<City>
     {
         public string Name { get; private set; }
         public Guid StateId { get; private set; }
-        public State State { get; private set; }
 
-        public City(string name, State state)
+        public City(string name, Guid stateId)
         {
             Name = name;
-            State = state;
+            StateId = stateId;
         }
     }
 }

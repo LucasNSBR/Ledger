@@ -5,18 +5,18 @@ using System.Linq.Expressions;
 
 namespace Ledger.Shared.Locations.Specifications.StateSpecifications
 {
-    public class StateCountryIdSpecification : BaseSpecification<State>
+    public class StateNameSpecification : BaseSpecification<State>
     {
-        private readonly Guid _countryId;
+        private readonly string _name;
 
-        public StateCountryIdSpecification(Guid countryId)
+        public StateNameSpecification(string name)
         {
-            _countryId = countryId;
+            _name = name;
         }
 
         public override Expression<Func<State, bool>> ToExpression()
         {
-            return s => s.CountryId == _countryId;
+            return s => s.Name.ToLower().Contains(_name.ToLower());
         }
     }
 }

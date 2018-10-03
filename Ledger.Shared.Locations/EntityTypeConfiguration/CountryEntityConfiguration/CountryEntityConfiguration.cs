@@ -1,8 +1,8 @@
-﻿using Ledger.Shared.Entities.Locations;
+﻿using Ledger.Shared.Entities.CountryAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ledger.Shared.Locations.EntityTypeConfiguration
+namespace Ledger.Shared.Locations.EntityTypeConfiguration.CountryEntityConfiguration
 {
     public class CountryEntityConfiguration : IEntityTypeConfiguration<Country>
     {

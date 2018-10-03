@@ -1,4 +1,4 @@
-﻿namespace Ledger.Shared.Entities.Locations
+﻿namespace Ledger.Shared.Entities.CountryAggregate
 {
     public class Country : Entity<Country>
     {

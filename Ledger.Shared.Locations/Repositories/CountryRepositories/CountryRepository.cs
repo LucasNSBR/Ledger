@@ -1,4 +1,4 @@
-﻿using Ledger.Shared.Entities.Locations;
+﻿using Ledger.Shared.Entities.CountryAggregate;
 using Ledger.Shared.Locations.Context;
 using Ledger.Shared.Locations.Specifications.CountrySpecifications;
 using Microsoft.EntityFrameworkCore;

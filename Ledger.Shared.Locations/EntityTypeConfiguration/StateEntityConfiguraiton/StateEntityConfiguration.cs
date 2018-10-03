@@ -1,8 +1,9 @@
-﻿using Ledger.Shared.Entities.Locations;
+﻿using Ledger.Shared.Entities.CountryAggregate;
+using Ledger.Shared.Entities.StateAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ledger.Shared.Locations.EntityTypeConfiguration
+namespace Ledger.Shared.Locations.EntityTypeConfiguration.StateEntityConfiguraiton
 {
     public class StateEntityConfiguration : IEntityTypeConfiguration<State>
     {
@@ -20,6 +21,11 @@ namespace Ledger.Shared.Locations.EntityTypeConfiguration
                 .Property(s => s.Name)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder
+                .HasOne<Country>()
+                .WithMany()
+                .HasForeignKey(c => c.CountryId);
         }
     }
 }
