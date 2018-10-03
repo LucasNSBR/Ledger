@@ -5,6 +5,7 @@ using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.Entities.Locations;
 using Ledger.Shared.IntegrationEvents.Events.CompanyEvents;
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
@@ -82,7 +83,12 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (NotifyNullCompany(company))
                 return;
 
-            Address address = new Address(command.Number, command.Street, command.Neighborhood, command.Complementation, command.City, command.State, command.Country, command.Cep);
+            //TODO: VALIDATE
+            City city = null;
+            State state = null;
+            Country country = null;
+
+            Address address = new Address(command.Number, command.Street, command.Neighborhood, command.Complementation, city.Name, state.Name, country.Name, command.Cep);
             company.ChangeAddress(address);
 
             if (AddNotifications(company))

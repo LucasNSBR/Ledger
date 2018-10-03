@@ -1,6 +1,4 @@
-﻿using Ledger.Shared.Entities.Locations;
-
-namespace Ledger.Shared.ValueObjects
+﻿namespace Ledger.Shared.ValueObjects
 {
     public class Address : ValueObject<Address>
     {
@@ -11,16 +9,16 @@ namespace Ledger.Shared.ValueObjects
         //Notes or extra details about this address
         public string Complementation { get; private set; }
 
-        public City City { get; private set; }
-        public State State { get; private set; }
-        public Country Country { get; private set; }
+        public string City { get; private set; }
+        public string State { get; private set; }
+        public string Country { get; private set; }
 
         //Same as ZipCode
         public string Cep { get; private set; }
 
         protected Address() { }
-        
-        public Address(int number, string street, string neighborhood, string complementation, City city, State state, Country country, string cep)
+
+        public Address(int number, string street, string neighborhood, string complementation, string city, string state, string country, string cep)
         {
             Number = number;
             Street = street;
@@ -34,7 +32,7 @@ namespace Ledger.Shared.ValueObjects
 
         public override string ToString()
         {
-            return $"{Street}, {Number}, {Neighborhood} - {City.Name}, {Cep}, {City.State.Name}";
+            return $"{Street}, {Number}, {Neighborhood} - {City}, {Cep}, {State} - {Country}";
         }
     }
 }
