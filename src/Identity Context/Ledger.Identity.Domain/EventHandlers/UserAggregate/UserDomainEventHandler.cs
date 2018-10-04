@@ -26,10 +26,9 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
 
         public async Task Handle(UserRegisteredEvent @event)
         {
-            string email = @event.Email;
             string confirmationToken = @event.EmailConfirmationToken;
 
-            EmailTemplate template = new EmailTemplate(email)
+            EmailTemplate template = new EmailTemplate(@event.Email)
                 .SetTemplate(EmailTemplateTypes.UserRegistered)
                 .AddSubstitution("-code-", confirmationToken);
 
@@ -55,7 +54,6 @@ namespace Ledger.Identity.Domain.EventHandlers.UserAggregate
 
         public async Task Handle(UserForgotPasswordEvent @event)
         {
-            string email = @event.Email;
             string resetToken = @event.PasswordResetToken;
 
             EmailTemplate template = new EmailTemplate(@event.Email)

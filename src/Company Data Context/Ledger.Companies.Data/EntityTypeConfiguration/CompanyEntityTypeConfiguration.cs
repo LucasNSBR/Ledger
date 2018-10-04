@@ -51,8 +51,9 @@ namespace Ledger.Companies.Data.EntityTypeConfiguration
                     cfg.Property(address => address.Street).IsRequired().HasMaxLength(250);
                     cfg.Property(address => address.Neighborhood).IsRequired().HasMaxLength(100);
                     cfg.Property(address => address.Complementation).HasMaxLength(250);
-                    cfg.Property(address => address.City).IsRequired().HasMaxLength(100);
-                    cfg.Property(address => address.State).IsRequired().HasMaxLength(100);
+                    cfg.Property(address => address.City).IsRequired().HasMaxLength(150);
+                    cfg.Property(address => address.State).IsRequired().HasMaxLength(50);
+                    cfg.Property(address => address.Country).IsRequired().HasMaxLength(100);
                     cfg.Property(address => address.Cep).IsRequired().HasMaxLength(8);
                 });
 

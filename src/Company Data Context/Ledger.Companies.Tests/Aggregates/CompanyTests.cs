@@ -13,7 +13,7 @@ namespace Ledger.Companies.Tests.Aggregates
         EmailAddress email = new EmailAddress("ledger@gmail.com");
         Cnpj cnpj = new Cnpj("15131000");
         InscricaoEstadual inscricao = new InscricaoEstadual("51113");
-        Address address = new Address(452, "One Way Microsoft", "Centro", "Perto do Prédio Grande", "Nova Serrana", "MG", "35519000");
+        Address address = new Address(452, "One Way Microsoft", "Centro", "Perto do Prédio Grande", "Nova Serrana", "MG", "Brazil", "35519000");
         PhoneNumber phone = new PhoneNumber("555 418 9220");
         Company company;
         Owner owner = new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99"));

@@ -3,6 +3,7 @@ using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.IntegrationEvents.Events;
 using Ledger.Shared.Notifications;
+using System.Collections.Generic;
 
 namespace Ledger.Companies.Application.AppServices
 {
@@ -22,6 +23,11 @@ namespace Ledger.Companies.Application.AppServices
         public bool AddNotifications(IDomainNotifier notifier)
         {
             return _domainNotificationHandler.AddNotifications(notifier);
+        }
+
+        public bool AddNotifications(List<DomainNotification> notifications)
+        {
+            return _domainNotificationHandler.AddNotifications(notifications);
         }
 
         public void AddNotification(string title, string description)

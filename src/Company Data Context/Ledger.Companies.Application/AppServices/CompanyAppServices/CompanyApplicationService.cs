@@ -5,10 +5,15 @@ using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Shared.Entities.CityAggregate;
+using Ledger.Shared.Entities.CountryAggregate;
+using Ledger.Shared.Entities.StateAggregate;
 using Ledger.Shared.IntegrationEvents.Events.CompanyEvents;
+using Ledger.Shared.Locations.Services;
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
 using System;
+using System.Collections.Generic;
 
 namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 {
@@ -16,11 +21,13 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
     {
         private readonly ICompanyRepository _repository;
         private readonly ICompanyFactory _factory;
+        private readonly ILocationService _locationService;
 
-        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
+        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, ILocationService locationService, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
         {
             _repository = repository;
             _factory = factory;
+            _locationService = locationService;
         }
 
         public Company GetByCnpj(string cnpj)
@@ -40,7 +47,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (AddNotifications(command))
                 return;
 
-            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj, 
+            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj,
                 command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf);
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
@@ -59,7 +66,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (AddNotifications(command))
                 return;
 
-            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj, 
+            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj,
                 command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, companyId: command.CompanyId);
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
@@ -82,7 +89,18 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (NotifyNullCompany(company))
                 return;
 
-            Address address = new Address(command.Number, command.State, command.Neighborhood, command.Complementation, command.City, command.State, command.Cep);
+            LocationResult result = _locationService.TryGetLocation(command.CityId, command.StateId, command.CountryId);
+            if (!result.Success)
+            {
+                AddNotifications((List<DomainNotification>)result.Notifications);
+                return;
+            }
+
+            City city = result.City;
+            State state = result.State;
+            Country country = result.Country;
+
+            Address address = new Address(command.Number, command.Street, command.Neighborhood, command.Complementation, city.Name, state.Name, country.Name, command.Cep);
             company.ChangeAddress(address);
 
             if (AddNotifications(company))

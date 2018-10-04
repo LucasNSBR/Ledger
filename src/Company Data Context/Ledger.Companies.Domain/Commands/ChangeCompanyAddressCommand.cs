@@ -12,8 +12,9 @@ namespace Ledger.Companies.Domain.Commands
         public string Street { get; set; }
         public string Neighborhood { get; set; }
         public string Complementation { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
+        public Guid CityId { get; set; }
+        public Guid StateId { get; set; }
+        public Guid CountryId { get; set; }
         public string Cep { get; set; }
 
         public override void Validate()
@@ -47,15 +48,18 @@ namespace Ledger.Companies.Domain.Commands
                 .Build()
                 .AddToNotifier(this);
 
-            new ValidationContract<ChangeCompanyAddressCommand, string>(this, command => command.City)
-                .MinLength(3)
-                .MaxLength(100)
+            new ValidationContract<ChangeCompanyAddressCommand, Guid>(this, command => command.CityId)
+                .NotEmpty()
                 .Build()
                 .AddToNotifier(this);
 
-            new ValidationContract<ChangeCompanyAddressCommand, string>(this, command => command.State)
-                .MinLength(3)
-                .MaxLength(100)
+            new ValidationContract<ChangeCompanyAddressCommand, Guid>(this, command => command.StateId)
+                .NotEmpty()
+                .Build()
+                .AddToNotifier(this);
+
+            new ValidationContract<ChangeCompanyAddressCommand, Guid>(this, command => command.CountryId)
+                .NotEmpty()
                 .Build()
                 .AddToNotifier(this);
 
