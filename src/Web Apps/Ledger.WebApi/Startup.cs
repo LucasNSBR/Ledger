@@ -3,6 +3,7 @@ using Ledger.Identity.Domain.Configuration.JwtConfigurations;
 using Ledger.Identity.Domain.Configuration.SigningConfigurations;
 using Ledger.Identity.Domain.Services;
 using Ledger.Identity.Domain.Services.SigningServices;
+using Ledger.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -135,6 +136,7 @@ namespace Ledger.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionLogger();
             app.UseResponseCompression();
             app.UseAuthentication();
             app.UseMvc();

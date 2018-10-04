@@ -27,6 +27,13 @@ namespace Ledger.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("throw")]
+        public IActionResult Throw()
+        {
+            throw new System.Exception("Erro fatal na aplicação");
+        }
+
+        [HttpGet]
         [Route("roles")]
         public IActionResult GetAllRoles()
         {
