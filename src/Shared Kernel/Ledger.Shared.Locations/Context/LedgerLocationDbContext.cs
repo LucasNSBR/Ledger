@@ -16,7 +16,7 @@ namespace Ledger.Shared.Locations.Context
 
         public LedgerLocationDbContext(DbContextOptions<LedgerLocationDbContext> options) : base(options)
         {
-            //Countries, States and Cities should be seeded manually using government or postal code data
+            //Countries, States and Cities should be seeded manually using government or postal agency data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
