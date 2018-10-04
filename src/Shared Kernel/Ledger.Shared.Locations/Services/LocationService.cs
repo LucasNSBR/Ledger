@@ -6,6 +6,7 @@ using Ledger.Shared.Locations.Repositories.CountryRepositories;
 using Ledger.Shared.Locations.Repositories.StateRepositories;
 using Ledger.Shared.Notifications;
 using System;
+using System.Linq;
 
 namespace Ledger.Shared.Locations.Services
 {
@@ -21,7 +22,22 @@ namespace Ledger.Shared.Locations.Services
             _stateRepository = stateRepository;
             _countryRepository = countryRepository;
         }
-        
+
+        public IQueryable<City> GetCitiesByState(Guid stateId)
+        {
+            return _cityRepository.GetByState(stateId);
+        }
+
+        public IQueryable<State> GetStatesByCountry(Guid countryId)
+        {
+            return _stateRepository.GetByCountry(countryId);
+        }
+
+        public IQueryable<Country> GetAllCountries()
+        {
+            return _countryRepository.GetAllCountries();
+        }
+
         public LocationResult TryGetLocation(Guid cityId, Guid stateId, Guid countryId)
         {
             City city = _cityRepository.GetById(cityId);
