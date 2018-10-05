@@ -65,6 +65,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.HelpDesk.Tests", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Shared.Locations", "src\Shared Kernel\Ledger.Shared.Locations\Ledger.Shared.Locations.csproj", "{226EE2ED-A146-460A-A8EA-E9D55D268FC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.CrossCutting.Storage", "src\CrossCutting\Ledger.CrossCutting.Storage\Ledger.CrossCutting.Storage.csproj", "{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{226EE2ED-A146-460A-A8EA-E9D55D268FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{226EE2ED-A146-460A-A8EA-E9D55D268FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{226EE2ED-A146-460A-A8EA-E9D55D268FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +202,7 @@ Global
 		{C8BDA723-F97A-4B85-8C29-846E993A6281} = {4B5CC1BD-6BFB-4782-866B-867EA97013D1}
 		{0D2CF350-B9E4-4EA7-85F3-2575834E3AE1} = {4B5CC1BD-6BFB-4782-866B-867EA97013D1}
 		{226EE2ED-A146-460A-A8EA-E9D55D268FC1} = {9CD8EB02-5B29-4940-8912-9DD324AFAD16}
+		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {395E85EF-3430-42A5-9692-61DCA5954711}
