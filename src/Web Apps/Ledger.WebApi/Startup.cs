@@ -47,6 +47,13 @@ namespace Ledger.WebApi
                 opt.SendGridKey = Configuration["SendGrid:API_KEY"];
             });
 
+            services.AddStorageService(opt =>
+            {
+                opt.AccountKey = Configuration["Storage:AccountKey"];
+                opt.AccountName = Configuration["Storage:AccountName"];
+                opt.ContainerName = Configuration["Storage:ContainerName"];
+            });
+
             services.Configure<JwtTokenOptions>(cfg =>
             {
                 cfg.Issuer = Configuration["JwtToken:Issuer"];

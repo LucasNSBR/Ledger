@@ -13,7 +13,7 @@ namespace Ledger.CrossCutting.IoC
         /// <param name="services">List of services to register</param>
         /// <param name="setupAction">List of configurations to Azure Blob Storage</param>
         /// <returns></returns>
-        public static IServiceCollection AddEmailService(this IServiceCollection services, Action<StorageOptions> setupAction)
+        public static IServiceCollection AddStorageService(this IServiceCollection services, Action<StorageOptions> setupAction)
         {
             services.Configure(setupAction);
 
