@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Data\Ledger.Identity.Data.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
     <ProjectReference Include="..\Ledger.CrossCutting.EmailService\Ledger.CrossCutting.EmailService.csproj" />
+    <ProjectReference Include="..\Ledger.CrossCutting.Storage\Ledger.CrossCutting.Storage.csproj" />
   </ItemGroup>
 
   <ItemGroup>

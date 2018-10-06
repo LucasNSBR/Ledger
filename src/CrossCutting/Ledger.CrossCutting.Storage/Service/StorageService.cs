@@ -14,8 +14,6 @@ namespace Ledger.CrossCutting.Storage.Service
     {
         private readonly IOptions<StorageOptions> _options;
 
-        private readonly StorageCredentials _credentials;
-
         public StorageService(IOptions<StorageOptions> options)
         {
             _options = options;
@@ -23,10 +21,12 @@ namespace Ledger.CrossCutting.Storage.Service
 
         private CloudBlobContainer GetContainer()
         {
-            CloudBlobContainer container = new CloudStorageAccount(_credentials, true)
+            StorageCredentials credentials = new StorageCredentials(_options.Value.AccountName, _options.Value.AccountKey);
+
+            CloudBlobContainer container = new CloudStorageAccount(credentials, true)
                 .CreateCloudBlobClient()
                 .GetContainerReference(_options.Value.ContainerName);
-            
+
             return container;
         }
 
@@ -36,15 +36,13 @@ namespace Ledger.CrossCutting.Storage.Service
                 .GetBlockBlobReference(name);
 
             return await block.ExistsAsync();
-        } 
+        }
 
         public async Task<StorageResult> UploadFileToStorageAsync(Stream file, string name)
         {
             string fileName = name + Guid.NewGuid().ToString();
 
-            CloudBlockBlob block = new CloudStorageAccount(_credentials, true)
-                .CreateCloudBlobClient()
-                .GetContainerReference(_options.Value.ContainerName)
+            CloudBlockBlob block = GetContainer()
                 .GetBlockBlobReference(fileName);
 
             try
