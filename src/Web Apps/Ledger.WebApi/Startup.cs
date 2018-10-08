@@ -124,7 +124,7 @@ namespace Ledger.WebApi
                         Version = "v1",
                     });
                 });
-
+            
             services
                    .AddMvc()
                    .AddJsonOptions(options =>
@@ -142,6 +142,13 @@ namespace Ledger.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(cfg =>
+            {
+                cfg.AllowAnyMethod();
+                cfg.AllowAnyHeader();
+                cfg.AllowAnyOrigin();
+            });
 
             app.UseExceptionLogger();
             app.UseResponseCompression();
