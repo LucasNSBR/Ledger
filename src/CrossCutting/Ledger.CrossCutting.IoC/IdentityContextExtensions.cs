@@ -8,7 +8,6 @@ using Ledger.Identity.Domain.EventHandlers.UserAggregate;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services.RoleServices;
-using Ledger.Identity.Domain.Services.UserServices.UserResolver;
 using Ledger.Shared.EventHandlers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -76,7 +75,6 @@ namespace Ledger.CrossCutting.IoC
             services.AddScoped<IDomainEventHandler<UserResetedPasswordEvent>, UserDomainEventHandler>();
             services.AddScoped<IDomainEventHandler<UserChangedPasswordEvent>, UserDomainEventHandler>();
 
-            services.AddScoped<IIdentityResolverService, IdentityResolverService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             return services;

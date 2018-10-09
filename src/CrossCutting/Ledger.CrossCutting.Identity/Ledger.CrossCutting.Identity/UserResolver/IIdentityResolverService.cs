@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ledger.Identity.Domain.Services.UserServices.UserResolver
+namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
 {
     public interface IIdentityResolverService
     {
