@@ -19,10 +19,15 @@ namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
                 string value = _httpContextAccessor.HttpContext.User.Identity.Name;
 
                 if (Guid.TryParse(value, out Guid id))
-                    return id;
+                {
+                    if (id != Guid.Empty)
+                        return id;
+                    else
+                        throw new InvalidOperationException("Failed to parse user id.");
+                }
             }
 
-            throw new InvalidOperationException("Can't parse user id.");
+            throw new InvalidOperationException("User not authenticated.");
         }
 
         public bool IsAuthenticated()

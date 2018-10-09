@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Ledger.Activations.Data.Context;
+﻿using Ledger.Activations.Data.Context;
 using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
 using Ledger.Activations.Domain.Specifications.ActivationSpecifications;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace Ledger.Activations.Data.Repositories.ActivationRepository
 {
