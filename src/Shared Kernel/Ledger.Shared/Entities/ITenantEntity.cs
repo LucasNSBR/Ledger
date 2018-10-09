@@ -4,6 +4,7 @@ namespace Ledger.Shared.Entities
 {
     public interface ITenantEntity
     {
-        Guid TenantId { get; }
+        Guid GetTenantId();
+        void SetTenantId(Guid id);
     }
 }
