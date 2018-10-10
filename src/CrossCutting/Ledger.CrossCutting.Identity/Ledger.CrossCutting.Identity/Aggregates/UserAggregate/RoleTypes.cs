@@ -1,4 +1,4 @@
-﻿namespace Ledger.HelpDesk.Domain.Aggregates.Roles
+﻿namespace Ledger.CrossCutting.Identity.Aggregates.UserAggregate
 {
     public class RoleTypes
     {

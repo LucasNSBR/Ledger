@@ -7,6 +7,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
 {
     public interface ITicketApplicationService
     {
+        IQueryable<Ticket> GetAllTickets();
         IQueryable<Ticket> GetByUserId(Guid userId);
         Ticket GetById(Guid id);
         void Register(RegisterTicketCommand command);

@@ -15,6 +15,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
 
         public TicketConversation Conversation { get; private set; }
 
+        //Because Ticket already contains TicketUserId, Ticket class don't need to implement ITenantEntity interface
+        //TicketUserId will act as Tenant indentifier on this entity
         public Guid TicketUserId { get; private set; }
         public Guid? SupportUserId { get; private set; }
 
@@ -111,8 +113,14 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return messages;
         }
 
-        public void Close()
+        public void Close(Guid userId)
         {
+            if(userId != TicketUserId && userId != SupportUserId)
+            {
+                AddNotification("Erro na finalização", "Esse usuário não tem permissão para finalizar esse ticket.");
+                return;
+            }
+
             if (NotifyClosedTicket())
                 return;
 

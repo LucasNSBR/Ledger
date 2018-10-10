@@ -21,7 +21,17 @@ namespace Ledger.WebApi.Controllers
         {
             _ticketApplicationService = ticketApplicationService;
         }
-        
+
+        [HttpGet]
+        [Route("")]
+        //[Authorize(Policy = "SupportAccount")]
+        public IActionResult GetAllTickets()
+        {
+            IQueryable<Ticket> tickets = _ticketApplicationService.GetAllTickets();
+
+            return CreateResponse(tickets);
+        }
+
         [HttpGet]
         [Route("user/{id:guid}")]
         public IActionResult GetByUser(Guid id)

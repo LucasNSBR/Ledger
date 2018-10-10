@@ -19,6 +19,14 @@ namespace Ledger.HelpDesk.Data.Repositories.TicketRepositories
             _dbSet = _dbContext.Tickets;
         }
 
+        public IQueryable<Ticket> GetAllTickets()
+        {
+            return _dbSet
+                .AsNoTracking()
+                .Include(c => c.Conversation)
+                .ThenInclude(tc => tc.Messages);
+        }
+
         public IQueryable<Ticket> GetByUserId(Guid userId)
         {
             TicketUserIdSpecification specification = new TicketUserIdSpecification(userId);

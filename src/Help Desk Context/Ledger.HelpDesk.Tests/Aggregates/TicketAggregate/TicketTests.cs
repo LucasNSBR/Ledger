@@ -1,6 +1,6 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
+﻿using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.UserAggregate;
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -17,8 +17,10 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
 
         public TicketTests()
         {
+            Guid userId = Guid.NewGuid();
+
             category = new TicketCategory("Problemas de ativação");
-            user = new User(Guid.NewGuid(), "contoso@contoso.com");
+            user = new User(userId);
             ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category.Id, user.Id);
         }
 
@@ -42,7 +44,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void TicketShouldAttachASupportUserToHelp()
         {
             //Come from repository
-            User user = new User(Guid.NewGuid(), "support@contoso.com");
+            User user = new User(Guid.NewGuid());
 
             ticket.AssignSupportUser(user.Id);
 
@@ -54,7 +56,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void TicketShouldFailToAttachASupportUserToHelp()
         {
             //Come from repository
-            User user = new User(Guid.NewGuid(), "support@contoso.com");
+            User user = new User(Guid.NewGuid());
            
             ticket.AssignSupportUser(user.Id);
 
@@ -67,7 +69,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void TicketShouldBeClosed()
         {
-            ticket.Close();
+            ticket.Close(user.Id);
 
             Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateClosed);
             Assert.IsTrue(!ticket.IsOpened());
@@ -76,8 +78,8 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToCloseTicketAfterTicketClosed()
         {
-            ticket.Close();
-            ticket.Close();
+            ticket.Close(user.Id);
+            ticket.Close(user.Id);
 
             Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);
         }
@@ -92,7 +94,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToAddMessageAfterTicketClosed()
         {
-            ticket.Close();
+            ticket.Close(user.Id);
             ticket.AddMessage("Olá, mundo!", user.Id);
 
             Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);
@@ -101,7 +103,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToAddMessageFromSupport()
         {
-            User user = new User(Guid.NewGuid(), "support@contoso.com");
+            User user = new User(Guid.NewGuid());
 
             ticket.AddMessage("Olá, mundo!", user.Id);
             Assert.AreEqual("Não possui acesso às mensagens", ticket.GetNotifications().First().Title);
@@ -110,7 +112,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldGetMessages()
         {
-            User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
+            User supportUser = new User(Guid.NewGuid());
             
             ticket.AssignSupportUser(supportUser.Id);
 
@@ -128,7 +130,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldGetMessagesFromUser()
         {
-            User supportUser = new User(Guid.NewGuid(), "support@contoso.com");
+            User supportUser = new User(Guid.NewGuid());
            
             ticket.AssignSupportUser(supportUser.Id);
 

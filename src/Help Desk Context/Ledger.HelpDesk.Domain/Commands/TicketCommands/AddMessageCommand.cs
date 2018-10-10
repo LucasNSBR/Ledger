@@ -9,7 +9,6 @@ namespace Ledger.HelpDesk.Domain.Commands.TicketCommands
     {
         public string Body { get; set; }
         public Guid TicketId { get; set; }
-        public Guid UserId { get; set; }
         
         public override void Validate()
         {
@@ -21,11 +20,6 @@ namespace Ledger.HelpDesk.Domain.Commands.TicketCommands
                 .AddToNotifier(this);
 
             new ValidationContract<AddMessageCommand, Guid>(this, command => command.TicketId)
-                .NotEmpty()
-                .Build()
-                .AddToNotifier(this);
-
-            new ValidationContract<AddMessageCommand, Guid>(this, command => command.UserId)
                 .NotEmpty()
                 .Build()
                 .AddToNotifier(this);

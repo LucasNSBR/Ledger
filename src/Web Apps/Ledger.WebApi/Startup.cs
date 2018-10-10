@@ -102,12 +102,12 @@ namespace Ledger.WebApi
 
                 cfg.AddPolicy("AdminAccount", cfgPolicy =>
                 {
-                    cfgPolicy.RequireRole("admin-account");
+                    cfgPolicy.RequireRole("Admin");
                 });
 
                 cfg.AddPolicy("SupportAccount", cfgPolicy =>
                 {
-                    cfgPolicy.RequireRole("support-account");
+                    cfgPolicy.RequireRole("Support");
                 });
             });
 

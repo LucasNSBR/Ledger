@@ -5,8 +5,6 @@ using Ledger.CrossCutting.IoC.Configuration;
 using Ledger.CrossCutting.ServiceBus;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.CrossCutting.ServiceBus.BackgroundTasks;
-using Ledger.HelpDesk.Domain.IntegrationEventHandlers.RoleAggregate;
-using Ledger.HelpDesk.Domain.IntegrationEventHandlers.UserAggregate;
 using MassTransit;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 using MassTransit.RabbitMqTransport;
@@ -34,8 +32,6 @@ namespace Ledger.CrossCutting.IoC
             {
                 cfg.AddConsumer<CompanyIntegrationEventHandler>();
                 cfg.AddConsumer<ActivationIntegrationEventHandler>();
-                cfg.AddConsumer<UserIntegrationEventHandler>();
-                cfg.AddConsumer<RoleIntegrationEventHandler>();
             });
 
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(transport =>

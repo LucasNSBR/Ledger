@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,24 @@ namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
                     if (id != Guid.Empty)
                         return id;
                     else
-                        throw new InvalidOperationException("Failed to parse user id.");
+                        throw new InvalidCastException("Failed to parse user id.");
                 }
             }
 
             throw new InvalidOperationException("User not authenticated.");
+        }
+
+        public User GetUser()
+        {
+            if (!IsAuthenticated())
+            {
+                Guid id = GetUserId();
+                IReadOnlyList<Claim> claims = GetUserClaims();
+
+                return new User(id, claims);
+            }
+
+            throw new InvalidOperationException("User not authenticated");
         }
 
         public bool IsAuthenticated()

@@ -6,6 +6,7 @@ namespace Ledger.HelpDesk.Domain.Repositories.TicketRepositories
 {
     public interface ITicketRepository
     {
+        IQueryable<Ticket> GetAllTickets();
         IQueryable<Ticket> GetByUserId(Guid userId);
         Ticket GetById(Guid id);
         void Register(Ticket ticket);

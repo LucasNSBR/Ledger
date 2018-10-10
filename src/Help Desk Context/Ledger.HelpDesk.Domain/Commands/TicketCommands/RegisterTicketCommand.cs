@@ -10,7 +10,6 @@ namespace Ledger.HelpDesk.Domain.Commands.TicketCommands
         public string Title { get; set; }
         public string Details { get; set; }
         public Guid CategoryId { get; set; }
-        public Guid UserId { get; set; }
 
         public override void Validate()
         {
@@ -25,11 +24,6 @@ namespace Ledger.HelpDesk.Domain.Commands.TicketCommands
                 .NotEmpty()
                 .MinLength(10)
                 .MaxLength(2000)
-                .Build()
-                .AddToNotifier(this);
-
-            new ValidationContract<RegisterTicketCommand, Guid>(this, command => command.UserId)
-                .NotEmpty()
                 .Build()
                 .AddToNotifier(this);
 
