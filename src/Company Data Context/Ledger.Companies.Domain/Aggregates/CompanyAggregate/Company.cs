@@ -4,7 +4,7 @@ using System;
 
 namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
 {
-    public class Company : Entity<Company>, IAggregateRoot
+    public class Company : Entity<Company>, IAggregateRoot, ITenantEntity
     {
         public bool Active { get; private set; }
         public string Name { get; private set; }
@@ -15,6 +15,13 @@ namespace Ledger.Companies.Domain.Aggregates.CompanyAggregate
         public InscricaoEstadual InscricaoEstadual { get; private set; }
         public Address Address { get; private set; }
         public Owner Owner { get; private set; }
+
+        public Guid TenantId { get; private set; }
+
+        public void SetTenantId(Guid id)
+        {
+            TenantId = id;
+        }
 
         protected Company() { }
 

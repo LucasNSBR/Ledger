@@ -2,6 +2,7 @@
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.Companies.Domain.Specifications.CompanySpecifications;
+using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Ledger.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,11 +14,13 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
     {
         private readonly LedgerCompanyDbContext _dbContext;
         private readonly DbSet<Company> _dbSet;
+        private readonly IIdentityResolverService _identityResolver;
 
-        public CompanyRepository(LedgerCompanyDbContext dbContext)
+        public CompanyRepository(LedgerCompanyDbContext dbContext, IIdentityResolverService identityResolver)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Companies;
+            _identityResolver = identityResolver;
         }
 
         public Company GetById(Guid id)
@@ -50,6 +53,8 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
 
         public void Register(Company company)
         {
+            company.SetTenantId(_identityResolver.GetUserId());
+
             _dbContext.Add(company);
         }
 

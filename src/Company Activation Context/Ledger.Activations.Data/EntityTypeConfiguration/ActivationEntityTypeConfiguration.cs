@@ -20,6 +20,10 @@ namespace Ledger.Activations.Data.EntityTypeConfiguration
             builder
                 .Property(a => a.Status)
                 .IsRequired();
+
+            builder
+                .Property(a => a.TenantId)
+                .IsRequired();
         }
     }
 }

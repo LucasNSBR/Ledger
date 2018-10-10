@@ -1,14 +1,22 @@
 ﻿using Ledger.Shared.Entities;
 using Ledger.Shared.ValueObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Ledger.Activations.Domain.Aggregates.ActivationAggregate
 {
-    public class Activation : Entity<Activation>, IAggregateRoot
+    public class Activation : Entity<Activation>, IAggregateRoot, ITenantEntity
     {
         public Company Company { get; private set; }
 
         public ActivationStatus Status { get; private set; }
+
+        public Guid TenantId { get; private set; }
+
+        public void SetTenantId(Guid id)
+        {
+            TenantId = id;
+        }
 
         protected Activation() { }
 

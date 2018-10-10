@@ -7,6 +7,5 @@ namespace Ledger.HelpDesk.Domain.Repositories.UserRepositories
     {
         User GetById(Guid id);
         void Register(User user);
-        void Update(User user);
     }
 }

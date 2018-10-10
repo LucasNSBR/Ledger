@@ -4,6 +4,7 @@ using Ledger.Companies.Domain.Context;
 using Ledger.Companies.Domain.Factories.CompanyFactories;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Entities.CityAggregate;
 using Ledger.Shared.Entities.CountryAggregate;
@@ -56,7 +57,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             _repository.Register(company);
 
             if (Commit())
-                Publish(new RegisteredCompanyIntegrationEvent(company.Id, company.Email.Email));
+                Publish(new RegisteredCompanyIntegrationEvent(company.Id, company.Email.Email, company.TenantId));
         }
 
         public void Update(UpdateCompanyCommand command)

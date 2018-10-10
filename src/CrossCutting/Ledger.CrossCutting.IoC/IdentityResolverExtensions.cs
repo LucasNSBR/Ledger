@@ -1,4 +1,5 @@
 ﻿using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ledger.CrossCutting.IoC
@@ -12,6 +13,7 @@ namespace Ledger.CrossCutting.IoC
         /// <returns></returns>
         public static IServiceCollection AddIdentityResolver(this IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IIdentityResolverService, IdentityResolverService>();
 
             return services;

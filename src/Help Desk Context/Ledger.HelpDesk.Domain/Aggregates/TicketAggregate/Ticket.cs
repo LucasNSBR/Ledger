@@ -21,7 +21,7 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
         public string Title { get; private set; }
         public string Details { get; private set; }
         public Image IssuePicture { get; private set; }
-
+        
         protected Ticket() { }
 
         public Ticket(string title, string details, Guid categoryId, Guid userId)
