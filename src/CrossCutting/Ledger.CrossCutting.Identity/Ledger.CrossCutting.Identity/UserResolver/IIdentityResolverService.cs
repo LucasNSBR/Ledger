@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
 {
-    public interface IIdentityResolverService
+    public interface IIdentityResolver
     {
         Guid GetUserId();
         bool IsAuthenticated();

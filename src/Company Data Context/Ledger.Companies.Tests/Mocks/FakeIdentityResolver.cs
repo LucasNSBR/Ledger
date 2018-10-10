@@ -3,7 +3,7 @@ using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 
 namespace Ledger.Companies.Tests.Mocks
 {
-    public class FakeIdentityResolver : IIdentityResolverService
+    public class FakeIdentityResolver : IIdentityResolver
     {
         public Guid GetUserId()
         {

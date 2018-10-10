@@ -14,7 +14,7 @@ namespace Ledger.CrossCutting.IoC
         public static IServiceCollection AddIdentityResolver(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IIdentityResolverService, IdentityResolverService>();
+            services.AddScoped<IIdentityResolver, IdentityResolver>();
 
             return services;
         }

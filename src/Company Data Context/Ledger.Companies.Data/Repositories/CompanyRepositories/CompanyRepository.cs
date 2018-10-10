@@ -14,9 +14,9 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
     {
         private readonly LedgerCompanyDbContext _dbContext;
         private readonly DbSet<Company> _dbSet;
-        private readonly IIdentityResolverService _identityResolver;
+        private readonly IIdentityResolver _identityResolver;
 
-        public CompanyRepository(LedgerCompanyDbContext dbContext, IIdentityResolverService identityResolver)
+        public CompanyRepository(LedgerCompanyDbContext dbContext, IIdentityResolver identityResolver)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Companies;

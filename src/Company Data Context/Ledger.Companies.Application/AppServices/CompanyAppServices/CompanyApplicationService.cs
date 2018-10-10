@@ -23,9 +23,9 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
         private readonly ICompanyRepository _repository;
         private readonly ICompanyFactory _factory;
         private readonly ILocationService _locationService;
-        private readonly IIdentityResolverService _identityResolver;
+        private readonly IIdentityResolver _identityResolver;
 
-        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, ILocationService locationService, IIdentityResolverService identityResolver, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
+        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, ILocationService locationService, IIdentityResolver identityResolver, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
         {
             _repository = repository;
             _factory = factory;

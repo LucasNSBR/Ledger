@@ -13,9 +13,9 @@ namespace Ledger.Activations.Data.Repositories.ActivationRepository
     {
         private readonly LedgerActivationDbContext _dbContext;
         private readonly DbSet<Activation> _dbSet;
-        private readonly IIdentityResolverService _identityResolver;
+        private readonly IIdentityResolver _identityResolver;
 
-        public ActivationRepository(LedgerActivationDbContext dbContext, IIdentityResolverService identityResolver)
+        public ActivationRepository(LedgerActivationDbContext dbContext, IIdentityResolver identityResolver)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Activations;

@@ -6,11 +6,11 @@ using System.Security.Claims;
 
 namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
 {
-    public class IdentityResolverService : IIdentityResolverService
+    public class IdentityResolver : IIdentityResolver
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityResolverService(IHttpContextAccessor httpContextAccessor)
+        public IdentityResolver(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
