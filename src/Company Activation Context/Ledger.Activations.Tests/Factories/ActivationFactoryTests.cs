@@ -14,8 +14,9 @@ namespace Ledger.Activations.Tests.Factories
             IActivationFactory factory = new ActivationFactory();
 
             Guid companyId = Guid.NewGuid();
+            Guid tenantId = Guid.NewGuid();
 
-            Activation activation = factory.CreateActivation(companyId);
+            Activation activation = factory.CreateActivation(companyId, tenantId);
 
             Assert.IsNotNull(activation);
             Assert.AreEqual(companyId, activation.Id);

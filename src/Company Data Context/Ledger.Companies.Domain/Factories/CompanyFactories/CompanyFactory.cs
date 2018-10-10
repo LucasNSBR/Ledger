@@ -6,7 +6,7 @@ namespace Ledger.Companies.Domain.Factories.CompanyFactories
 {
     public class CompanyFactory : ICompanyFactory
     {
-        public Company CreateCompany(string companyName, string companyDescription, string companyEmail, string companyCnpj, string companyInscricaoEstadual, string ownerName, DateTime ownerBirthday, string ownerCpf, Guid? companyId = null)
+        public Company CreateCompany(string companyName, string companyDescription, string companyEmail, string companyCnpj, string companyInscricaoEstadual, string ownerName, DateTime ownerBirthday, string ownerCpf, Guid tenantId, Guid? companyId = null)
         {
             //Build company related VO's
             EmailAddress email = new EmailAddress(companyEmail);
@@ -17,11 +17,14 @@ namespace Ledger.Companies.Domain.Factories.CompanyFactories
             Cpf cpf = new Cpf(ownerCpf);
             Owner owner = new Owner(ownerName, ownerBirthday, cpf);
 
-            //Use the parameter id or create a new one
+            //Set the company id, if exists
             Guid id = companyId ?? Guid.NewGuid();
 
             //Build company
             Company company = new Company(id, companyName, companyDescription, email, cnpj, inscricaoEstadual, owner);
+
+            //Set the TenantId (UserId)
+            company.SetTenantId(tenantId);
 
             return company;
         }

@@ -19,6 +19,7 @@ namespace Ledger.Companies.Tests.AppServices
         LocationService locationService;
         FakeServiceBus bus;
         FakeUnitOfWork uow;
+        FakeIdentityResolver identityResolver;
         CompanyApplicationService service;
         DomainNotificationHandler domainNotificationHandler;
         CompanyFactory factory;
@@ -29,10 +30,11 @@ namespace Ledger.Companies.Tests.AppServices
             locationService = new LocationService(new FakeCityRepository(), new StateFakeRepository(), new CountryFakeRepository());
             bus = new FakeServiceBus();
             uow = new FakeUnitOfWork();
+            identityResolver = new FakeIdentityResolver();
             domainNotificationHandler = new DomainNotificationHandler();
             factory = new CompanyFactory();
 
-            service = new CompanyApplicationService(repository, factory, locationService, domainNotificationHandler, uow, bus);
+            service = new CompanyApplicationService(repository, factory, locationService, identityResolver, domainNotificationHandler, uow, bus);
         }
 
         [TestMethod]

@@ -34,8 +34,7 @@ namespace Ledger.Activations.Domain.IntegrationEventHandlers.ActivationAggregate
             string email = context.Message.Email;
             Guid tenantId = context.Message.TenantId;
             
-            Activation activation = _factory.CreateActivation(companyId);
-            activation.SetTenantId(tenantId);
+            Activation activation = _factory.CreateActivation(companyId, tenantId);
 
             _repository.Register(activation);
             _unitOfWork.Commit();

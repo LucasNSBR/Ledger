@@ -23,12 +23,14 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
         private readonly ICompanyRepository _repository;
         private readonly ICompanyFactory _factory;
         private readonly ILocationService _locationService;
+        private readonly IIdentityResolverService _identityResolver;
 
-        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, ILocationService locationService, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
+        public CompanyApplicationService(ICompanyRepository repository, ICompanyFactory factory, ILocationService locationService, IIdentityResolverService identityResolver, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerCompanyDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus) : base(domainNotificationHandler, unitOfWork, integrationBus)
         {
             _repository = repository;
             _factory = factory;
             _locationService = locationService;
+            _identityResolver = identityResolver;
         }
 
         public Company GetByCnpj(string cnpj)
@@ -49,7 +51,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
                 return;
 
             Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj,
-                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf);
+                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, _identityResolver.GetUserId());
 
             if (NotifyCnpjExists(company.Cnpj, company.Id))
                 return;
@@ -67,10 +69,12 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (AddNotifications(command))
                 return;
 
-            Company company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj,
-                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, companyId: command.CompanyId);
+            Company company = _repository.GetById(command.CompanyId);
 
-            if (NotifyCnpjExists(company.Cnpj, company.Id))
+            company = _factory.CreateCompany(command.Name, command.Description, command.Email, command.Cnpj,
+                command.InscricaoEstadual, command.OwnerName, command.OwnerBirthday, command.OwnerCpf, _identityResolver.GetUserId(), company.Id);
+
+            if (NotifyNullCompany(company) || NotifyDifferentUser(company) || NotifyCnpjExists(company.Cnpj, company.Id))
                 return;
 
             _repository.Update(company);
@@ -87,7 +91,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
             Company company = _repository.GetById(command.CompanyId);
 
-            if (NotifyNullCompany(company))
+            if (NotifyNullCompany(company) || NotifyNullCompany(company))
                 return;
 
             LocationResult result = _locationService.TryGetLocation(command.CityId, command.StateId, command.CountryId);
@@ -121,7 +125,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
             Company company = _repository.GetById(command.CompanyId);
 
-            if (NotifyNullCompany(company))
+            if (NotifyNullCompany(company) || NotifyNullCompany(company))
                 return;
 
             PhoneNumber phone = new PhoneNumber(command.PhoneNumber);
@@ -153,6 +157,21 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             if (company == null)
             {
                 AddNotification("Id inválido", "A empresa não pôde ser encontrada.");
+                return true;
+            }
+
+            return false;
+        }
+
+        //Ensure that user 'owns' data before can modify it
+        //Company querying operations are public, this applies only for write operations
+        private bool NotifyDifferentUser(Company company)
+        {
+            Guid userId = _identityResolver.GetUserId();
+
+            if (company.TenantId != userId)
+            {
+                AddNotification("Usuário inválido", "Os dados não podem ser modificados por esse usuário.");
                 return true;
             }
 

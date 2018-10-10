@@ -23,8 +23,9 @@ namespace Ledger.Companies.Tests.Factories
             string ownerName = "Lucas Pereira";
             DateTime ownerBirthDate = DateTime.Now.AddYears(-20);
             string cpf = "81.153.856-99";
+            Guid tenantId = Guid.NewGuid();
 
-            Company company = factory.CreateCompany(name, description, email, cnpj, inscrEstadual, ownerName, ownerBirthDate, cpf);
+            Company company = factory.CreateCompany(name, description, email, cnpj, inscrEstadual, ownerName, ownerBirthDate, cpf, tenantId);
 
             Assert.IsNotNull(company);
             Assert.AreEqual("Fabrikam", company.Name);
@@ -48,7 +49,7 @@ namespace Ledger.Companies.Tests.Factories
             DateTime ownerBirthDate = DateTime.Now.AddYears(-20);
             string cpf = "81.153.856-99";
 
-            Company company = factory.CreateCompany(name, description, email, cnpj, inscrEstadual, ownerName, ownerBirthDate, cpf, EXISTING_ID);
+            Company company = factory.CreateCompany(name, description, email, cnpj, inscrEstadual, ownerName, ownerBirthDate, cpf, Guid.NewGuid(), EXISTING_ID);
 
             Assert.IsNotNull(company);
             Assert.AreEqual(new Guid("89707872-eab3-4f04-bfe8-7dc20f5d3b9c"), company.Id);

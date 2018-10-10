@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
 {
@@ -33,6 +36,16 @@ namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
         public bool IsAuthenticated()
         {
             return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+        }
+
+        public IReadOnlyList<Claim> GetUserClaims()
+        {
+            if (IsAuthenticated())
+            {
+                return _httpContextAccessor.HttpContext.User.Claims.ToList();
+            }
+
+            throw new InvalidOperationException("User not authenticated");
         }
     }
 }

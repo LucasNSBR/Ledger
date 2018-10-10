@@ -33,5 +33,10 @@ namespace Ledger.HelpDesk.Data.Repositories.UserRepositories
         {
             _dbContext.Add(user);
         }
+
+        public void Update(User user)
+        {
+            _dbContext.Update(user);
+        }
     }
 }

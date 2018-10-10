@@ -26,6 +26,9 @@ namespace Ledger.Companies.Tests.Mocks
                "Fabrikam", "Fabrikam Corporation", new EmailAddress("admin@fabrikam.com"), new Cnpj("59009518000141"), new InscricaoEstadual("001.115 -550"),
                            new Owner("Lucas Pereira Campos", DateTime.Now.AddYears(-20), new Cpf("981.153.856-99")))
             );
+
+            //Set tenant id, this same id will be setted to user on FakeIdentityResolver
+            _companies.First().SetTenantId(new Guid("5227c760-f6f0-4e72-b3fa-19059c58d8e3"));
         }
 
         public List<Company> GetCompanies()
