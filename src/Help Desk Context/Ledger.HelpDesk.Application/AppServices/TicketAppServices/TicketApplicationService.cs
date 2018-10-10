@@ -33,6 +33,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
             _identityResolver = identityResolver;
         }
 
+        //Accessible only through a user with Support role on controller
         public IQueryable<Ticket> GetAllTickets()
         {
             return _ticketRepository.GetAllTickets();
@@ -42,7 +43,10 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
         {
             User user = _identityResolver.GetUser();
             if (userId != user.Id)
+            {
+                AddNotification("Erro ao buscar", "O usuário atual não possui permissão para visualizar os dados.");
                 return Enumerable.Empty<Ticket>().AsQueryable();
+            }
 
             return _ticketRepository.GetByUserId(userId);
         }
@@ -50,11 +54,8 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
         public Ticket GetById(Guid id)
         {
             Ticket ticket = _ticketRepository.GetById(id);
-            User user = _identityResolver.GetUser();
-
-            bool isPartOfTicket = ticket.TicketUserId == user.Id || ticket.SupportUserId == user.Id;
-
-            if (!isPartOfTicket)
+            
+            if (NotifyCantAccessTicket(ticket))
                 return null;
 
             return ticket;
@@ -112,6 +113,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
             Commit();
         }
 
+        //Accessible only through a user with Support role on controller
         public void AssignSupport(AssignSupportCommand command)
         {
             command.Validate();
@@ -149,6 +151,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
             if (NotifyNullTicket(ticket))
                 return;
 
+            //User authenticity threated inside AddMessage() method
             ticket.AddMessage(command.Body, user.Id);
 
             if (AddNotifications(ticket))
@@ -168,12 +171,11 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 return;
 
             Ticket ticket = _ticketRepository.GetById(command.TicketId);
-            User user = _identityResolver.GetUser();
 
-            if (NotifyNullTicket(ticket))
+            if (NotifyNullTicket(ticket) || NotifyCantAccessTicket(ticket))
                 return;
 
-            ticket.Close(user.Id);
+            ticket.Close();
 
             if (AddNotifications(ticket))
                 return;
@@ -200,6 +202,22 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
             if (category == null)
             {
                 AddNotification("Id inválido", "A categoria de Ticket não pôde ser encontrada.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool NotifyCantAccessTicket(Ticket ticket)
+        {
+            User user = _identityResolver.GetUser();
+            Role supportRole = new Role(RoleTypes.Support);
+
+            bool canAccessTicket = ticket.TicketUserId == user.Id || user.IsInRole(supportRole);
+
+            if (!canAccessTicket)
+            {
+                AddNotification("Usuário inválido", "O usuário não tem autorização para acessar os dados.");
                 return true;
             }
 

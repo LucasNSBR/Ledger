@@ -12,11 +12,13 @@ namespace Ledger.Activations.Tests.AppServices
     [TestClass]
     public class ActivationApplicationServiceTests
     {
+        Guid userId = new Guid("5227c760-f6f0-4e72-b3fa-19059c58d8e3");
         Guid companyId = new Guid("399b3510-3c3e-4d0a-85a0-a4723d492883");
 
         FakeActivationRepository activationRepository;
         ActivationFactory activationFactory;
         DomainNotificationHandler domainNotificationHandler;
+        FakeIdentityResolver identityResolver;
         FakeUnitOfWork fakeUnitOfWork;
         FakeServiceBus serviceBus;
         FakeDomainServiceBus domainBus;
@@ -25,20 +27,25 @@ namespace Ledger.Activations.Tests.AppServices
         public ActivationApplicationServiceTests()
         {
             activationFactory = new ActivationFactory();
+            identityResolver = new FakeIdentityResolver();
             domainNotificationHandler = new DomainNotificationHandler();
             fakeUnitOfWork = new FakeUnitOfWork();
             serviceBus = new FakeServiceBus();
             domainBus = new FakeDomainServiceBus();
             activationRepository = new FakeActivationRepository();
 
-            service = new ActivationApplicationService(activationRepository, domainNotificationHandler, fakeUnitOfWork, serviceBus, domainBus);
+            service = new ActivationApplicationService(activationRepository, identityResolver, domainNotificationHandler, fakeUnitOfWork, serviceBus, domainBus);
         }
 
         //Helpers
         private void PopulateRepository()
         {
-            activationRepository.Register(new Activation
-                (new Company(companyId)));   
+            Activation activation = new Activation
+                (new Company(companyId));
+
+            activation.SetTenantId(userId);
+
+            activationRepository.Register(activation);   
         }
 
         private Activation GetActivation()

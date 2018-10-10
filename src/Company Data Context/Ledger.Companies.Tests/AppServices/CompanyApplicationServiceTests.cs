@@ -46,14 +46,6 @@ namespace Ledger.Companies.Tests.AppServices
         }
 
         [TestMethod]
-        public void ShouldGetByCnpj()
-        {
-            Company company = service.GetByCnpj("59009518000141");
-
-            Assert.IsNotNull(company);
-        }
-
-        [TestMethod]
         public void ShouldRegisterCompany()
         {
             RegisterCompanyCommand command = new RegisterCompanyCommand

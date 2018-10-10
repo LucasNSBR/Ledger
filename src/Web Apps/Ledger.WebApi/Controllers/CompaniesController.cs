@@ -5,6 +5,7 @@ using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Ledger.WebApi.Controllers
 {
@@ -18,6 +19,15 @@ namespace Ledger.WebApi.Controllers
         public CompaniesController(ICompanyApplicationService companyApplicationService, IDomainNotificationHandler domainNotificationHandler) : base(domainNotificationHandler)
         {
             _companyApplicationService = companyApplicationService;
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IActionResult GetById()
+        {
+            IQueryable<Company> companies = _companyApplicationService.GetAllCompanies();
+
+            return CreateResponse(companies);
         }
 
         [HttpGet]

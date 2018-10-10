@@ -2,7 +2,6 @@
 using Ledger.Activations.Domain.Aggregates.ActivationAggregate;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
 using Ledger.Activations.Domain.Specifications.ActivationSpecifications;
-using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -13,31 +12,20 @@ namespace Ledger.Activations.Data.Repositories.ActivationRepository
     {
         private readonly LedgerActivationDbContext _dbContext;
         private readonly DbSet<Activation> _dbSet;
-        private readonly IIdentityResolver _identityResolver;
 
-        public ActivationRepository(LedgerActivationDbContext dbContext, IIdentityResolver identityResolver)
+        public ActivationRepository(LedgerActivationDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Activations;
-            _identityResolver = identityResolver;
         }
 
         public Activation GetById(Guid id)
         {
             ActivationIdSpecification specification = new ActivationIdSpecification(id);
 
-            Activation activation = _dbSet
+            return _dbSet
                 .AsNoTracking()
                 .FirstOrDefault(specification.ToExpression());
-
-            //Suppress any modification on activation by returning null
-            //Since all Activation operations require to GetById() the Activation
-            //The only operation that don't use GetById is Register(), created through a event, so no security problem
-            //If UserId is different of TenantId the operation will break 
-            if (activation.TenantId != _identityResolver.GetUserId())
-                return null;
-
-            return activation;
         }
 
         public void Register(Activation activation)

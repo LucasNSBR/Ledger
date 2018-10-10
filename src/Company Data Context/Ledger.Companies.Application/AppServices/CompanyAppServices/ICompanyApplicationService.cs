@@ -1,13 +1,14 @@
 ﻿using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Commands;
 using System;
+using System.Linq;
 
 namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 {
     public interface ICompanyApplicationService
     {
+        IQueryable<Company> GetAllCompanies();
         Company GetById(Guid id);
-        Company GetByCnpj(string cnpj);
         void Register(RegisterCompanyCommand command);
         void Update(UpdateCompanyCommand command);
         void ChangeAddress(ChangeCompanyAddressCommand command);

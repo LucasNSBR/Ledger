@@ -23,6 +23,12 @@ namespace Ledger.Companies.Data.Repositories.CompanyRepositories
             _identityResolver = identityResolver;
         }
 
+        public IQueryable<Company> GetAllCompanies()
+        {
+            return _dbSet
+                .AsNoTracking();
+        }
+
         public Company GetById(Guid id)
         {
             CompanyIdSpecification specification = new CompanyIdSpecification(id);

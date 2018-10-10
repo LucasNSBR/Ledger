@@ -113,14 +113,8 @@ namespace Ledger.HelpDesk.Domain.Aggregates.TicketAggregate
             return messages;
         }
 
-        public void Close(Guid userId)
+        public void Close()
         {
-            if(userId != TicketUserId && userId != SupportUserId)
-            {
-                AddNotification("Erro na finalização", "Esse usuário não tem permissão para finalizar esse ticket.");
-                return;
-            }
-
             if (NotifyClosedTicket())
                 return;
 

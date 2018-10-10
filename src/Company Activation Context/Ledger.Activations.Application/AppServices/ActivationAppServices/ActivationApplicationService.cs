@@ -3,6 +3,7 @@ using Ledger.Activations.Domain.Commands;
 using Ledger.Activations.Domain.Context;
 using Ledger.Activations.Domain.Repositories.ActivationRepository;
 using Ledger.CrossCutting.Data.UnitOfWork;
+using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.Shared.Extensions;
 using Ledger.Shared.IntegrationEvents.Events.ActivationEvents;
@@ -15,15 +16,22 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
     public class ActivationApplicationService : BaseApplicationService, IActivationApplicationService
     {
         private readonly IActivationRepository _repository;
+        private readonly IIdentityResolver _identityResolver;
 
-        public ActivationApplicationService(IActivationRepository repository, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, integrationBus, domainBus)
+        public ActivationApplicationService(IActivationRepository repository, IIdentityResolver identityResolver, IDomainNotificationHandler domainNotificationHandler, IUnitOfWork<ILedgerActivationDbAbstraction> unitOfWork, IIntegrationServiceBus integrationBus, IDomainServiceBus domainBus) : base(domainNotificationHandler, unitOfWork, integrationBus, domainBus)
         {
             _repository = repository;
+            _identityResolver = identityResolver;
         }
 
         public Activation GetById(Guid id)
         {
-            return _repository.GetById(id);
+            Activation activation = _repository.GetById(id);
+      
+            if (NotifyDifferentUser(activation))
+                return null;
+            
+            return activation;
         }
 
         public void AttachCompanyDocuments(AttachCompanyDocumentsCommand command)
@@ -40,7 +48,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNullActivation(activation))
+            if (NotifyNullActivation(activation) || NotifyDifferentUser(activation))
                 return;
 
             activation.AttachCompanyDocuments(contratoSocialPicture,
@@ -65,7 +73,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNullActivation(activation))
+            if (NotifyNullActivation(activation) || NotifyDifferentUser(activation))
                 return;
 
             activation.SetAccepted();
@@ -88,7 +96,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNullActivation(activation))
+            if (NotifyNullActivation(activation) || NotifyDifferentUser(activation))
                 return;
 
             activation.SetRejected();
@@ -111,7 +119,7 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
 
             Activation activation = _repository.GetById(command.ActivationId);
 
-            if (NotifyNullActivation(activation))
+            if (NotifyNullActivation(activation) || NotifyDifferentUser(activation))
                 return;
 
             activation.ResetActivationProcess();
@@ -129,6 +137,19 @@ namespace Ledger.Activations.Application.AppServices.ActivationAppServices
             if (activation == null)
             {
                 AddNotification("Id inválido", "A ativação não pôde ser encontrada.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool NotifyDifferentUser(Activation activation)
+        {
+            Guid userId = _identityResolver.GetUserId();
+
+            if (activation.TenantId != userId)
+            {
+                AddNotification("Usuário inválido", "O usuário não tem autorização para acessar os dados.");
                 return true;
             }
 

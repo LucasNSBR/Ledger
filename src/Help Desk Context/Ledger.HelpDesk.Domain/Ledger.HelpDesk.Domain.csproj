@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="IntegrationEventHandlers\" />
-  </ItemGroup>
-
 </Project>

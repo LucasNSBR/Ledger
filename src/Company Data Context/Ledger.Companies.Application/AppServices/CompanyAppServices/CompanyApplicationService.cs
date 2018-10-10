@@ -15,6 +15,7 @@ using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 {
@@ -33,9 +34,9 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             _identityResolver = identityResolver;
         }
 
-        public Company GetByCnpj(string cnpj)
+        public IQueryable<Company> GetAllCompanies()
         {
-            return _repository.GetByCnpj(cnpj);
+            return _repository.GetAllCompanies();
         }
 
         public Company GetById(Guid id)
@@ -91,7 +92,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
             Company company = _repository.GetById(command.CompanyId);
 
-            if (NotifyNullCompany(company) || NotifyNullCompany(company))
+            if (NotifyNullCompany(company) || NotifyDifferentUser(company))
                 return;
 
             LocationResult result = _locationService.TryGetLocation(command.CityId, command.StateId, command.CountryId);
@@ -125,7 +126,7 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
 
             Company company = _repository.GetById(command.CompanyId);
 
-            if (NotifyNullCompany(company) || NotifyNullCompany(company))
+            if (NotifyNullCompany(company) || NotifyDifferentUser(company))
                 return;
 
             PhoneNumber phone = new PhoneNumber(command.PhoneNumber);
@@ -163,8 +164,6 @@ namespace Ledger.Companies.Application.AppServices.CompanyAppServices
             return false;
         }
 
-        //Ensure that user 'owns' data before can modify it
-        //Company querying operations are public, this applies only for write operations
         private bool NotifyDifferentUser(Company company)
         {
             Guid userId = _identityResolver.GetUserId();
