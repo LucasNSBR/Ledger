@@ -78,5 +78,10 @@ namespace Ledger.Companies.Tests.Mocks
 
             return false;
         }
+
+        public IQueryable<Company> GetAllCompanies()
+        {
+            return _companies.AsQueryable();
+        }
     }
 }

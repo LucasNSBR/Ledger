@@ -69,7 +69,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void TicketShouldBeClosed()
         {
-            ticket.Close(user.Id);
+            ticket.Close();
 
             Assert.AreNotEqual(DateTime.MinValue, ticket.TicketStatus.DateClosed);
             Assert.IsTrue(!ticket.IsOpened());
@@ -78,8 +78,8 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToCloseTicketAfterTicketClosed()
         {
-            ticket.Close(user.Id);
-            ticket.Close(user.Id);
+            ticket.Close();
+            ticket.Close();
 
             Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);
         }
@@ -94,7 +94,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToAddMessageAfterTicketClosed()
         {
-            ticket.Close(user.Id);
+            ticket.Close();
             ticket.AddMessage("Olá, mundo!", user.Id);
 
             Assert.AreEqual("Ticket finalizado", ticket.GetNotifications().First().Title);

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
+using Ledger.HelpDesk.Domain.Repositories.TicketCategoryRepositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
-using Ledger.HelpDesk.Domain.Repositories.TicketCategoryRepositories;
 
 namespace Ledger.HelpDesk.Tests.Mocks
 {
