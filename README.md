@@ -32,7 +32,7 @@ Contains all building blocks such as Event, Notification, Entity, ValueObject in
 ##### CrossCutting
 Application infrastructure services. Dependency Injection resolving, Email Services, Service Bus configurations and Unit Of Work definitons. Basically this layer wrapps all infrastructure dirty dependencies. Also responsible for resolve the User Identity by using HttpContext.
  
-#### HelpDesk Context
+##### HelpDesk Context
 The application help-desk. Users can open tickets, send and receive messages from support.
  
 ##### Identity Context
