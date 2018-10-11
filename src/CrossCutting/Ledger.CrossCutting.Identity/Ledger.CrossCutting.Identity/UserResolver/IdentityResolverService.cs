@@ -36,7 +36,7 @@ namespace Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver
 
         public User GetUser()
         {
-            if (!IsAuthenticated())
+            if (IsAuthenticated())
             {
                 Guid id = GetUserId();
                 IReadOnlyList<Claim> claims = GetUserClaims();

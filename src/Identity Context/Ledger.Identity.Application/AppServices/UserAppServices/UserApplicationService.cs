@@ -4,12 +4,12 @@ using Ledger.Identity.Domain.Commands.UserCommands;
 using Ledger.Identity.Domain.Events.UserEvents;
 using Ledger.Identity.Domain.Models.Services.UserServices;
 using Ledger.Identity.Domain.Services.RoleServices;
-using Ledger.Shared.IntegrationEvents.Events.RoleEvents;
 using Ledger.Shared.IntegrationEvents.Events.UserEvents;
 using Ledger.Shared.Notifications;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -81,8 +81,14 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             if (result.Succeeded)
             {
                 IEnumerable<Claim> claims = await _userManager.GetClaimsAsync(user);
+                IEnumerable<string> roles = await _userManager.GetRolesAsync(user);
+
+                List<Claim> userPermissions = new List<Claim>();
+                userPermissions.AddRange(claims);
+                userPermissions.AddRange(roles.Select(value => new Claim(ClaimTypes.Role, value)));
+
                 GenericIdentity identity = new GenericIdentity(user.Id.ToString());
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(identity, claims);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(identity, userPermissions);
 
                 await PublishLocal(new UserLoggedInEvent(user.Id, user.Email));
 
