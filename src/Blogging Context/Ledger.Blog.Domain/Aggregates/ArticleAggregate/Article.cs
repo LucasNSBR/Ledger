@@ -77,7 +77,10 @@ namespace Ledger.Blog.Domain.Aggregates.ArticleAggregate
 
         public void RemoveComment(Comment comment)
         {
-            _comments.Remove(comment);
+            if (_comments.Contains(comment))
+                _comments.Remove(comment);
+            else
+                AddNotification("Erro na remoção", "Erro ao buscar. Não é possível remover o comentário.");
         }
     }
 }
