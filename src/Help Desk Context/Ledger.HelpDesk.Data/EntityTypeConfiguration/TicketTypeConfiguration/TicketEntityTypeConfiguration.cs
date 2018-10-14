@@ -1,4 +1,5 @@
-﻿using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
+﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
+using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,6 +21,11 @@ namespace Ledger.HelpDesk.Data.EntityTypeConfiguration.TicketTypeConfiguration
             builder
                 .Property(t => t.CategoryId)
                 .IsRequired();
+
+            builder
+                .HasOne<TicketCategory>()
+                .WithMany()
+                .HasForeignKey(t => t.CategoryId);
 
             builder
                 .HasOne(t => t.Conversation)
