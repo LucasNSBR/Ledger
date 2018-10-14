@@ -12,6 +12,11 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
         Article GetById(Guid id);
         void Register(RegisterArticleCommand command);
         void Update(UpdateArticleCommand command);
+        void SetActive(SetActiveArticleCommand command);
+        void SetInactive(SetInactiveArticleCommand command);
+        void AddComment(AddArticleCommentCommand command);
+        void RemoveComment(RemoveArticleCommentCommand command);
+
         void Remove(RemoveArticleCommand command);
     }
 }

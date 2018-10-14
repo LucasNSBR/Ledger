@@ -83,6 +83,91 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
             Commit();
         }
 
+        public void SetActive(SetActiveArticleCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+           Article article = _articleRepository.GetById(command.ArticleId);
+
+            if (NotifyNullArticle(article))
+                return;
+
+            article.SetActive();
+
+            _articleRepository.Update(article);
+
+            Commit();
+        }
+
+        public void SetInactive(SetInactiveArticleCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            Article article = _articleRepository.GetById(command.ArticleId);
+
+            if (NotifyNullArticle(article))
+                return;
+
+            article.SetInactive();
+
+            _articleRepository.Update(article);
+
+            Commit();
+        }
+
+        public void AddComment(AddArticleCommentCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            Article article = _articleRepository.GetById(command.ArticleId);
+            User user = _identityResolver.GetUser();
+
+            if (NotifyNullArticle(article))
+                return;
+
+            Comment comment = new Comment(article.Id, user.Id, command.Body);
+
+            article.AddComment(comment);
+            _articleRepository.Update(article);
+
+            Commit();
+        }
+
+        public void RemoveComment(RemoveArticleCommentCommand command)
+        {
+            command.Validate();
+
+            if (AddNotifications(command))
+                return;
+
+            Article article = _articleRepository.GetById(command.ArticleId);
+            User user = _identityResolver.GetUser();
+
+            if (NotifyNullArticle(article))
+                return;
+
+            Comment comment = article.Comments.FirstOrDefault(c => c.Id == command.CommentId);
+
+            if(comment == null || comment.AuthorId != user.Id)
+            {
+                AddNotification("Erro na remoção", "Não foi possível remover esse comentário.");
+                return;
+            }
+
+            _articleRepository.Update(article);
+
+            Commit();
+        }
+
         public void Remove(RemoveArticleCommand command)
         {
             command.Validate();
