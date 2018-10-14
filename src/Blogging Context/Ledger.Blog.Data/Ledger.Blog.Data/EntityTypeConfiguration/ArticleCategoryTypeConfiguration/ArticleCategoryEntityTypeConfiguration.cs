@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ledger.Blog.Data.EntityTypeConfiguration
+namespace Ledger.Blog.Data.EntityTypeConfiguration.ArticleCategoryTypeConfiguration
 {
     public class ArticleCategoryEntityTypeConfiguration : IEntityTypeConfiguration<ArticleCategory>
     {

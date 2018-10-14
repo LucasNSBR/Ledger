@@ -1,4 +1,6 @@
 ﻿using Ledger.Blog.Data.EntityTypeConfiguration;
+using Ledger.Blog.Data.EntityTypeConfiguration.ArticleCategoryTypeConfiguration;
+using Ledger.Blog.Data.EntityTypeConfiguration.ArticleTypeConfiguration;
 using Ledger.Blog.Domain.Aggregates.ArticleAggregate;
 using Ledger.Blog.Domain.Aggregates.CategoryAggregate;
 using Microsoft.EntityFrameworkCore;

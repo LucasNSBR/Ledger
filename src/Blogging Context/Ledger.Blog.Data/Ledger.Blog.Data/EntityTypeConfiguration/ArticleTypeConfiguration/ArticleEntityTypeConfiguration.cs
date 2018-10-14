@@ -3,7 +3,7 @@ using Ledger.Blog.Domain.Aggregates.CategoryAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ledger.Blog.Data.EntityTypeConfiguration
+namespace Ledger.Blog.Data.EntityTypeConfiguration.ArticleTypeConfiguration
 {
     public class ArticleEntityTypeConfiguration : IEntityTypeConfiguration<Article>
     {
