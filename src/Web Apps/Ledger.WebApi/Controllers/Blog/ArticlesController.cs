@@ -2,6 +2,7 @@
 using Ledger.Blog.Domain.Aggregates.ArticleAggregate;
 using Ledger.Blog.Domain.Commands.ArticleCommands;
 using Ledger.Shared.Notifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -64,6 +65,30 @@ namespace Ledger.WebApi.Controllers.Blog
             command.ArticleId = id;
 
             _articleAppService.Update(command);
+
+            return CreateResponse();
+        }
+
+        [HttpPost]
+        [Route("{id:guid}/comments")]
+        [Authorize(Policy = "ActivatedAccount")]
+        public IActionResult AddComment(Guid id, [FromBody]AddArticleCommentCommand command)
+        {
+            command.ArticleId = id;
+
+            _articleAppService.AddComment(command);
+
+            return CreateResponse();
+        }
+
+        [HttpDelete]
+        [Route("{id:guid}/comments")]
+        [Authorize(Policy = "ActivatedAccount")]
+        public IActionResult Remove(Guid id, [FromBody]RemoveArticleCommentCommand command)
+        {
+            command.ArticleId = id;
+
+            _articleAppService.RemoveComment(command);
 
             return CreateResponse();
         }
