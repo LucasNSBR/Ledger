@@ -33,6 +33,7 @@ namespace Ledger.WebApi
             services.AddActivations();
             services.AddCompanies();
             services.AddHelpDesk();
+            services.AddBlogging();
 
             services.AddServiceBus(opt =>
             {
@@ -139,10 +140,10 @@ namespace Ledger.WebApi
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseCors(cfg =>
             {

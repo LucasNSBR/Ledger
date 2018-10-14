@@ -2,11 +2,12 @@
 using Ledger.Blog.Data.EntityTypeConfiguration.ArticleTypeConfiguration;
 using Ledger.Blog.Domain.Aggregates.ArticleAggregate;
 using Ledger.Blog.Domain.Aggregates.CategoryAggregate;
+using Ledger.Blog.Domain.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ledger.Blog.Data.Context
 {
-    public class LedgerBlogDbContext : DbContext
+    public class LedgerBlogDbContext : DbContext, ILedgerBlogDbAbstraction
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
