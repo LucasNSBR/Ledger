@@ -23,7 +23,7 @@ namespace Ledger.WebApi.Controllers.HelpDesk
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetTicketCategories()
+        public IActionResult GetAllCategories()
         {
             IQueryable<TicketCategory> ticketCategories = _ticketCategoryApplicationService.GetAllCategories();
 
@@ -32,7 +32,7 @@ namespace Ledger.WebApi.Controllers.HelpDesk
 
         [HttpGet]
         [Route("{id:guid}")]
-        public IActionResult GetTicketCategoriesById(Guid id)
+        public IActionResult GetById(Guid id)
         {
             TicketCategory ticketCategory = _ticketCategoryApplicationService.GetById(id);
 
@@ -42,7 +42,7 @@ namespace Ledger.WebApi.Controllers.HelpDesk
         [HttpPost]
         [Route("")]
         //[Authorize(Roles = "SupportAccount,AdminAccount")]
-        public IActionResult RegisterTicketCategory([FromBody]RegisterTicketCategoryCommand command)
+        public IActionResult Register([FromBody]RegisterTicketCategoryCommand command)
         {
             _ticketCategoryApplicationService.Register(command);
 
@@ -52,7 +52,7 @@ namespace Ledger.WebApi.Controllers.HelpDesk
         [HttpPut]
         [Route("{id:guid}")]
         //[Authorize(Roles = "SupportAccount,AdminAccount")]
-        public IActionResult UpdateTicketCategory(Guid id, [FromBody]UpdateTicketCategoryCommand command)
+        public IActionResult Update(Guid id, [FromBody]UpdateTicketCategoryCommand command)
         {
             command.CategoryId = id;
 
