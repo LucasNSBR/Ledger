@@ -6,7 +6,7 @@ namespace Ledger.Blog.Domain.Aggregates.CategoryAggregate
     {
         public string Name { get; private set; }
 
-        protected ArticleCategory(string name)
+        public ArticleCategory(string name)
         {
             Name = name;
         }
