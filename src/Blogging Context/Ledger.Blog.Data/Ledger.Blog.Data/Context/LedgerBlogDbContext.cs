@@ -1,5 +1,4 @@
-﻿using Ledger.Blog.Data.EntityTypeConfiguration;
-using Ledger.Blog.Data.EntityTypeConfiguration.ArticleCategoryTypeConfiguration;
+﻿using Ledger.Blog.Data.EntityTypeConfiguration.ArticleCategoryTypeConfiguration;
 using Ledger.Blog.Data.EntityTypeConfiguration.ArticleTypeConfiguration;
 using Ledger.Blog.Domain.Aggregates.ArticleAggregate;
 using Ledger.Blog.Domain.Aggregates.CategoryAggregate;
@@ -19,6 +18,7 @@ namespace Ledger.Blog.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ArticleEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ArticleCategoryEntityTypeConfiguration());
         }
     }

@@ -20,26 +20,32 @@ You need to install RabbitMQ in order to properly run this soluction.
 ## Architecture Overview
 Every Bounded Context is 100% autonomous and the interactions across them are threathed through Integration Events using a Mass Transit event bus, no direct dependencies. Every Bounded Context also contains a 3-layer project *(Application, Domain, Data)*.
  
-##### Company Activation Context
+#### Company Activation Context
+Experimental Blogging context, Here is the logic for a simple blog about updates of the platform.
+
+#### Company Activation Context
 Activations context, this context is responsible for receive, analyze and validate a activation submision.
  
-##### Company Data Context
+#### Company Data Context
 Companies Data, contains detailed informations about the Companies.
  
-##### Shared Kernel
+#### Shared Kernel
 Contains all building blocks such as Event, Notification, Entity, ValueObject interfaces and base classes.
  
-##### CrossCutting
+#### CrossCutting
 Application infrastructure services. Dependency Injection resolving, Email Services, Service Bus configurations and Unit Of Work definitons. Basically this layer wrapps all infrastructure dirty dependencies. Also responsible for resolve the User Identity by using HttpContext.
  
-##### HelpDesk Context
+#### HelpDesk Context
 The application help-desk. Users can open tickets, send and receive messages from support.
  
-##### Identity Context
+#### Identity Context
 Wrapps the Identity logic. Users, roles, logins, claims, etc. Makes use of ASP.NET Identity Core. 
  
-##### Web Apps
-Web API entry point and front-end
+#### Ordering Context
+This Context is responsible for main application logic, after the Activation was accepted, users can access this page and create orders. (Currently not implemented)
+
+#### Web Apps
+Web API entry point and front-end.
  
 ## Pattern List
 * Unit Of Work
