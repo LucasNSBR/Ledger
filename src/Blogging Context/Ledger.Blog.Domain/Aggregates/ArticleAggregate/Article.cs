@@ -25,6 +25,8 @@ namespace Ledger.Blog.Domain.Aggregates.ArticleAggregate
             }
         }
 
+        protected Article() { }
+
         public Article(string slug, string title, string body, Guid categoryId, Guid authorId)
         {
             Active = true;

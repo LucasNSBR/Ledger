@@ -9,6 +9,8 @@ namespace Ledger.Blog.Domain.Aggregates.ArticleAggregate
         public Guid AuthorId { get; private set; }
         public string Body { get; private set; }
 
+        protected Comment() { }
+
         public Comment(Guid articleId, Guid authorId, string body)
         {
             ArticleId = articleId;

@@ -55,7 +55,7 @@ namespace Ledger.Blog.Application.AppServices.ArticleCategoryAppServices
             if (NotifyNullCategory(category))
                 return;
 
-            category = new ArticleCategory(command.Name);
+            category = new ArticleCategory(command.CategoryId, command.Name);
 
             _repository.Update(category);
 
