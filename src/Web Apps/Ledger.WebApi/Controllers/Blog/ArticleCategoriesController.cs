@@ -22,6 +22,7 @@ namespace Ledger.WebApi.Controllers.Blog
 
         [HttpGet]
         [Route("")]
+        [ResponseCache(Duration = 15)]
         public IActionResult GetAllCategories()
         {
             IQueryable<ArticleCategory> categories = _categoryAppService.GetAllCategories();

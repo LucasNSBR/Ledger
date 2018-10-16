@@ -22,6 +22,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("countries")]
+        [ResponseCache(Duration = 60)]
         public IActionResult GetAllCountries()
         {
             IQueryable<Country> countries = _locationService.GetAllCountries();
@@ -31,6 +32,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("countries/{id}/states")]
+        [ResponseCache(Duration = 60)]
         public IActionResult GetStatesByCountry(Guid id)
         {
             IQueryable<State> states = _locationService.GetStatesByCountry(id);
@@ -40,6 +42,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("states/{id}/cities")]
+        [ResponseCache(Duration = 60)]
         public IActionResult GetCitiesByState(Guid id)
         {
             IQueryable<City> cities = _locationService.GetCitiesByState(id);

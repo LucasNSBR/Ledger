@@ -22,6 +22,7 @@ namespace Ledger.WebApi.Controllers.Blog
 
         [HttpGet]
         [Route("")]
+        [ResponseCache(Duration = 30)]
         public IActionResult GetAllArticles()
         {
             IQueryable<Article> articles = _articleAppService.GetAllArticles();
@@ -31,6 +32,7 @@ namespace Ledger.WebApi.Controllers.Blog
 
         [HttpGet]
         [Route("category/{id:guid}")]
+        [ResponseCache(Duration = 30)]
         public IActionResult GetByCategory(Guid id)
         {
             IQueryable<Article> articles = _articleAppService.GetByCategory(id);
@@ -40,6 +42,7 @@ namespace Ledger.WebApi.Controllers.Blog
 
         [HttpGet]
         [Route("{id:guid}")]
+        [ResponseCache(Duration = 15)]
         public IActionResult GetById(Guid id)
         {
             Article article = _articleAppService.GetById(id);

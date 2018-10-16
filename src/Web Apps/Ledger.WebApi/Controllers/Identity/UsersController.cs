@@ -1,8 +1,6 @@
 ﻿using Ledger.Identity.Application.AppServices.UserAppServices;
 using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Shared.Notifications;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -23,6 +21,7 @@ namespace Ledger.WebApi.Controllers.Identity
 
         [HttpGet]
         [Route("")]
+        [ResponseCache(Duration = 15)]
         public IActionResult GetAllUsers()
         {
             IQueryable<LedgerIdentityUser> users = _userApplicationService.GetAllUsers();
@@ -37,6 +36,7 @@ namespace Ledger.WebApi.Controllers.Identity
 
         [HttpGet]
         [Route("{id:guid}")]
+        [ResponseCache(Duration = 15)]
         public async Task<IActionResult> GetUserById(Guid id)
         {
             LedgerIdentityUser user = await _userApplicationService.GetById(id);

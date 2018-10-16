@@ -23,7 +23,8 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("")]
-        public IActionResult GetById()
+        [ResponseCache(Duration = 30)]
+        public IActionResult GetAllCompanies()
         {
             IQueryable<Company> companies = _companyApplicationService.GetAllCompanies();
 
@@ -32,6 +33,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [ResponseCache(Duration = 15)]
         public IActionResult GetById(Guid id)
         {
             Company company = _companyApplicationService.GetById(id);

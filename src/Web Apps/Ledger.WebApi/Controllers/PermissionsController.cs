@@ -28,6 +28,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("roles")]
+        [ResponseCache(Duration = 15)]
         public IActionResult GetAllRoles()
         {
             IQueryable<LedgerIdentityRole> roles = _roleApplicationService.GetAllRoles();
@@ -37,6 +38,7 @@ namespace Ledger.WebApi.Controllers
 
         [HttpGet]
         [Route("roles/{name}")]
+        [ResponseCache(Duration = 15)]
         public async Task<IActionResult> GetByName(string name)
         {
             LedgerIdentityRole role = await _roleApplicationService.GetByName(name);
