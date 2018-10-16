@@ -83,13 +83,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ordering Context", "Orderin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blogging Context", "Blogging Context", "{C2571218-ABEE-4846-812F-00D10E14FF9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Blog.Domain", "src\Blogging Context\Ledger.Blog.Domain\Ledger.Blog.Domain.csproj", "{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Blog.Domain", "src\Blogging Context\Ledger.Blog.Domain\Ledger.Blog.Domain.csproj", "{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Blog.Data", "src\Blogging Context\Ledger.Blog.Data\Ledger.Blog.Data\Ledger.Blog.Data.csproj", "{135625F5-188C-4857-878B-C73065AF90DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Blog.Tests", "src\Blogging Context\Ledger.Blog.Tests\Ledger.Blog.Tests.csproj", "{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Blog.Tests", "src\Blogging Context\Ledger.Blog.Tests\Ledger.Blog.Tests.csproj", "{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Blog.Application", "src\Blogging Context\Ledger.Blog.Application\Ledger.Blog.Application.csproj", "{4D862995-D8A0-4839-A393-0640A3309E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ledger.Blog.Application", "src\Blogging Context\Ledger.Blog.Application\Ledger.Blog.Application.csproj", "{4D862995-D8A0-4839-A393-0640A3309E2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ledger.Blog.Data", "src\Blogging Context\Ledger.Blog.Data\Ledger.Blog.Data.csproj", "{8F24137C-D685-4B25-B897-5F1DB1939609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,10 +205,6 @@ Global
 		{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{135625F5-188C-4857-878B-C73065AF90DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{135625F5-188C-4857-878B-C73065AF90DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{135625F5-188C-4857-878B-C73065AF90DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{135625F5-188C-4857-878B-C73065AF90DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -217,6 +213,10 @@ Global
 		{4D862995-D8A0-4839-A393-0640A3309E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D862995-D8A0-4839-A393-0640A3309E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D862995-D8A0-4839-A393-0640A3309E2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F24137C-D685-4B25-B897-5F1DB1939609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F24137C-D685-4B25-B897-5F1DB1939609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F24137C-D685-4B25-B897-5F1DB1939609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F24137C-D685-4B25-B897-5F1DB1939609}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,9 +249,9 @@ Global
 		{B23CA73F-234E-47C6-8958-C8BBE9BDC9C0} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 		{B6B6898A-993A-4C0C-A9A1-4F4182ED99D1} = {495DE3C3-43F2-489E-AB2B-E243605A0A55}
 		{21C9E3FF-65DF-43B6-8130-8B2CB8C556FD} = {C2571218-ABEE-4846-812F-00D10E14FF9C}
-		{135625F5-188C-4857-878B-C73065AF90DB} = {C2571218-ABEE-4846-812F-00D10E14FF9C}
 		{742F9DAD-BBFE-4288-8598-B53BE2AA9CB2} = {C2571218-ABEE-4846-812F-00D10E14FF9C}
 		{4D862995-D8A0-4839-A393-0640A3309E2F} = {C2571218-ABEE-4846-812F-00D10E14FF9C}
+		{8F24137C-D685-4B25-B897-5F1DB1939609} = {C2571218-ABEE-4846-812F-00D10E14FF9C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {395E85EF-3430-42A5-9692-61DCA5954711}
