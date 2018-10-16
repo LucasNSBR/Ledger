@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Ledger.WebApi.Controllers
+namespace Ledger.WebApi.Controllers.Identity
 {
     [Produces("application/json")]
     [Route("api/accounts")]

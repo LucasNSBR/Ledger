@@ -30,6 +30,11 @@ namespace Ledger.Identity.Application.AppServices.UserAppServices
             _roleManager = roleManager;
         }
 
+        public IQueryable<LedgerIdentityUser> GetAllUsers()
+        {
+            return _userManager.Users;
+        }
+
         public async Task<LedgerIdentityUser> GetById(Guid id)
         {
             LedgerIdentityUser user = await _userManager.FindByIdAsync(id.ToString());
