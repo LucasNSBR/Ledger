@@ -16,7 +16,6 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
         void SetInactive(SetInactiveArticleCommand command);
         void AddComment(AddArticleCommentCommand command);
         void RemoveComment(RemoveArticleCommentCommand command);
-
         void Remove(RemoveArticleCommand command);
     }
 }
