@@ -7,7 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
-    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
     <ProjectReference Include="..\Ledger.Activations.Data\Ledger.Activations.Data.csproj" />
     <ProjectReference Include="..\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
   </ItemGroup>

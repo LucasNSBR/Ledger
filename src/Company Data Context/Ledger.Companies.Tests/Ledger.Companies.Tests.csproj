@@ -15,7 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
-    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Shared Kernel\Identity Context\Ledger.Identity.Domain\Ledger.Identity.Domain.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared.IntegrationEvents\Ledger.Shared.IntegrationEvents.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared.Tests\Ledger.Shared.Tests.csproj" />
     <ProjectReference Include="..\Ledger.Companies.Application\Ledger.Companies.Application.csproj" />

@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\Company Data Context\Ledger.Companies.Domain\Ledger.Companies.Domain.csproj" />
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.IoC\Ledger.CrossCutting.IoC.csproj" />
     <ProjectReference Include="..\..\Help Desk Context\Ledger.HelpDesk.Application\Ledger.HelpDesk.Application.csproj" />
+    <ProjectReference Include="..\..\Help Desk Context\Ledger.HelpDesk.Domain\Ledger.HelpDesk.Domain.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 

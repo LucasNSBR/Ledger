@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.EmailService\Ledger.CrossCutting.EmailService.csproj" />
-    <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
+    <ProjectReference Include="..\..\..\CrossCutting\Ledger.CrossCutting.EmailService\Ledger.CrossCutting.EmailService.csproj" />
+    <ProjectReference Include="..\..\Ledger.Shared\Ledger.Shared.csproj" />
   </ItemGroup>
 
 </Project>
