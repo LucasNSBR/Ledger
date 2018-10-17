@@ -1,5 +1,5 @@
-﻿using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
-using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
+﻿using Ledger.Identity.Domain.Aggregates.UserAggregate;
+using Ledger.Identity.UserServices.IdentityResolver;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -10,9 +10,9 @@ namespace Ledger.Blog.Tests.Mocks
     {
         private Guid id = new Guid("5227c760-f6f0-4e72-b3fa-19059c58d8e3");
 
-        public User GetUser()
+        public LedgerIdentityUser GetUser()
         {
-            return new User(id);
+            return new LedgerIdentityUser(id);
         }
 
         public IReadOnlyList<Claim> GetUserClaims()

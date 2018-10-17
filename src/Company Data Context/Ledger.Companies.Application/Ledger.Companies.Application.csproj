@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Data\Ledger.CrossCutting.Data.csproj" />
-    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj" />
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared.Locations\Ledger.Shared.Locations.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />

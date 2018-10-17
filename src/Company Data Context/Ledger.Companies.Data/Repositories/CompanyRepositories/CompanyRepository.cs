@@ -2,7 +2,7 @@
 using Ledger.Companies.Domain.Aggregates.CompanyAggregate;
 using Ledger.Companies.Domain.Repositories;
 using Ledger.Companies.Domain.Specifications.CompanySpecifications;
-using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
+using Ledger.Identity.UserServices.IdentityResolver;
 using Ledger.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;

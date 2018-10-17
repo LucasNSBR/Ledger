@@ -1,6 +1,6 @@
-﻿using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
-using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
+﻿using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
 using Ledger.Shared.ValueObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -13,14 +13,14 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
     {
         public Ticket ticket;
         public TicketCategory category;
-        public User user;
+        public LedgerIdentityUser user;
 
         public TicketTests()
         {
             Guid userId = Guid.NewGuid();
 
             category = new TicketCategory("Problemas de ativação");
-            user = new User(userId);
+            user = new LedgerIdentityUser(userId);
             ticket = new Ticket("Não consigo anexar documentos", "Meus documentos falham ao serem anexados para enviar e ativar a conta", category.Id, user.Id);
         }
 
@@ -44,7 +44,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void TicketShouldAttachASupportUserToHelp()
         {
             //Come from repository
-            User user = new User(Guid.NewGuid());
+            LedgerIdentityUser user = new LedgerIdentityUser(Guid.NewGuid());
 
             ticket.AssignSupportUser(user.Id);
 
@@ -56,7 +56,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         public void TicketShouldFailToAttachASupportUserToHelp()
         {
             //Come from repository
-            User user = new User(Guid.NewGuid());
+            LedgerIdentityUser user = new LedgerIdentityUser(Guid.NewGuid());
            
             ticket.AssignSupportUser(user.Id);
 
@@ -103,7 +103,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldFailToAddMessageFromSupport()
         {
-            User user = new User(Guid.NewGuid());
+            LedgerIdentityUser user = new LedgerIdentityUser(Guid.NewGuid());
 
             ticket.AddMessage("Olá, mundo!", user.Id);
             Assert.AreEqual("Não possui acesso às mensagens", ticket.GetNotifications().First().Title);
@@ -112,7 +112,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldGetMessages()
         {
-            User supportUser = new User(Guid.NewGuid());
+            LedgerIdentityUser supportUser = new LedgerIdentityUser(Guid.NewGuid());
             
             ticket.AssignSupportUser(supportUser.Id);
 
@@ -130,7 +130,7 @@ namespace Ledger.HelpDesk.Tests.Aggregates.TicketAggregate
         [TestMethod]
         public void ShouldGetMessagesFromUser()
         {
-            User supportUser = new User(Guid.NewGuid());
+            LedgerIdentityUser supportUser = new LedgerIdentityUser(Guid.NewGuid());
            
             ticket.AssignSupportUser(supportUser.Id);
 

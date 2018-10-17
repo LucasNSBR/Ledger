@@ -1,6 +1,4 @@
 ﻿using Ledger.CrossCutting.Data.UnitOfWork;
-using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
-using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
 using Ledger.HelpDesk.Domain.Aggregates.CategoryAggregate;
 using Ledger.HelpDesk.Domain.Aggregates.TicketAggregate;
@@ -10,6 +8,9 @@ using Ledger.HelpDesk.Domain.Events.TicketAggregate;
 using Ledger.HelpDesk.Domain.Factories;
 using Ledger.HelpDesk.Domain.Repositories.TicketCategoryRepositories;
 using Ledger.HelpDesk.Domain.Repositories.TicketRepositories;
+using Ledger.Identity.Domain.Aggregates.RoleAggregate;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
+using Ledger.Identity.UserServices.IdentityResolver;
 using Ledger.Shared.Extensions;
 using Ledger.Shared.Notifications;
 using Ledger.Shared.ValueObjects;
@@ -41,7 +42,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
 
         public IQueryable<Ticket> GetByUserId(Guid userId)
         {
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
             if (userId != user.Id)
             {
                 AddNotification("Erro ao buscar", "O usuário atual não possui permissão para visualizar os dados.");
@@ -69,7 +70,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 return;
 
             TicketCategory category = _categoryRepository.GetById(command.CategoryId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullCategory(category))
                 return;
@@ -92,7 +93,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
             Image issuePicture = new Image(command.IssuePicture.ToBytes());
 
             Ticket ticket = _ticketRepository.GetById(command.TicketId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullTicket(ticket))
                 return;
@@ -122,7 +123,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 return;
 
             Ticket ticket = _ticketRepository.GetById(command.TicketId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
             
             if (NotifyNullTicket(ticket))
                 return;
@@ -146,7 +147,7 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
                 return;
 
             Ticket ticket = _ticketRepository.GetById(command.TicketId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullTicket(ticket))
                 return;
@@ -210,8 +211,8 @@ namespace Ledger.HelpDesk.Application.AppServices.TicketAppServices
 
         private bool NotifyCantAccessTicket(Ticket ticket)
         {
-            User user = _identityResolver.GetUser();
-            Role supportRole = new Role(RoleTypes.Support);
+            LedgerIdentityUser user = _identityResolver.GetUser();
+            LedgerIdentityRole supportRole = new LedgerIdentityRole(RoleTypes.Support);
 
             bool canAccessTicket = ticket.TicketUserId == user.Id || user.IsInRole(supportRole);
 

@@ -29,7 +29,6 @@ namespace Ledger.WebApi
         {
             services.AddCore();
             services.AddIdentity();
-            services.AddIdentityResolver();
             services.AddActivations();
             services.AddCompanies();
             services.AddHelpDesk();

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity\Ledger.CrossCutting.Identity.csproj" />
     <ProjectReference Include="..\..\CrossCutting\Ledger.CrossCutting.ServiceBus\Ledger.CrossCutting.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
     <ProjectReference Include="..\Ledger.HelpDesk.Domain\Ledger.HelpDesk.Domain.csproj" />
   </ItemGroup>

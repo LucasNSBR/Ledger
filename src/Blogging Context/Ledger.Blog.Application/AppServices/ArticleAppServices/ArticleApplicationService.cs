@@ -5,9 +5,9 @@ using Ledger.Blog.Domain.Context;
 using Ledger.Blog.Domain.Repositories.ArticleCategoryRepositories;
 using Ledger.Blog.Domain.Repositories.ArticleRepositories;
 using Ledger.CrossCutting.Data.UnitOfWork;
-using Ledger.CrossCutting.Identity.Aggregates.UserAggregate;
-using Ledger.CrossCutting.Identity.Services.UserServices.IdentityResolver;
 using Ledger.CrossCutting.ServiceBus.Abstractions;
+using Ledger.Identity.Domain.Aggregates.UserAggregate;
+using Ledger.Identity.UserServices.IdentityResolver;
 using Ledger.Shared.Notifications;
 using System;
 using System.Linq;
@@ -50,7 +50,7 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
                 return;
 
             ArticleCategory category = _categoryRepository.GetById(command.CategoryId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullCategory(category))
                 return;
@@ -71,7 +71,7 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
 
             ArticleCategory category = _categoryRepository.GetById(command.CategoryId);
             Article article = _articleRepository.GetById(command.ArticleId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullCategory(category) || NotifyNullArticle(article))
                 return;
@@ -129,7 +129,7 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
                 return;
 
             Article article = _articleRepository.GetById(command.ArticleId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullArticle(article))
                 return;
@@ -150,7 +150,7 @@ namespace Ledger.Blog.Application.AppServices.ArticleAppServices
                 return;
 
             Article article = _articleRepository.GetById(command.ArticleId);
-            User user = _identityResolver.GetUser();
+            LedgerIdentityUser user = _identityResolver.GetUser();
 
             if (NotifyNullArticle(article))
                 return;

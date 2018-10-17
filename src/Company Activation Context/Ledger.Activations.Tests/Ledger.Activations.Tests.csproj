@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Application\Ledger.Identity.Application.csproj" />
+    <ProjectReference Include="..\..\Identity Context\Ledger.Identity.Domain\Ledger.Identity.Domain.csproj" />
     <ProjectReference Include="..\..\Shared Kernel\Ledger.Shared\Ledger.Shared.csproj" />
     <ProjectReference Include="..\Ledger.Activations.Application\Ledger.Activations.Application.csproj" />
     <ProjectReference Include="..\Ledger.Activations.Domain\Ledger.Activations.Domain.csproj" />
