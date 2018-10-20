@@ -262,3 +262,34 @@ __pycache__/
 
 # Sonarqube
 .sonarqube/
+
+# Angular 
+/dist
+/tmp
+/out-tsc
+
+/node_modules
+
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings

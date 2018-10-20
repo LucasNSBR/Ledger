@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Blogging Context\Ledger.Blog.Application\Ledger.Blog.Application.csproj" />
     <ProjectReference Include="..\..\Blogging Context\Ledger.Blog.Data\Ledger.Blog.Data.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Application\Ledger.Activations.Application.csproj" />
     <ProjectReference Include="..\..\Company Activation Context\Ledger.Activations.Data\Ledger.Activations.Data.csproj" />

@@ -1,4 +1,6 @@
-﻿using Ledger.Blog.Data.Context;
+﻿using Ledger.Blog.Application.AppServices.ArticleAppServices;
+using Ledger.Blog.Application.AppServices.ArticleCategoryAppServices;
+using Ledger.Blog.Data.Context;
 using Ledger.Blog.Data.Repositories.ArticleCategoryRepositories;
 using Ledger.Blog.Data.Repositories.ArticleRepositories;
 using Ledger.Blog.Domain.Context;
@@ -24,6 +26,9 @@ namespace Ledger.CrossCutting.IoC
         {
             services.AddDbContext<LedgerBlogDbContext>(options =>
                   options.UseInMemoryDatabase("BlogDb"));
+
+            services.AddScoped<IArticleApplicationService, ArticleApplicationService>();
+            services.AddScoped<IArticleCategoryApplicationService, ArticleCategoryApplicationService>();
 
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();

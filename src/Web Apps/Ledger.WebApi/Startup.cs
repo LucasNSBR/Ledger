@@ -34,6 +34,8 @@ namespace Ledger.WebApi
             services.AddHelpDesk();
             services.AddBlogging();
 
+            services.AddCors();
+
             services.AddServiceBus(opt =>
             {
                 opt.HostAddress = Configuration["MassTransit:RabbitMqHost"];
@@ -71,6 +73,8 @@ namespace Ledger.WebApi
 
             services.AddSingleton<ISigningService, SigningService>();
             services.AddScoped<IJwtFactory, JwtFactory>();
+
+            services.AddCors();
 
             services
                 .AddAuthentication(cfg =>
@@ -142,14 +146,15 @@ namespace Ledger.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
 
-            app.UseCors(cfg =>
-            {
-                cfg.AllowAnyMethod();
-                cfg.AllowAnyHeader();
-                cfg.AllowAnyOrigin();
-            });
+                app.UseCors(cfg =>
+                {
+                    cfg.AllowAnyMethod();
+                    cfg.AllowAnyHeader();
+                    cfg.AllowAnyOrigin();
+                    cfg.AllowCredentials();
+                });
+            }
 
             app.UseExceptionLogger();
             app.UseResponseCompression();

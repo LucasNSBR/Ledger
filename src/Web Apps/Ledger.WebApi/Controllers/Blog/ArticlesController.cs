@@ -72,8 +72,8 @@ namespace Ledger.WebApi.Controllers.Blog
             return CreateResponse();
         }
 
-        [HttpPost]
-        [Route("{id:guid}/comments")]
+        [HttpPut]
+        [Route("{id:guid}/add-comment")]
         [Authorize(Policy = "ActivatedAccount")]
         public IActionResult AddComment(Guid id, [FromBody]AddArticleCommentCommand command)
         {
@@ -84,8 +84,8 @@ namespace Ledger.WebApi.Controllers.Blog
             return CreateResponse();
         }
 
-        [HttpDelete]
-        [Route("{id:guid}/comments")]
+        [HttpPut]
+        [Route("{id:guid}/remove-comment")]
         [Authorize(Policy = "ActivatedAccount")]
         public IActionResult Remove(Guid id, [FromBody]RemoveArticleCommentCommand command)
         {
@@ -99,9 +99,12 @@ namespace Ledger.WebApi.Controllers.Blog
         [HttpDelete]
         [Route("{id:guid}")]        
         //[Authorize(Policy = "AdminAccount")]
-        public IActionResult Remove(Guid id, [FromBody]RemoveArticleCommand command)
+        public IActionResult Remove(Guid id)
         {
-            command.ArticleId = id;
+            RemoveArticleCommand command = new RemoveArticleCommand
+            {
+                ArticleId = id
+            };
 
             _articleAppService.Remove(command);
 
