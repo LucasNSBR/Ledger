@@ -18,7 +18,10 @@ namespace Ledger.Identity.Domain.Aggregates.UserAggregate
             }
         }
 
-        protected LedgerIdentityUser() { }
+        protected LedgerIdentityUser()
+        {
+            _claims = new List<Claim>();
+        }
 
         public LedgerIdentityUser(Guid id)
         {

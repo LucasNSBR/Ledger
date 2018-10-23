@@ -8,7 +8,7 @@ namespace Ledger.Identity.Data.EntityTypeConfiguration
     {
         public void Configure(EntityTypeBuilder<LedgerIdentityUser> builder)
         {
-            //Should be implemented later
+            builder.Ignore(u => u.Claims);
         }
     }
 }

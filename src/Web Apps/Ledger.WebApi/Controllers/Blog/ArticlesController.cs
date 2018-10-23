@@ -23,6 +23,7 @@ namespace Ledger.WebApi.Controllers.Blog
         [HttpGet]
         [Route("")]
         [ResponseCache(Duration = 30)]
+        //[Authorize]
         public IActionResult GetAllArticles()
         {
             IQueryable<Article> articles = _articleAppService.GetAllArticles();

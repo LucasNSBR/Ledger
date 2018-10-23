@@ -25,7 +25,10 @@ namespace Ledger.Blog.Domain.Aggregates.ArticleAggregate
             }
         }
 
-        protected Article() { }
+        protected Article()
+        {
+            _comments = new List<Comment>();
+        }
 
         public Article(string slug, string title, string body, Guid categoryId, Guid authorId)
         {

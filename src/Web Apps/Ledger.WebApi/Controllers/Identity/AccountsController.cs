@@ -30,11 +30,16 @@ namespace Ledger.WebApi.Controllers.Identity
         {
             LedgerIdentityUser user = await _userApplicationService.Register(command);
 
-            return CreateResponse(new
+            if (user != null)
             {
-                id = user.Id,
-                email = user.Email
-            });
+                return CreateResponse(new
+                {
+                    id = user.Id,
+                    email = user.Email
+                });
+            }
+
+            return CreateResponse();
         }
 
         [HttpPost]
@@ -46,7 +51,12 @@ namespace Ledger.WebApi.Controllers.Identity
             if (identity != null)
             {
                 string token = _jwtFactory.WriteToken(identity);
-                return CreateResponse(token);
+                return CreateResponse(new
+                {
+                    id = identity.Name,
+                    email = command.Email,
+                    token 
+                });
             }
 
             return CreateResponse();
